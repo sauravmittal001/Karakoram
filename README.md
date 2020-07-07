@@ -21,8 +21,6 @@
 - Hostel News/Updates
 - Bills Transperancy
 
----
-
 
 ## Screens
 
