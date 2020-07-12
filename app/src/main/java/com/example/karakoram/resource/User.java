@@ -14,7 +14,17 @@ public class User {
 
     private String room;
 
-    private String type;
+    private UserType type;
+
+    public User(){
+        department = "-NA-";
+        name = "-NA-";
+        room = "-NA-";
+        program = "-NA-";
+        isLoggedin = false;
+        entryYear = -1;
+        type = UserType.STUDENT;
+    }
 
     public String getName() {
         return name;
@@ -64,11 +74,11 @@ public class User {
         isLoggedin = loggedin;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 }
