@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_userinfo"
+
+        android:title="userinfo" />
+
+    <item
+        android:id="@+id/navigation_complain"
+
+        android:title="complain" />
+
+    <item
+        android:id="@+id/navigation_logout"
+
+        android:title="logout" />
+
+    <item
+        android:id="@+id/navigation_about"
+
+        android:title="about" />
+</menu>
