@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class billOtherFragment extends Fragment {
+public class billCultFragment extends Fragment {
 
 
     ArrayList<Integer> bill= new ArrayList<>(Arrays.asList( R.drawable.download_1,R.drawable.download,R.drawable.images,R.drawable.images_1,R.drawable.images_2,R.drawable.images_3,R.drawable.download_2,R.drawable.download_3,
@@ -29,7 +29,7 @@ public class billOtherFragment extends Fragment {
     View view;
     FloatingActionButton fab;
 
-    public billOtherFragment() {
+    public billCultFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +37,7 @@ public class billOtherFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //initialize gridview object
-        gridView=view.findViewById(R.id.othersbillgridView);
+        gridView=view.findViewById(R.id.cultbillgridView);
         //set adapter on gridview object
         gridView.setAdapter(new imageAdapter(bill,getActivity()));
 
@@ -53,7 +53,7 @@ public class billOtherFragment extends Fragment {
         });
 
 
-        fab=view.findViewById(R.id.FABother_bill);
+        fab=view.findViewById(R.id.FABCult_bill);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class billOtherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_bill_other, container, false);
+        view=inflater.inflate(R.layout.fragment_bill_cult, container, false);
         return view;
     }
 }

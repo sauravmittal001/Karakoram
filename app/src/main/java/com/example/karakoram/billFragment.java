@@ -2,10 +2,8 @@ package com.example.karakoram;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -67,7 +65,8 @@ public class billFragment extends Fragment {
         pageadapter adapter=new pageadapter(getChildFragmentManager());
         adapter.addFragment(new billMaintFragment(),"Maint");
         adapter.addFragment(new billMessFragment(),"Mess");
-        adapter.addFragment(new billOtherFragment(),"Others");
+        adapter.addFragment(new billCultFragment(),"cult");
+        adapter.addFragment(new billSportsFragment(),"sports");
         viewPager.setAdapter(adapter);
 
 
