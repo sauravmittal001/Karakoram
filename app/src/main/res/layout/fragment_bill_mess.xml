@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".billMessFragment"
     android:layout_marginBottom="56dp"
-    android:layout_marginLeft="25dp"
+
     >
 
 

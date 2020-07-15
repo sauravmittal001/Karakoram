@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".billOtherFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <GridView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="35sp"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:id="@+id/othersbillgridView"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"/>
 
 </FrameLayout>

@@ -13,7 +13,7 @@
         <activity android:name=".activity.ComplaintActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.UserInfoActivity" />
-
+        <activity android:name=".fullimageActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

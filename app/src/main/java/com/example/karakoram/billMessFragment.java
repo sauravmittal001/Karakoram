@@ -13,8 +13,15 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class billMessFragment extends Fragment {
+
+   ArrayList<Integer> bill= new ArrayList<>(Arrays.asList( R.drawable.download_1,R.drawable.download,R.drawable.images,R.drawable.images_1,R.drawable.images_2,R.drawable.images_3,R.drawable.download_2,R.drawable.download_3,
+           R.drawable.download_4,R.drawable.download_5,R.drawable.download_6));
+
 
    private GridView gridView;
    View view;
@@ -33,14 +40,18 @@ public class billMessFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //initialize gridview object
         gridView=view.findViewById(R.id.messbillgridView);
-        gridView.setAdapter(new imageAdapter(getActivity()));
+        //set adapter on gridview object
+        gridView.setAdapter(new imageAdapter(bill,getActivity()));
 
+        //when click on image it open full screen iamge
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(getActivity().getApplicationContext(), fullimageActivity.class);
+                Intent i = new Intent( getActivity().getApplicationContext(),fullimageActivity.class);
                 // passing array index
-                i.putExtra("id", position);
+                i.putExtra("bill", bill);
+                i.putExtra("currentbill",position);
                 startActivity(i);
             }
         });

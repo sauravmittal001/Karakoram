@@ -7,15 +7,20 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class imageAdapter extends BaseAdapter {
     private Context mContext;
-    public imageAdapter(Context c) {
+    List<Integer> bill;
+    public imageAdapter(List<Integer> bill ,Context c) {
+        this.bill=bill;
         mContext = c;
     }
 
     @Override
     public int getCount() {
-        return bill.length;
+        return bill.size();
     }
 
     @Override
@@ -30,13 +35,16 @@ public class imageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ImageView imageView=new ImageView(mContext);
+        ImageView imageView=(ImageView) view;
+        if(imageView==null){
+         imageView=new ImageView(mContext);
+         //imageView.setLayoutParams(new GridView.LayoutParams(30,450));
+         //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+        imageView.setImageResource(bill.get(i));
 
-        imageView.setImageResource(bill[i]);
         return imageView;
     }
 
-    public Integer[] bill={
-    R.drawable.download_1,R.drawable.download,R.drawable.images,R.drawable.images_1,R.drawable.images_2,R.drawable.images_3,R.drawable.download_2,R.drawable.download_3,
-    R.drawable.download_4,R.drawable.download_5,R.drawable.download_6};
+
 }
