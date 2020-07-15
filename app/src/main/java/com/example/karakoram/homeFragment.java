@@ -1,5 +1,6 @@
 package com.example.karakoram;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +16,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 
-public class homeFragment extends ListFragment  {
+public class homeFragment extends Fragment  {
 
     final ArrayList<Event> event = new ArrayList<Event>();
     View view;
+    ListView listView;
+    FloatingActionButton fab;
 
 
     public homeFragment() {
@@ -67,7 +73,7 @@ public class homeFragment extends ListFragment  {
         event.add(new Event("Event 9","Mess meeting","12 PM"));
 
         EventAdapter adapter = new EventAdapter(getActivity(),event);
-        ListView listView = (ListView) view.findViewById(R.id.list);
+         listView = (ListView) view.findViewById(R.id.list_event);
         listView.setAdapter(adapter);
 
 
@@ -76,6 +82,16 @@ public class homeFragment extends ListFragment  {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 showDailog(i);
             }});
+
+        fab=view.findViewById(R.id.FAB_event);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"add event",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+
+
+            }
+        });
 
 
     }

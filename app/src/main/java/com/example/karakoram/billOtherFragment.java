@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,6 +27,7 @@ public class billOtherFragment extends Fragment {
 
     private GridView gridView;
     View view;
+    FloatingActionButton fab;
 
     public billOtherFragment() {
         // Required empty public constructor
@@ -48,7 +51,20 @@ public class billOtherFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+
+        fab=view.findViewById(R.id.FABother_bill);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+                startActivity(intent);
+
+            }
+        });
     }
+
+
 
 
 
