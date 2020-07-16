@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.childFragment.bill.fullscreenimage;
 
 import android.os.Bundle;
 
@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.karakoram.childFragment.bill.fullscreenimage.FullscreenImageFragment;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.childFragment.bill.fullscreenimage;
 
 import android.os.Bundle;
 

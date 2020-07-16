@@ -16,12 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Eventdiscription"></activity>
+        <activity android:name=".childFragment.EventResources.Eventdiscription"></activity>
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.ComplaintActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.UserInfoActivity" />
-        <activity android:name=".fullimageActivity" />
+        <activity android:name=".childFragment.bill.fullscreenimage.fullimageActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

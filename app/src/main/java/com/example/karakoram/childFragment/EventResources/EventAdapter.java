@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.childFragment.EventResources;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.karakoram.R;
 
 import java.util.ArrayList;
 
@@ -36,11 +39,18 @@ public class EventAdapter extends ArrayAdapter<Event> {
         TextView eventname =(TextView)list.findViewById(R.id.event_name);
         eventname.setText(event.getEvent_name());
 
-        TextView eventdetails =(TextView)list.findViewById(R.id.event_details);
-        eventdetails.setText(event.getEvent_details());
+        TextView eventtitle =(TextView)list.findViewById(R.id.event_title);
+        eventtitle.setText(event.getEvent_title());
 
         TextView eventtime =(TextView)list.findViewById(R.id.event_time);
         eventtime.setText(event.getEvent_time());
+
+
+
+
+
+
+
 
         return list;
     }

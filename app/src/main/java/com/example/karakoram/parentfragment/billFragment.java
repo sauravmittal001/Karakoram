@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.parentfragment;
 
 import android.os.Bundle;
 
@@ -10,6 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.karakoram.R;
+import com.example.karakoram.childFragment.bill.billCultFragment;
+import com.example.karakoram.childFragment.bill.billMaintFragment;
+import com.example.karakoram.childFragment.bill.billMessFragment;
+import com.example.karakoram.childFragment.bill.billOthersFragment;
+import com.example.karakoram.childFragment.bill.billSportsFragment;
+import com.example.karakoram.childFragment.pageadapter;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -67,6 +74,7 @@ public class billFragment extends Fragment {
         adapter.addFragment(new billMessFragment(),"Mess");
         adapter.addFragment(new billCultFragment(),"cult");
         adapter.addFragment(new billSportsFragment(),"sports");
+        adapter.addFragment(new billOthersFragment(),"Other");
         viewPager.setAdapter(adapter);
 
 

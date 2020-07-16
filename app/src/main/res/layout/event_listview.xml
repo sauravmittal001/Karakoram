@@ -20,7 +20,7 @@
             android:text="event1" />
 
         <TextView
-            android:id="@+id/event_details"
+            android:id="@+id/event_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"

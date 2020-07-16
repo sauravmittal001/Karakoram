@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.childFragment.bill.fullscreenimage;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.karakoram.childFragment.bill.fullscreenimage.FullscreenImageAdapter;
+import com.example.karakoram.R;
 
 import java.util.List;
 

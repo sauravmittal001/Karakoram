@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.example.karakoram.activity.AboutActivity;
 import com.example.karakoram.activity.ComplaintActivity;
 import com.example.karakoram.activity.UserInfoActivity;
+import com.example.karakoram.parentfragment.homeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -114,17 +115,17 @@ public class MainActivity extends AppCompatActivity  {
 
             switch (menuItem.getItemId()) {
                 case R.id.navigation_home:
-                    return openfragment(new homeFragment());
+                    return openfragment(new com.example.karakoram.parentfragment.homeFragment());
 
                 case R.id.navigation_mess:
-                    return openfragment(new messFragment());
+                    return openfragment(new com.example.karakoram.parentfragment.messFragment());
 
 
                 case R.id.navigation_bill:
-                    return openfragment(new billFragment());
+                    return openfragment(new com.example.karakoram.parentfragment.billFragment());
 
                 case R.id.navigation_notification:
-                    return openfragment(new notificationFragment());
+                    return openfragment(new com.example.karakoram.notificationFragment());
 
             }
 

@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.parentfragment;
 
 import android.os.Bundle;
 
@@ -10,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.karakoram.R;
+import com.example.karakoram.childFragment.mess.messFeedbackFragment;
+import com.example.karakoram.childFragment.mess.messMenuFragment;
+import com.example.karakoram.childFragment.mess.messUSTFragment;
+import com.example.karakoram.childFragment.pageadapter;
 import com.google.android.material.tabs.TabLayout;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.childFragment.mess;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.karakoram.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link messUSTFragment#newInstance} factory method to
+ * Use the {@link messFeedbackFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class messUSTFragment extends Fragment {
+public class messFeedbackFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class messUSTFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public messUSTFragment() {
+    public messFeedbackFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class messUSTFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment messUSTFragment.
+     * @return A new instance of fragment messFeedbackFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static messUSTFragment newInstance(String param1, String param2) {
-        messUSTFragment fragment = new messUSTFragment();
+    public static messFeedbackFragment newInstance(String param1, String param2) {
+        messFeedbackFragment fragment = new messFeedbackFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class messUSTFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mess_u_s_t, container, false);
+        return inflater.inflate(R.layout.fragment_mess_feedback, container, false);
     }
 }
