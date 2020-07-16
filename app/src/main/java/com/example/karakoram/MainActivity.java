@@ -1,10 +1,16 @@
 package com.example.karakoram;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.example.karakoram.activity.AboutActivity;
+import com.example.karakoram.activity.ComplaintActivity;
+import com.example.karakoram.activity.UserInfoActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,7 +25,8 @@ public class MainActivity extends AppCompatActivity  {
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle toggle;
     private BottomNavigationView navView;
-
+    private NavigationView side_navview;
+    private View header;
 
 
     @Override
@@ -32,6 +39,34 @@ public class MainActivity extends AppCompatActivity  {
 
 
         //sidebar
+        side_navview=(NavigationView)findViewById(R.id.side_navview);
+        header=side_navview.getHeaderView(0);
+        side_navview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id=menuItem.getItemId();
+                if(id==R.id.navigation_complaints){
+                    startActivity(new Intent(MainActivity.this, ComplaintActivity.class));
+                }
+                else if(id==R.id.navigation_about){
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                }
+                else if(id==R.id.navigation_logout){
+
+                }
+                return true;
+            }
+        });
+        ImageView header_image=(ImageView)header.findViewById(R.id.user_image);
+
+        header_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UserInfoActivity.class));
+            }
+        });
+
+
 
         mdrawer=(DrawerLayout)findViewById(R.id.drawer_layout);
 

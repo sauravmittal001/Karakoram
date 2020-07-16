@@ -80,7 +80,14 @@ public class homeFragment extends Fragment  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showDailog(i);
+
+                Intent intent= new Intent(getActivity().getApplicationContext(),Eventdiscription.class);
+                intent.putExtra("event_name",event.get(i).getEvent_name());
+                intent.putExtra("event_details",event.get(i).getEvent_details());
+                intent.putExtra("event_time",event.get(i).getEvent_time());
+
+                startActivity(intent);
+                //showDailog(i);
             }});
 
         fab=view.findViewById(R.id.FAB_event);
@@ -99,13 +106,13 @@ public class homeFragment extends Fragment  {
 
 
 
-    public void showDailog(int i)
+   /* public void showDailog(int i)
     {    Event m=event.get(i);
          FragmentManager manager=getFragmentManager();
          mydialog dial=new mydialog(m.getEvent_name(),m.getEvent_details(),m.getEvent_time());
          dial.show(manager,"mydialog");
 
-    }
+    } */
 
 
 }

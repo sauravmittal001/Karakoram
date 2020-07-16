@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +27,7 @@ public class billMessFragment extends Fragment {
            R.drawable.download_4,R.drawable.download_5,R.drawable.download_6));
 
 
-   private GridView gridView;
+   private ListView listView;
    View view;
    FloatingActionButton fab;
 
@@ -45,12 +46,12 @@ public class billMessFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //initialize gridview object
-        gridView=view.findViewById(R.id.messbillgridView);
+        listView=view.findViewById(R.id.messbilllistView);
         //set adapter on gridview object
-        gridView.setAdapter(new imageAdapter(bill,getActivity()));
+        listView.setAdapter(new imageAdapter(bill,getActivity()));
 
         //when click on image it open full screen iamge
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent i = new Intent( getActivity().getApplicationContext(),fullimageActivity.class);
                 // passing array index

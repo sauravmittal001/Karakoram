@@ -38,11 +38,10 @@ public class imageAdapter extends BaseAdapter {
         ImageView imageView=(ImageView) view;
         if(imageView==null){
          imageView=new ImageView(mContext);
-         //imageView.setLayoutParams(new GridView.LayoutParams(30,450));
-         //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+         imageView.setLayoutParams(new GridView.LayoutParams(600,450));
+         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
         imageView.setImageResource(bill.get(i));
-
         return imageView;
     }
 

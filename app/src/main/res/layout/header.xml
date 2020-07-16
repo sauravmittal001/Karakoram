@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="300dp"
     android:orientation="vertical"
     android:background="@color/colorAccent"
     android:gravity="bottom"
     >
-<TextView
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/user_image"
+        android:src="@drawable/user_image"
+
+        android:layout_gravity="center"
+        android:layout_marginBottom="25dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="70dp"
+        android:text="Mahesh Patidar"
+        />
+
+  <TextView
     android:layout_width="wrap_content"
+      android:layout_gravity="center"
     android:layout_height="wrap_content"
-    android:text="Karakoram"
-    android:textSize="50dp"
-    android:layout_gravity="center"/>
+    android:text="ce1180113@iitd.ac.in"
+      />
 
 
 

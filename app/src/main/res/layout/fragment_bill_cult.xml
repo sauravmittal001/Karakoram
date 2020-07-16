@@ -15,11 +15,10 @@
         android:src="@drawable/add_photo"
         />
 
-    <GridView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cultbillgridView"
-        android:numColumns="2"
-        android:stretchMode="columnWidth"/>
+        android:id="@+id/cultbilllistView"
+        />
 
 </FrameLayout>

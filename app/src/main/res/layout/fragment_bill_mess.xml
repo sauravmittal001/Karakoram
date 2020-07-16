@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".billMessFragment"
-    android:layout_marginBottom="56dp"
-
     >
 
    <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -17,12 +15,11 @@
        android:layout_marginBottom="70dp"
        android:src="@drawable/add_photo"
        />
-   <GridView
+   <ListView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:id="@+id/messbillgridView"
-       android:numColumns="2"
-       android:stretchMode="columnWidth"/>
+       android:id="@+id/messbilllistView"
+       />
 
 
 
