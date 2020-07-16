@@ -3,17 +3,11 @@ package com.example.karakoram.resource;
 public class User {
 
     private String department;
-
     private int entryYear;
-
     private Boolean isLoggedin;
-
     private String name;
-
     private String program;
-
     private String room;
-
     private UserType type;
 
     public User(){
