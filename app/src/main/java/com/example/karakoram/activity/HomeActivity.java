@@ -1,11 +1,9 @@
 package com.example.karakoram.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,13 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.karakoram.R;
-import com.example.karakoram.firebase.FirebaseQuery;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -27,31 +18,21 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Query query = FirebaseQuery.getAllEvents();
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        String[] fragmentList = {"Events","Bills","Mess", "User", "Complain Form"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.support_simple_spinner_dropdown_item, fragmentList);
+        ListView listView = findViewById(R.id.events);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> eventList = new ArrayList<>();
-                for( DataSnapshot snapshotItem : snapshot.getChildren()){
-                    eventList.add(snapshotItem.child("title").getValue(String.class));
-                }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.support_simple_spinner_dropdown_item, eventList);
-                ListView listView = findViewById(R.id.events);
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Log.d("123", ((TextView)view).getText().toString());
-                        Intent intent = new Intent(HomeActivity.this,EventActivity.class);
-                        intent.putExtra("title",((TextView)view).getText().toString());
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent;
+                if(((TextView)view).getText().equals("Events"))
+                    intent = new Intent(HomeActivity.this,EventHomeActivity.class);
+                else if(((TextView)view).getText().equals("Bills"))
+                    intent = new Intent(HomeActivity.this,BillHomeActivity.class);
+                else
+                    intent = new Intent(HomeActivity.this,EventHomeActivity.class);
+                startActivity(intent);
             }
         });
     }

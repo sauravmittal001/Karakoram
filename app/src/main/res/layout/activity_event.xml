@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/description"
-        android:layout_width="322dp"
-        android:layout_height="366dp"
+        android:layout_width="313dp"
+        android:layout_height="200dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="100dp"
         android:textAlignment="center"
@@ -31,4 +31,57 @@
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TableLayout
+        android:layout_width="240dp"
+        android:layout_height="113dp"
+        app:layout_constraintEnd_toEndOf="@+id/description"
+        app:layout_constraintTop_toBottomOf="@+id/description">
+
+        <TableRow
+            android:id="@+id/date_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/date_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/date_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text=""
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/time_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center">
+
+            <TextView
+                android:id="@+id/time_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/time_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text=""
+                android:textAlignment="center" />
+
+        </TableRow>
+
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

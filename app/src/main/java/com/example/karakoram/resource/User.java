@@ -17,7 +17,7 @@ public class User {
         program = "-NA-";
         isLoggedin = false;
         entryYear = -1;
-        type = UserType.STUDENT;
+        type = UserType.Student;
     }
 
     public String getName() {

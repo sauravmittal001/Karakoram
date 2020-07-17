@@ -6,15 +6,14 @@ public class Event {
 
     private String title;
     private String description;
-    private String timeOfEvent;
-    private Date date;
+    private Date dateTime;
 
-    public Date getDate() {
-        return date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -23,14 +22,6 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getTimeOfEvent() {
-        return timeOfEvent;
-    }
-
-    public void setTimeOfEvent(String timeOfEvent) {
-        this.timeOfEvent = timeOfEvent;
     }
 
     public String getTitle() {
