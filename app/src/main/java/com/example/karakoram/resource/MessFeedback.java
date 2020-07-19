@@ -1,20 +1,20 @@
 package com.example.karakoram.resource;
 
-import java.security.Timestamp;
+import java.util.Date;
 
 public class MessFeedback {
 
-    private Timestamp timestamp;
+    private Date timestamp;
     private String userId;
     private String description;
     private int rating;
     private Meal meal;
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

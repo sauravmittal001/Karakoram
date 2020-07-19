@@ -1,11 +1,11 @@
 package com.example.karakoram.resource;
 
-import java.security.Timestamp;
+import java.util.Date;
 
 public class Complain {
 
     private String userId;
-    private Timestamp timestamp;
+    private Date timestamp;
     private Status status;
     private Category category;
     private String description;
@@ -18,11 +18,11 @@ public class Complain {
         this.userId = userId;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

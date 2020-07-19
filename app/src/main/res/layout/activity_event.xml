@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="228dp"
         android:layout_height="58dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="50dp"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,6 @@
         android:id="@+id/description"
         android:layout_width="313dp"
         android:layout_height="200dp"
-        android:layout_marginTop="30dp"
         android:layout_marginBottom="100dp"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -29,8 +28,7 @@
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/event_image" />
 
     <TableLayout
         android:layout_width="240dp"
@@ -84,4 +82,16 @@
         </TableRow>
 
     </TableLayout>
+
+    <ImageView
+        android:id="@+id/event_image"
+        android:layout_width="174dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="30dp"
+        android:clickable="true"
+        android:onClick="choosePic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
