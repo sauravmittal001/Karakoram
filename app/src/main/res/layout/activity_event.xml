@@ -89,7 +89,6 @@
         android:layout_height="167dp"
         android:layout_marginTop="30dp"
         android:clickable="true"
-        android:onClick="choosePic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"

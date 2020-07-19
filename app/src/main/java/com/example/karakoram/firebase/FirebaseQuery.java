@@ -25,8 +25,8 @@ public class FirebaseQuery {
         ref.child("users").child(id).setValue(user);
     }
 
-    public static Query getEvent(String title){
-        return ref.child("events").orderByChild("title").equalTo(title);
+    public static Query getEvent(String key){
+        return ref.child("events").child(key);
     }
 
     public static Query getAllEvents(){

@@ -30,15 +30,16 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         Intent intent = this.getIntent();
-        final String title = intent.getStringExtra("title");
-        Query query = FirebaseQuery.getEvent(title);
+        final String key = intent.getStringExtra("key");
+        Log.d("124hello",key);
+        Query query = FirebaseQuery.getEvent(key);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Event event = snapshot.getChildren().iterator().next().getValue(Event.class);
+                Event event = snapshot.getValue(Event.class);
                 assert event != null;
                 ((TextView)findViewById(R.id.description)).setText(event.getDescription());
-                ((TextView)findViewById(R.id.title)).setText(title);
+                ((TextView)findViewById(R.id.title)).setText(event.getTitle());
                 String date = (event.getDateTime().getYear() + 1900) + "-" + String.format("%02d",event.getDateTime().getMonth() + 1) + "-" + String.format("%02d",event.getDateTime().getDate());
                 String time = String.format("%02d",event.getDateTime().getHours()) + " : " + String.format("%02d",event.getDateTime().getMinutes());
                 ((TextView)findViewById(R.id.date_output)).setText(date);
@@ -51,7 +52,7 @@ public class EventActivity extends AppCompatActivity {
             }
         });
         final ImageView eventImage = findViewById(R.id.event_image);
-        StorageReference ref = FirebaseStorage.getInstance().getReference("test2.png");
+        StorageReference ref = FirebaseStorage.getInstance().getReference("eventImages/"+key+".png");
         long MAXBYTES = 1024*1024;
         ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

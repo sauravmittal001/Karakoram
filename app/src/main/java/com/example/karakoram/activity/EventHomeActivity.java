@@ -28,12 +28,14 @@ public class EventHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_home);
         Query query = FirebaseQuery.getAllEvents();
+        final ArrayList<String> keyList = new ArrayList<>();
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> eventList = new ArrayList<>();
                 for( DataSnapshot snapshotItem : snapshot.getChildren()){
                     eventList.add(snapshotItem.child("title").getValue(String.class));
+                    keyList.add(snapshotItem.getKey());
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventHomeActivity.this,R.layout.support_simple_spinner_dropdown_item, eventList);
                 ListView listView = findViewById(R.id.events);
@@ -42,7 +44,7 @@ public class EventHomeActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(EventHomeActivity.this,EventActivity.class);
-                        intent.putExtra("title",((TextView)view).getText().toString());
+                        intent.putExtra("key",keyList.get(i));
                         startActivity(intent);
                     }
                 });
