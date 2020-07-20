@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
                 Date dateTime = event.get(i).getDateTime();
                 String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
                 String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());;
-                Intent intent = new Intent(getActivity().getApplicationContext(), EventActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), EventDescription.class);
                 intent.putExtra("title", event.get(i).getTitle());
                 intent.putExtra("description", event.get(i).getDescription());
                 intent.putExtra("time", time);
