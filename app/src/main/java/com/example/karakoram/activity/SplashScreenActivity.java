@@ -1,8 +1,10 @@
-package com.example.karakoram;
+package com.example.karakoram.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.karakoram.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

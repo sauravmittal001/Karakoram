@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="20dp">
+
+    <!-- @drawable/user_image: image which is visible before the actual image from firebase is loaded -->
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_event_image"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/user_image"-->
+<!--        android:contentDescription="Event image fetched from firebase" />-->
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+</LinearLayout>

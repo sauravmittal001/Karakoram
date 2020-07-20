@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.EventFormActivity">
+
+
+    <TableLayout
+        android:id="@+id/userDetails"
+        android:layout_width="358dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading_event_form">
+
+        <TableRow
+            android:id="@+id/title_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/title_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/date_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date(yyyy-mm-dd)"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/date_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/time_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time(hh:mm)"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/time_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/description_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/description_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/image_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/choose_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickChooseImage"
+                android:text="Choose Image" />
+
+            <ImageView
+                android:id="@+id/image_chosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/heading_event_form"
+        android:layout_width="135dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="50dp"
+        android:text="Event Form"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/upload_event_form_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickUpdateEvent"
+        android:text="Upload Event"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userDetails" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
