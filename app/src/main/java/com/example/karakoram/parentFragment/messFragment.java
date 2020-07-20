@@ -1,4 +1,4 @@
-package com.example.karakoram.parentfragment;
+package com.example.karakoram.parentFragment;
 
 import android.os.Bundle;
 

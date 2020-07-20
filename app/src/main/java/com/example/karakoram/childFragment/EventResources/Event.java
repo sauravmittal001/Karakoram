@@ -1,77 +1,34 @@
 package com.example.karakoram.childFragment.EventResources;
 
+import java.util.Date;
+
 public class Event {
 
-    private String event_name;
-    private String event_title;
-    private String event_details;
-    private String event_time;
-    private int event_image=no_image_provided;
+    private String title;
+    private String description;
+    private Date dateTime;
 
-    private static final int no_image_provided=-1;
-
-    public Event(String event_name, String event_title, String event_time, String event_details)
-    {
-        this.event_name=event_name;
-        this.event_details=event_details;
-        this.event_time=event_time;
-        this.event_title=event_title;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public Event(String event_name, String event_title, String event_time, String event_details, int event_image)
-    {
-        this.event_name=event_name;
-        this.event_details=event_details;
-        this.event_time=event_time;
-        this.event_title=event_title;
-        this.event_image=event_image;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public void setEvent_name(String event_name) {
-        this.event_name = event_name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEvent_details(String event_details) {
-        this.event_details = event_details;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setEvent_time(String event_time) {
-        this.event_time = event_time;
+    public String getTitle() {
+        return title;
     }
 
-    public void setEvent_title(String event_title) {
-        this.event_title = event_title;
+    public void setTitle(String title) {
+        this.title = title;
     }
-
-    public void setEvent_image(int event_image) {
-        this.event_image = event_image;
-    }
-
-    public String getEvent_details() {
-        return event_details;
-    }
-
-    public String getEvent_name() {
-        return event_name;
-    }
-
-    public String getEvent_time() {
-        return event_time;
-    }
-
-    public String getEvent_title() {
-        return event_title;
-    }
-
-    public int getEvent_image() {
-        return event_image;
-    }
-
-
-    public boolean hasimage()
-    {
-        return event_image!=no_image_provided;
-    }
-
-
 }

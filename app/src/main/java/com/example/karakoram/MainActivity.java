@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.example.karakoram.activity.AboutActivity;
 import com.example.karakoram.activity.ComplaintActivity;
 import com.example.karakoram.activity.UserInfoActivity;
-import com.example.karakoram.parentfragment.homeFragment;
+import com.example.karakoram.parentFragment.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -20,6 +20,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -67,36 +69,23 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
-
-
         mdrawer=(DrawerLayout)findViewById(R.id.drawer_layout);
-
         toggle=new ActionBarDrawerToggle(this,mdrawer,R.string.open,R.string.close);
-
         mdrawer.addDrawerListener(toggle);
         toggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         // Set the adapter onto the view pager
-
-        openfragment(new homeFragment());
-
-
+        openfragment(new HomeFragment());
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-
         if(toggle.onOptionsItemSelected(item))
         return true;
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean openfragment(Fragment fragment)
-    {
+    private boolean openfragment(Fragment fragment) {
         if(fragment!=null)
         {   FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment);
@@ -115,14 +104,14 @@ public class MainActivity extends AppCompatActivity  {
 
             switch (menuItem.getItemId()) {
                 case R.id.navigation_home:
-                    return openfragment(new com.example.karakoram.parentfragment.homeFragment());
+                    return openfragment(new HomeFragment());
 
                 case R.id.navigation_mess:
-                    return openfragment(new com.example.karakoram.parentfragment.messFragment());
+                    return openfragment(new com.example.karakoram.parentFragment.messFragment());
 
 
                 case R.id.navigation_bill:
-                    return openfragment(new com.example.karakoram.parentfragment.billFragment());
+                    return openfragment(new com.example.karakoram.parentFragment.billFragment());
 
                 case R.id.navigation_notification:
                     return openfragment(new com.example.karakoram.notificationFragment());

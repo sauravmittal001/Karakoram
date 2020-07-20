@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "642949070610",
+    "firebase_url": "https://karakoram-94656.firebaseio.com",
+    "project_id": "karakoram-94656",
+    "storage_bucket": "karakoram-94656.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642949070610:android:a254566c4a0e159206bdcb",
+        "android_client_info": {
+          "package_name": "com.example.karakoram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642949070610-mi2211kmlp1j13d3i9rq2ho5iijr1epo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.karakoram",
+            "certificate_hash": "e5ae1489a46c6bcab4298c19d07ec040f01aba91"
+          }
+        },
+        {
+          "client_id": "642949070610-cngbgqtp4gb47klars48ut6hqgaurbf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnpwZV1-ZlXpmq468wD4-iotBqRWJir5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642949070610-cngbgqtp4gb47klars48ut6hqgaurbf1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

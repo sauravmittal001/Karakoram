@@ -4,24 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".parentfragment.homeFragment">
+    tools:context=".parentFragment.HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:id="@+id/FAB_event"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="20dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="70dp"
-        android:src="@drawable/add_event"
-        />
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/list_event">
-</ListView>
+        android:src="@drawable/add_event" />
+
+    <ListView
+        android:id="@+id/list_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>

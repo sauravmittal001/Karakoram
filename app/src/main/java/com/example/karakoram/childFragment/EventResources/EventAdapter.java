@@ -1,12 +1,10 @@
 package com.example.karakoram.childFragment.EventResources;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,11 +15,17 @@ import com.example.karakoram.R;
 import java.util.ArrayList;
 
 public class EventAdapter extends ArrayAdapter<Event> {
+
+    TextView mTitle;
+    TextView mDescription;
+    TextView mTime;
+
     public EventAdapter(Activity context, ArrayList<Event> word) {
-        // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
-        // the second argument is used when the ArrayAdapter is populating a single TextView.
-        // Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
-        // going to use this second argument, so it can be any value. Here, we used 0.
+        /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
+         * the second argument is used when the ArrayAdapter is populating a single TextView.
+         * Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
+         * going to use this second argument, so it can be any value. Here, we used 0.
+         */
         super(context, 0, word);
 
     }
@@ -29,29 +33,27 @@ public class EventAdapter extends ArrayAdapter<Event> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View list=convertView;
-        if(list==null)
-        {
-            list= LayoutInflater.from(getContext()).inflate(R.layout.event_listview,parent,false);
+        View list = convertView;
+        if (list == null) {
+            list = LayoutInflater.from(getContext()).inflate(R.layout.event_listview, parent, false);
         }
 
-        Event event=getItem(position);
-        TextView eventname =(TextView)list.findViewById(R.id.event_name);
-        eventname.setText(event.getEvent_name());
+        Event event = getItem(position);
 
-        TextView eventtitle =(TextView)list.findViewById(R.id.event_title);
-        eventtitle.setText(event.getEvent_title());
+        mTitle = list.findViewById(R.id.tv_event_title);
+        mDescription = list.findViewById(R.id.tv_event_description);
+        mTime = list.findViewById(R.id.tv_event_time);
 
-        TextView eventtime =(TextView)list.findViewById(R.id.event_time);
-        eventtime.setText(event.getEvent_time());
+        if (event != null) {
+            String description = (String) event.getDescription().subSequence(0, Math.min(15, event.getDescription().length())) + "...";
+            String time = String.format("%02d", event.getDateTime().getHours()) + " : " + String.format("%02d", event.getDateTime().getMinutes());
 
-
-
-
-
-
-
+            mTitle.setText(event.getTitle());
+            mDescription.setText(description);
+            mTime.setText(time);
+        }
 
         return list;
     }
+
 }
