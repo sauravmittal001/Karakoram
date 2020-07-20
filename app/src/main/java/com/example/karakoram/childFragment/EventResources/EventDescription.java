@@ -22,10 +22,12 @@ public class EventDescription extends AppCompatActivity {
     String time;
     String description;
     String key;
+    String date;
     String dbImageLocation;
 
     /*Views*/
     TextView mTitle;
+    TextView mDate;
     TextView mTime;
     TextView mDescription;
     ImageView image;
@@ -44,11 +46,13 @@ public class EventDescription extends AppCompatActivity {
         time = getIntent().getExtras().getString("time");
         description = getIntent().getExtras().getString("description");
         key = getIntent().getExtras().getString("key");
+        date = getIntent().getExtras().getString("date");
         dbImageLocation = "eventImages/" + key + ".png";
     }
 
     private void initViews() {
         mTitle = findViewById(R.id.tv_event_title);
+        mDate = findViewById(R.id.tv_event_date);
         mTime = findViewById(R.id.tv_event_time);
         mDescription = findViewById(R.id.tv_event_description);
         image = findViewById(R.id.iv_event_image);
@@ -58,6 +62,7 @@ public class EventDescription extends AppCompatActivity {
         // TextViews
         mTitle.setText(title);
         mTime.setText(time);
+        mDate.setText(date);
         mDescription.setText(description);
 
         //ImageViews

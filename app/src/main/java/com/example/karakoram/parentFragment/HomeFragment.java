@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.activity.EventActivity;
 import com.example.karakoram.activity.EventFormActivity;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.adapter.EventAdapter;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.example.karakoram.activity.EventFormActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class HomeFragment extends Fragment {
@@ -95,11 +97,14 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String time = String.format("%02d", event.get(i).getDateTime().getHours()) + " : " + String.format("%02d", event.get(i).getDateTime().getMinutes());
-                Intent intent = new Intent(getActivity().getApplicationContext(), EventDescription.class);
+                Date dateTime = event.get(i).getDateTime();
+                String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());;
+                Intent intent = new Intent(getActivity().getApplicationContext(), EventActivity.class);
                 intent.putExtra("title", event.get(i).getTitle());
                 intent.putExtra("description", event.get(i).getDescription());
                 intent.putExtra("time", time);
+                intent.putExtra("date", date);
                 intent.putExtra("key", key.get(i));
                 startActivity(intent);
             }

@@ -20,6 +20,7 @@
         <activity android:name=".childFragment.EventResources.EventDescription"></activity>
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.ComplaintActivity" />
+        <activity android:name=".activity.EventActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.HostelBillDescription"/>
