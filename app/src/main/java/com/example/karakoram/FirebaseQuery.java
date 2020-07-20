@@ -3,9 +3,9 @@ package com.example.karakoram;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.karakoram.resources.Category;
-import com.example.karakoram.resources.Event;
-import com.example.karakoram.resources.HostelBill;
+import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.Event;
+import com.example.karakoram.resource.HostelBill;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;

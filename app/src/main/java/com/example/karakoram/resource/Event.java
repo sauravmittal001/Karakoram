@@ -1,4 +1,4 @@
-package com.example.karakoram.resources;
+package com.example.karakoram.resource;
 
 import java.util.Date;
 

@@ -25,16 +25,9 @@ public class billFragment extends Fragment {
     ViewPager viewPager;
     TabLayout tabLayout;
 
-
-
-
     public billFragment() {
         // Required empty public constructor
     }
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,10 +69,7 @@ public class billFragment extends Fragment {
         adapter.addFragment(new billSportsFragment(),"sports");
         adapter.addFragment(new billOthersFragment(),"Other");
         viewPager.setAdapter(adapter);
-
-
     }
-
 
 }
 

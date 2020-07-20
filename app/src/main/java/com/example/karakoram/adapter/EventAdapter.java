@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.karakoram.R;
-import com.example.karakoram.resources.Event;
+import com.example.karakoram.resource.Event;
 
 import java.util.ArrayList;
 

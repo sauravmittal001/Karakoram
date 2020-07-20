@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.example.karakoram.R;
+import com.example.karakoram.activity.BillFormActivity;
 import com.example.karakoram.childFragment.bill.imageadapter.imageAdapter;
 import com.example.karakoram.childFragment.bill.fullscreenimage.fullimageActivity;
 import com.example.karakoram.childFragment.bill.imageadapter.imageAdapter;
@@ -62,7 +63,8 @@ public class billSportsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+//                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+                Intent intent = new Intent(getContext().getApplicationContext(), BillFormActivity.class);
                 startActivity(intent);
 
             }

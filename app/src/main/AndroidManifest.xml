@@ -22,6 +22,8 @@
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.HostelBillDescription"/>
+        <activity android:name=".activity.EventFormActivity"/>
+        <activity android:name=".activity.BillFormActivity"/>
         <activity android:name=".childFragment.bill.fullscreenimage.fullimageActivity" />
         <activity
             android:name=".activity.MainActivity"

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.karakoram.R;
-import com.example.karakoram.resources.HostelBill;
+import com.example.karakoram.resource.HostelBill;
 
 import java.util.ArrayList;
 

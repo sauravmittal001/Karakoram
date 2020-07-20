@@ -14,7 +14,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.resources.Event;
+import com.example.karakoram.activity.EventFormActivity;
+import com.example.karakoram.resource.Event;
 import com.example.karakoram.adapter.EventAdapter;
 import com.example.karakoram.childFragment.EventResources.EventDescription;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.example.karakoram.activity.EventFormActivity;
 
 import java.util.ArrayList;
 
@@ -77,8 +79,10 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Snackbar.make(v, "add event", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent intent = new Intent(getActivity().getApplicationContext(), EventFormActivity.class);
+                startActivity(intent);
+
             }
         });
     }

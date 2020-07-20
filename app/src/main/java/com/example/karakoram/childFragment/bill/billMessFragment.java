@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.karakoram.resources.Category;
+import com.example.karakoram.activity.BillFormActivity;
+import com.example.karakoram.resource.Category;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.activity.HostelBillDescription;
 import com.example.karakoram.R;
-import com.example.karakoram.resources.HostelBill;
+import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.adapter.HostelBillAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -104,7 +105,8 @@ public class billMessFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+//                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+                Intent intent = new Intent(getContext().getApplicationContext(), BillFormActivity.class);
                 startActivity(intent);
 
             }
