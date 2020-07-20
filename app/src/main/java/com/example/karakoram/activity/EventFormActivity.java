@@ -1,8 +1,5 @@
 package com.example.karakoram.activity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,11 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.karakoram.R;
-import com.example.karakoram.firebase.FirebaseQuery;
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.resource.Event;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 

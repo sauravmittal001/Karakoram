@@ -1,16 +1,15 @@
-package com.example.karakoram.firebase;
+package com.example.karakoram;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
-import com.example.karakoram.resource.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class FirebaseQuery {
 
@@ -19,10 +18,6 @@ public class FirebaseQuery {
 
     public static Query getUserDetail(String id){
         return ref.child("users").child(id);
-    }
-
-    public static void setUser(String id, User user){
-        ref.child("users").child(id).setValue(user);
     }
 
     public static Query getEvent(String key){
@@ -35,8 +30,13 @@ public class FirebaseQuery {
 
     public static void addEvent(Event event, Uri imageUri){
         String key = ref.child("events").push().getKey();
-        ref.child("events").child(key).setValue(event);
-        storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
+        if (key != null) {
+            ref.child("events").child(key).setValue(event);
+            storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
+        }
+        else {
+            Log.d("FireBaseQueryClass", "key is null");
+        }
     }
 
     public static Query getCategoryBills(Category category){
@@ -51,4 +51,6 @@ public class FirebaseQuery {
         String key = ref.child("hostelBills").push().getKey();
         ref.child("hostelBills").child(key).setValue(bill);
     }
+
+
 }

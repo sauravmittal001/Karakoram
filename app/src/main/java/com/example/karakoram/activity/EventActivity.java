@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.karakoram.R;
-import com.example.karakoram.firebase.FirebaseQuery;
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.resource.Event;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
