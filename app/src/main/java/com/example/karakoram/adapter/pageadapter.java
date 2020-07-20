@@ -1,4 +1,4 @@
-package com.example.karakoram.childFragment;
+package com.example.karakoram.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.karakoram.activity.AboutActivity;
-import com.example.karakoram.activity.ComplaintActivity;
-import com.example.karakoram.activity.UserInfoActivity;
+import com.example.karakoram.R;
 import com.example.karakoram.parentFragment.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;

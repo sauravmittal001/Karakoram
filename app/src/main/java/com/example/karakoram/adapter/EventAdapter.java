@@ -1,4 +1,4 @@
-package com.example.karakoram.childFragment.EventResources;
+package com.example.karakoram.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.karakoram.R;
+import com.example.karakoram.resources.Event;
 
 import java.util.ArrayList;
 

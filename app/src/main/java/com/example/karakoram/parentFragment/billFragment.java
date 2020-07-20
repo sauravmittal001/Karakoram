@@ -16,7 +16,7 @@ import com.example.karakoram.childFragment.bill.billMaintFragment;
 import com.example.karakoram.childFragment.bill.billMessFragment;
 import com.example.karakoram.childFragment.bill.billOthersFragment;
 import com.example.karakoram.childFragment.bill.billSportsFragment;
-import com.example.karakoram.childFragment.pageadapter;
+import com.example.karakoram.adapter.pageadapter;
 import com.google.android.material.tabs.TabLayout;
 
 

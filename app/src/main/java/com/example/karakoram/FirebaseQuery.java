@@ -3,12 +3,13 @@ package com.example.karakoram;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.karakoram.childFragment.EventResources.Event;
+import com.example.karakoram.resources.Category;
+import com.example.karakoram.resources.Event;
+import com.example.karakoram.resources.HostelBill;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class FirebaseQuery {
 
@@ -38,9 +39,18 @@ public class FirebaseQuery {
         }
     }
 
+    public static Query getCategoryBills(Category category){
+        return ref.child("hostelBills").orderByChild("category").equalTo(String.valueOf(category));
+    }
 
     public static Query getBill(String billId){
         return ref.child("hostelBills").child(billId);
     }
+
+    public static void addBill(HostelBill bill){
+        String key = ref.child("hostelBills").push().getKey();
+        ref.child("hostelBills").child(key).setValue(bill);
+    }
+
 
 }

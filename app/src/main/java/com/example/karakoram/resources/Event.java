@@ -1,4 +1,4 @@
-package com.example.karakoram.childFragment.EventResources;
+package com.example.karakoram.resources;
 
 import java.util.Date;
 

@@ -10,13 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.childFragment.EventResources.Event;
-import com.example.karakoram.childFragment.EventResources.EventAdapter;
+import com.example.karakoram.resources.Event;
+import com.example.karakoram.adapter.EventAdapter;
 import com.example.karakoram.childFragment.EventResources.EventDescription;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,11 +43,6 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
     }
-
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,12 +77,14 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Snackbar.make(v, "add event", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
 
     private void start() {
+        Log.i("ASDF", String.valueOf(event));
         adapter = new EventAdapter(getActivity(), event);
         listView = view.findViewById(R.id.list_event);
         listView.setAdapter(adapter);
