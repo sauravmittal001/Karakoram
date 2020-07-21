@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".childFragment.bill.billMessFragment"
+    tools:context=".childFragment.bill.billChildFragment"
     >
 
    <com.google.android.material.floatingactionbutton.FloatingActionButton
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_gravity="end|bottom"
-       android:id="@+id/FABmess_bill"
+       android:id="@+id/FABchild_bill"
        android:layout_marginRight="20dp"
        android:layout_marginBottom="70dp"
        android:src="@drawable/add_photo" />
@@ -19,7 +19,7 @@
    <ListView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:id="@+id/messbilllistView" />
+       android:id="@+id/billlistView" />
 
 
 

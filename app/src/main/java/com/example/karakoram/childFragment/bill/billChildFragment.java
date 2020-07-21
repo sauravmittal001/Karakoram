@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.karakoram.activity.BillActivity;
 import com.example.karakoram.activity.BillFormActivity;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.FirebaseQuery;
@@ -29,23 +30,25 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class billMessFragment extends Fragment {
+public class billChildFragment extends Fragment {
 
 //   ArrayList<Integer> bill= new ArrayList<>();
 
     /* Variables */
-    ArrayList<String> key = new ArrayList<>();
-    ArrayList<HostelBill> hostelBill = new ArrayList<>();
+    private ArrayList<String> key = new ArrayList<>();
+    private ArrayList<HostelBill> hostelBill = new ArrayList<>();
+    private Category category;
 
     /* Views */
-    View view;
-    ListView listView;
-    FloatingActionButton fab;
+    private View view;
+    private ListView listView;
+    private FloatingActionButton fab;
 
     /* Adapters */
-    HostelBillAdapter adapter;
+    private HostelBillAdapter adapter;
 
-    public billMessFragment() {
+    public billChildFragment(Category category) {
+        this.category = category;
     }
 
 
@@ -57,7 +60,7 @@ public class billMessFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view= inflater.inflate(R.layout.fragment_bill_mess, container, false);
+        view= inflater.inflate(R.layout.fragment_bill_child, container, false);
         return view;
     }
 
@@ -66,7 +69,7 @@ public class billMessFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        FirebaseQuery.getCategoryBills(Category.Maintenance).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
@@ -82,30 +85,10 @@ public class billMessFragment extends Fragment {
             }
         });
 
-
-//        listView = (ListView) Arrays.asList( R.drawable.download_1,R.drawable.download,R.drawable.images,R.drawable.images_1,R.drawable.images_2,R.drawable.images_3,R.drawable.download_2,R.drawable.download_3, R.drawable.download_4,R.drawable.download_5,R.drawable.download_6);
-//        //initialize gridview object
-//        listView=view.findViewById(R.id.messbilllistView);
-//        //set adapter on gridview object
-//        listView.setAdapter(new imageAdapter(bill,getActivity()));
-//
-//        //when click on image it open full screen iamge
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//                Intent i = new Intent( getActivity().getApplicationContext(), fullimageActivity.class);
-//                // passing array index
-//                i.putExtra("bill", bill);
-//                i.putExtra("currentbill",position);
-//                startActivity(i);
-//            }
-//        });
-
-
-        fab=view.findViewById(R.id.FABmess_bill);
+        fab=view.findViewById(R.id.FABchild_bill);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
                 Intent intent = new Intent(getContext().getApplicationContext(), BillFormActivity.class);
                 startActivity(intent);
 
@@ -117,18 +100,13 @@ public class billMessFragment extends Fragment {
     private void start() {
         Log.i("ASDF", String.valueOf(hostelBill));
         adapter = new HostelBillAdapter(getActivity(), hostelBill);
-        if (adapter == null) {
-            Log.i("ASDF", "null adapter");
-        } else {
-            Log.i("ASDF", "ADAPTER = " + adapter);
-        }
-        listView = view.findViewById(R.id.messbilllistView);
+        listView = view.findViewById(R.id.billlistView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(getActivity().getApplicationContext(), HostelBillDescription.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), BillActivity.class);
                 intent.putExtra("key", key.get(i));
                 startActivity(intent);
             }

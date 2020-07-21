@@ -11,12 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.karakoram.R;
-import com.example.karakoram.childFragment.bill.billCultFragment;
-import com.example.karakoram.childFragment.bill.billMaintFragment;
-import com.example.karakoram.childFragment.bill.billMessFragment;
-import com.example.karakoram.childFragment.bill.billOthersFragment;
-import com.example.karakoram.childFragment.bill.billSportsFragment;
+import com.example.karakoram.childFragment.bill.billChildFragment;
 import com.example.karakoram.adapter.pageadapter;
+import com.example.karakoram.resource.Category;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -63,11 +60,11 @@ public class billFragment extends Fragment {
     }
     private void setUpViewPager(ViewPager viewPager){
         pageadapter adapter=new pageadapter(getChildFragmentManager());
-        adapter.addFragment(new billMaintFragment(),"Maint");
-        adapter.addFragment(new billMessFragment(),"Mess");
-        adapter.addFragment(new billCultFragment(),"cult");
-        adapter.addFragment(new billSportsFragment(),"sports");
-        adapter.addFragment(new billOthersFragment(),"Other");
+        adapter.addFragment(new billChildFragment(Category.Maintenance),"Maint");
+        adapter.addFragment(new billChildFragment(Category.Mess),"Mess");
+        adapter.addFragment(new billChildFragment(Category.Cultural),"Cult");
+        adapter.addFragment(new billChildFragment(Category.Sports),"Sports");
+        adapter.addFragment(new billChildFragment(Category.Others),"Others");
         viewPager.setAdapter(adapter);
     }
 

@@ -4,17 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.karakoram.R;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.resource.HostelBill;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class BillActivity extends AppCompatActivity {
 
@@ -41,6 +47,17 @@ public class BillActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("firebase error","Something went wrong");
+            }
+        });
+
+        final ImageView billImage = findViewById(R.id.bill_image);
+        StorageReference ref = FirebaseStorage.getInstance().getReference("hostelBillImages/"+billId+".png");
+        long MAXBYTES = 1024*1024;
+        ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                billImage.setImageBitmap(bitmap);
             }
         });
     }

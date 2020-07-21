@@ -30,13 +30,8 @@ public class FirebaseQuery {
 
     public static void addEvent(Event event, Uri imageUri){
         String key = ref.child("events").push().getKey();
-        if (key != null) {
-            ref.child("events").child(key).setValue(event);
-            storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
-        }
-        else {
-            Log.d("FireBaseQueryClass", "key is null");
-        }
+        ref.child("events").child(key).setValue(event);
+        storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
     }
 
     public static Query getCategoryBills(Category category){
@@ -47,9 +42,10 @@ public class FirebaseQuery {
         return ref.child("hostelBills").child(billId);
     }
 
-    public static void addBill(HostelBill bill){
+    public static void addBill(HostelBill bill, Uri imageUri){
         String key = ref.child("hostelBills").push().getKey();
         ref.child("hostelBills").child(key).setValue(bill);
+        storage.getReference("/hostelBillImages/"+key+".png").putFile(imageUri);
     }
 
 

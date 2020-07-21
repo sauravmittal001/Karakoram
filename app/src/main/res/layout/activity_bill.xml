@@ -7,6 +7,7 @@
     tools:context=".activity.BillActivity">
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="291dp"
         android:layout_height="175dp"
         android:layout_marginTop="50dp"
@@ -30,9 +31,9 @@
                 android:id="@+id/amount_output"
                 android:layout_width="182dp"
                 android:layout_height="34dp"
-                android:textSize="18sp"
                 android:text=""
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
         </TableRow>
 
@@ -53,9 +54,9 @@
                 android:id="@+id/category_output"
                 android:layout_width="191dp"
                 android:layout_height="35dp"
-                android:textSize="18sp"
                 android:text=""
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
         </TableRow>
 
@@ -76,9 +77,9 @@
                 android:id="@+id/description_output"
                 android:layout_width="196dp"
                 android:layout_height="34dp"
-                android:textSize="18sp"
                 android:text=""
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
         </TableRow>
 
@@ -95,5 +96,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bill_image"
+        android:layout_width="329dp"
+        android:layout_height="278dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

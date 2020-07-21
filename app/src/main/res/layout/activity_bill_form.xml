@@ -8,8 +8,8 @@
 
     <TableLayout
         android:id="@+id/userDetails"
-        android:layout_width="327dp"
-        android:layout_height="366dp"
+        android:layout_width="340dp"
+        android:layout_height="369dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,11 +71,31 @@
 
             <EditText
                 android:id="@+id/description_input"
-                android:layout_width="wrap_content"
+                android:layout_width="198dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
                 android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/image_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/choose_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickChooseImage"
+                android:text="Choose Image" />
+
+            <ImageView
+                android:id="@+id/image_chosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars" />
 
         </TableRow>
 

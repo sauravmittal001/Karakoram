@@ -1,13 +1,18 @@
 package com.example.karakoram.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.karakoram.FirebaseQuery;
@@ -20,6 +25,7 @@ public class BillFormActivity extends AppCompatActivity implements AdapterView.O
     String[] category = {"Mess", "Maintenance", "Sports", "Cultural", "Others"};
     String bill_category;
     Spinner spin;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +46,28 @@ public class BillFormActivity extends AppCompatActivity implements AdapterView.O
         bill.setAmount(Integer.parseInt(((EditText) findViewById(R.id.amount_input)).getText().toString()));
         bill.setCategory(Category.valueOf((bill_category)));
         bill.setDescription(((EditText) findViewById(R.id.description_input)).getText().toString());
-        FirebaseQuery.addBill(bill);
+        FirebaseQuery.addBill(bill,imageUri);
     }
 
+    public void onClickChooseImage(View view){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+            imageUri = data.getData();
+            ImageView billImage = findViewById(R.id.image_chosen);
+            billImage.setImageURI(imageUri);
+        }
+        else{
+            Log.d("123hello","upload failure");
+        }
+    }
 
     //Performing action onItemSelected and onNothing selected
     @Override
