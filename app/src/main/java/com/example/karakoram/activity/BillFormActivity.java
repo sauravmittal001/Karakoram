@@ -35,10 +35,10 @@ public class BillFormActivity extends AppCompatActivity implements AdapterView.O
         spin = findViewById(R.id.category_input);
         spin.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
         //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> dropDownAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
+        dropDownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
-        spin.setAdapter(aa);
+        spin.setAdapter(dropDownAdapter);
     }
 
     public void onClickUploadBill(View view) {

@@ -2,13 +2,13 @@ package com.example.karakoram.resource;
 
 public class Menu {
 
-    private String menu;
+    private String menuString;
 
-    public String getMenu() {
-        return menu;
+    public String getMenuString() {
+        return menuString;
     }
 
-    public void setMenu(String menu) {
-        this.menu = menu;
+    public void setMenuString(String menuString) {
+        this.menuString = menuString;
     }
 }

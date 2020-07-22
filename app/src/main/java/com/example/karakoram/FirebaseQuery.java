@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.MessFeedback;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -48,5 +49,14 @@ public class FirebaseQuery {
         storage.getReference("/hostelBillImages/"+key+".png").putFile(imageUri);
     }
 
+    public static void addMessFeedBack(MessFeedback messFeedback){
+        String key = ref.child("messFeedback").push().getKey();
+        Log.d("123hello",key);
+        ref.child("messFeedback").child(key).setValue(messFeedback);
+    }
+
+    public static Query getAllMenu(){
+        return ref.child("messMenu");
+    }
 
 }

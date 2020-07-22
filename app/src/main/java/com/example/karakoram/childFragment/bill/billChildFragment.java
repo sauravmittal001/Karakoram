@@ -36,7 +36,7 @@ public class billChildFragment extends Fragment {
 
     /* Variables */
     private ArrayList<String> key = new ArrayList<>();
-    private ArrayList<HostelBill> hostelBill = new ArrayList<>();
+    private ArrayList<HostelBill> hostelBill;
     private Category category;
 
     /* Views */
@@ -72,6 +72,7 @@ public class billChildFragment extends Fragment {
         FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                hostelBill = new ArrayList<>();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                     hostelBill.add(snapshotItem.getValue(HostelBill.class));
                     key.add(snapshotItem.getKey());
