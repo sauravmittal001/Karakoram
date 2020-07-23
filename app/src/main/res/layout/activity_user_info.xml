@@ -25,11 +25,13 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="50dp"
             android:textSize="25sp"/>
-        <TextView
+
+        <EditText
+            android:id="@+id/name_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text="Mahesh Patidar"/>
+            android:text="Mahesh Patidar"
+            android:textSize="25sp" />
 
 
     </LinearLayout>
@@ -46,11 +48,13 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="50dp"
             android:textSize="25sp"/>
-        <TextView
+
+        <EditText
+            android:id="@+id/entry_number_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text="2018CE10113"/>
+            android:text="2018CE10113"
+            android:textSize="25sp" />
 
 
     </LinearLayout>
@@ -67,13 +71,14 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="110dp"
             android:textSize="25sp"/>
+
         <EditText
+            android:id="@+id/room_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:editable="true"
             android:text="C-05"
-            android:id="@+id/room_edittext"
-           />
+            android:textSize="25sp" />
 
 
     </LinearLayout>
@@ -109,20 +114,11 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BACK"
-            android:textSize="25sp"
-            android:onClick="back"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="70dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="save"
-            android:textSize="25sp"
-            android:text="SAVE"/>
+            android:onClick="saveData"
+            android:text="SAVE"
+            android:textSize="25sp" />
 
 
 

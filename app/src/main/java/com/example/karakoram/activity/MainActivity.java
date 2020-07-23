@@ -1,19 +1,30 @@
 package com.example.karakoram.activity;
 
+import android.app.backup.SharedPreferencesBackupHelper;
+import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.karakoram.R;
 import com.example.karakoram.parentFragment.HomeFragment;
+import com.example.karakoram.resource.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -37,10 +48,7 @@ public class MainActivity extends AppCompatActivity  {
         //bottom navigation
         navView =  findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
-
-        //sidebar
-        side_navview=(NavigationView)findViewById(R.id.side_navview);
+        side_navview=findViewById(R.id.side_navview);
         header=side_navview.getHeaderView(0);
         side_navview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -53,7 +61,20 @@ public class MainActivity extends AppCompatActivity  {
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 }
                 else if(id==R.id.navigation_logout){
-
+                    if(menuItem.getTitle().equals("logout")){
+                        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        menuItem.setTitle("login/signin");
+                        TextView nameView = header.findViewById(R.id.user_name);
+                        TextView entryNumberView = header.findViewById(R.id.user_entry_number);
+                        nameView.setText("");
+                        entryNumberView.setText("");
+                        Toast.makeText(getApplicationContext(),"logged out",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 }
                 return true;
             }
@@ -77,9 +98,26 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = side_navview.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.navigation_logout);
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        if(userId.equals("loggedOut"))
+            menuItem.setTitle("login/signin");
+        else
+            menuItem.setTitle("logout");
+        TextView nameView = header.findViewById(R.id.user_name);
+        TextView entryNumberView = header.findViewById(R.id.user_entry_number);
+        nameView.setText(sharedPreferences.getString("userName",""));
+        entryNumberView.setText(sharedPreferences.getString("entryNumber",""));
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(toggle.onOptionsItemSelected(item))
-        return true;
+            return true;
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,7 +134,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-   BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -128,7 +166,7 @@ public class MainActivity extends AppCompatActivity  {
             mdrawer.closeDrawer(GravityCompat.START);
         }
         else
-        super.onBackPressed();
+            super.onBackPressed();
     }
 }
 

@@ -1,23 +1,30 @@
 package com.example.karakoram.resource;
 
+import android.content.SharedPreferences;
+
+import com.example.karakoram.activity.SignInActivity;
+
 public class User {
 
     private String department;
-    private int entryYear;
-    private Boolean isLoggedin;
     private String name;
     private String program;
     private String room;
     private UserType type;
+    private String entryNumber;
+    public static final String SHARED_PREFS = "sharedPrefs";
 
     public User(){
-        department = "-NA-";
-        name = "-NA-";
-        room = "-NA-";
-        program = "-NA-";
-        isLoggedin = false;
-        entryYear = -1;
-        type = UserType.Student;
+        this.type = UserType.Admin;
+    }
+
+    public User(String name, String entryNumber, String program, String department, String room){
+        this.name = name;
+        this.entryNumber = entryNumber;
+        this.program = program;
+        this.department = department;
+        this.room = room;
+        this.type = UserType.Admin;
     }
 
     public String getName() {
@@ -26,14 +33,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getEntryYear() {
-        return entryYear;
-    }
-
-    public void setEntryYear(int entryYear) {
-        this.entryYear = entryYear;
     }
 
     public String getDepartment() {
@@ -60,19 +59,19 @@ public class User {
         this.program = program;
     }
 
-    public Boolean getLoggedin() {
-        return isLoggedin;
-    }
-
-    public void setLoggedin(Boolean loggedin) {
-        isLoggedin = loggedin;
-    }
-
     public UserType getType() {
         return type;
     }
 
     public void setType(UserType type) {
         this.type = type;
+    }
+
+    public String getEntryNumber() {
+        return entryNumber;
+    }
+
+    public void setEntryNumber(String entryNumber) {
+        this.entryNumber = entryNumber;
     }
 }

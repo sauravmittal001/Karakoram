@@ -29,8 +29,8 @@ public class BillActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
         Intent intent = this.getIntent();
-        String billId = intent.getStringExtra("key");
-        Query query = FirebaseQuery.getBill(billId);
+        String key = intent.getStringExtra("key");
+        Query query = FirebaseQuery.getBill(key);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -51,7 +51,7 @@ public class BillActivity extends AppCompatActivity {
         });
 
         final ImageView billImage = findViewById(R.id.bill_image);
-        StorageReference ref = FirebaseStorage.getInstance().getReference("hostelBillImages/"+billId+".png");
+        StorageReference ref = FirebaseStorage.getInstance().getReference("hostelBillImages/"+key+".png");
         long MAXBYTES = 1024*1024;
         ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

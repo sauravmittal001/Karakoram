@@ -7,6 +7,7 @@ import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.MessFeedback;
+import com.example.karakoram.resource.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -19,6 +20,20 @@ public class FirebaseQuery {
 
     public static Query getUserDetail(String id){
         return ref.child("users").child(id);
+    }
+
+    public static String addUser(User user){
+        String key = ref.child("users").push().getKey();
+        ref.child("users").child(key).setValue(user);
+        return key;
+    }
+
+    public static Query getUserByEntryNumber(String entryNumber){
+        return ref.child("users").orderByChild("entryNumber").equalTo(entryNumber);
+    }
+
+    public static Query getUserByKey(String key){
+        return ref.child("users").child(key);
     }
 
     public static Query getEvent(String key){
@@ -39,8 +54,8 @@ public class FirebaseQuery {
         return ref.child("hostelBills").orderByChild("category").equalTo(String.valueOf(category));
     }
 
-    public static Query getBill(String billId){
-        return ref.child("hostelBills").child(billId);
+    public static Query getBill(String key){
+        return ref.child("hostelBills").child(key);
     }
 
     public static void addBill(HostelBill bill, Uri imageUri){
@@ -51,7 +66,6 @@ public class FirebaseQuery {
 
     public static void addMessFeedBack(MessFeedback messFeedback){
         String key = ref.child("messFeedback").push().getKey();
-        Log.d("123hello",key);
         ref.child("messFeedback").child(key).setValue(messFeedback);
     }
 
