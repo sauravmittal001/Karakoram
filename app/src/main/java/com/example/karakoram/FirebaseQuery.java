@@ -41,7 +41,7 @@ public class FirebaseQuery {
     }
 
     public static Query getAllEvents(){
-        return ref.child("events");
+        return ref.child("events").orderByChild("dateTime/time").startAt(Double.parseDouble("0"));
     }
 
     public static void addEvent(Event event, Uri imageUri){

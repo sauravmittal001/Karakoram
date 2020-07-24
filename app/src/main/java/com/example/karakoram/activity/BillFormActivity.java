@@ -1,6 +1,7 @@
 package com.example.karakoram.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,9 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.User;
+
+import java.util.Date;
 
 public class BillFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -42,11 +46,22 @@ public class BillFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void onClickUploadBill(View view) {
-        HostelBill bill = new HostelBill();
-        bill.setAmount(Integer.parseInt(((EditText) findViewById(R.id.amount_input)).getText().toString()));
-        bill.setCategory(Category.valueOf((bill_category)));
-        bill.setDescription(((EditText) findViewById(R.id.description_input)).getText().toString());
-        FirebaseQuery.addBill(bill,imageUri);
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        if(userId.equals("loggedOut")) {
+            Toast.makeText(getApplicationContext(),"please login to continue",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            HostelBill bill = new HostelBill();
+            bill.setAmount(Integer.parseInt(((EditText) findViewById(R.id.amount_input)).getText().toString()));
+            bill.setCategory(Category.valueOf((bill_category)));
+            bill.setDescription(((EditText) findViewById(R.id.description_input)).getText().toString());
+            bill.setTimeStamp(new Date());
+            bill.setUserId(userId);
+            FirebaseQuery.addBill(bill, imageUri);
+            Toast.makeText(getApplicationContext(),"new bill added",Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
+        }
     }
 
     public void onClickChooseImage(View view){
