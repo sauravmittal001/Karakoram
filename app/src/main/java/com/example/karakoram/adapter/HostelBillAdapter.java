@@ -31,7 +31,6 @@ public class HostelBillAdapter extends ArrayAdapter<HostelBill> {
          * going to use this second argument, so it can be any value. Here, we used 0.
          */
         super(context, 0, word);
-        Log.i("ASDF", "print");
     }
 
     @NonNull
@@ -50,12 +49,12 @@ public class HostelBillAdapter extends ArrayAdapter<HostelBill> {
         mCategory = list.findViewById(R.id.tv_bill_time);
 
         if (hostelBill != null) {
-            String description = (String) hostelBill.getDescription().subSequence(0, Math.min(15, hostelBill.getDescription().length())) + "...";
+            String description = (String) hostelBill.getDescription().subSequence(0, Math.min(10, hostelBill.getDescription().length())) + "...";
 //            String time = String.format("%02d", hostelBill.getDateTime().getHours()) + " : " + String.format("%02d", hostelBill.getDateTime().getMinutes());
-            mAmount.setText("hostelBill.getAmount()");
-            mDescription.setText("description");
+            mAmount.setText("Amount");
+            mDescription.setText(description);
 //            mTime.setText(time);
-            mCategory.setText("hostelBill.getCategory().name()");
+            mCategory.setText("Mess");
         }
         return list;
     }

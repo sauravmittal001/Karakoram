@@ -55,8 +55,7 @@ public class billMessFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_bill_mess, container, false);
         return view;
     }
@@ -117,17 +116,11 @@ public class billMessFragment extends Fragment {
     private void start() {
         Log.i("ASDF", String.valueOf(hostelBill));
         adapter = new HostelBillAdapter(getActivity(), hostelBill);
-        if (adapter == null) {
-            Log.i("ASDF", "null adapter");
-        } else {
-            Log.i("ASDF", "ADAPTER = " + adapter);
-        }
         listView = view.findViewById(R.id.messbilllistView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Intent intent = new Intent(getActivity().getApplicationContext(), HostelBillDescription.class);
                 intent.putExtra("key", key.get(i));
                 startActivity(intent);
