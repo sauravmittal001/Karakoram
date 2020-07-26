@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity  {
                 else if(id==R.id.navigation_about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 }
+                else if(id==R.id.navigation_upload){
+                    startActivity(new Intent(MainActivity.this, uploadActivity.class));
+                }
                 else if(id==R.id.navigation_logout){
                     if(menuItem.getTitle().equals("logout")){
                         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);

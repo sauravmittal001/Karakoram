@@ -10,6 +10,9 @@
         android:id="@+id/navigation_about"
         android:title="about"/>
     <item
+        android:id="@+id/navigation_upload"
+        android:title="upload"/>
+    <item
         android:id="@+id/navigation_logout"
         android:title="logout"/>
 

@@ -13,6 +13,7 @@ public class pageadapter extends FragmentPagerAdapter {
     public pageadapter(@NonNull FragmentManager fm) {
         super(fm);
     }
+
   private List<Fragment> fragmentList=new ArrayList<>();
     private List<String> titleList=new ArrayList<>();
     @NonNull
