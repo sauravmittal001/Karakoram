@@ -53,6 +53,5 @@
         android:progressTint="@color/background_black"
         android:visibility="visible"
         android:indeterminateDuration="@android:integer/config_longAnimTime"
-        android:indeterminate="true"
-        tools:targetApi="lollipop" />
+        android:indeterminate="true" />
 </RelativeLayout>

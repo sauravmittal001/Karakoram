@@ -32,7 +32,7 @@
         <activity android:name=".activity.BillFormActivity" />
         <activity android:name=".childFragment.bill.fullscreenimage.fullimageActivity" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SplashScreenActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SplashScreenActivity" />
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

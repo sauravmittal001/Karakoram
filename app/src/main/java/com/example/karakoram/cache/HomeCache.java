@@ -75,7 +75,7 @@ public class HomeCache {
 
     public void setKeyArray(ArrayList<String> keys) throws IOException, JSONException {
         clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + KEY_FILE_NAME);
-        printFileContent(KEY_FILE_NAME);
+//        printFileContent(KEY_FILE_NAME);
 
         JSONObject JSON = new JSONObject();
         for (String key : keys)
@@ -144,7 +144,7 @@ public class HomeCache {
 
     public void setValueArray(ArrayList<Event> values) throws IOException, JSONException {
         clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + EVENT_FILE_NAME);
-        printFileContent(EVENT_FILE_NAME);
+//        printFileContent(EVENT_FILE_NAME);
 
         int i = 0;
         JSONObject JSON = new JSONObject();
@@ -162,7 +162,6 @@ public class HomeCache {
             fos = CONTEXT.openFileOutput(EVENT_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-
             Toast.makeText(CONTEXT, "Saved to " + file + "/" + EVENT_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,7 +177,6 @@ public class HomeCache {
     }
 
     private void printFileContent(String fileName) throws IOException {
-
         FileInputStream fis = CONTEXT.getApplicationContext().openFileInput(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(fis));
         StringBuilder sb = new StringBuilder();

@@ -73,10 +73,17 @@ public class HomeFragment extends Fragment {
         setViews();
 
         try {
-            Log.i("HomeCacheLog", "try block");
             event = cache.getValueArray();
             key = cache.getKeyArray();
+            Log.i("HomeCacheLog", "events: " + event);
+            Log.i("HomeCacheLog", "keys: " + key);
+
+            if (event.isEmpty() || key.isEmpty()) {
+                Log.i("HomeCacheLog", "lists were empty");
+                refreshListView();
+            }
             start();
+            Log.i("HomeCacheLog", "try block");
         } catch (Exception e) {
             Log.i("HomeCacheLog", "some problem in getting cached content");
             refreshListView();
@@ -112,8 +119,12 @@ public class HomeFragment extends Fragment {
                     event.add(snapshotItem.getValue(Event.class));
                     key.add(snapshotItem.getKey());
                 }
-                cache.setKeyArray(key);
-                cache.setValueArray(event);
+                try {
+                    cache.setKeyArray(key);
+                    cache.setValueArray(event);
+                }catch (Exception ignored) {
+                    Log.i("HomeCacheLog", "cache files are not getting updated");
+                }
                 start();
             }
 
