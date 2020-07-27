@@ -82,8 +82,6 @@ public class BillFormActivity extends AppCompatActivity {
     }
 
     public void onClickChooseImage(View view) {
-        findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
-        mError.setVisibility(View.INVISIBLE);
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -93,6 +91,8 @@ public class BillFormActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
+        mError.setVisibility(View.INVISIBLE);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             ImageView eventImage = findViewById(R.id.div_bill_image);
