@@ -40,15 +40,20 @@ public class UserInfoActivity extends AppCompatActivity {
         }
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("name",nameEditText.getText().toString());
+        editor.putString("userName",nameEditText.getText().toString());
         editor.putString("entryNumber",entryNumberEditText.getText().toString());
+        editor.putString("room",roomEditText.getText().toString());
+        editor.putString("wing",wingEditText.getText().toString());
         editor.apply();
     }
 
     public void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-        nameEditText.setText(sharedPreferences.getString("name",""));
+        nameEditText.setText(sharedPreferences.getString("userName",""));
         entryNumberEditText.setText(sharedPreferences.getString("entryNumber",""));
+        roomEditText.setText(sharedPreferences.getString("room",""));
+        wingEditText.setText(sharedPreferences.getString("wing",""));
+
     }
 
 }

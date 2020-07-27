@@ -82,6 +82,7 @@ public class SignInActivity extends AppCompatActivity implements AdapterView.OnI
 
     public void onClickLogIn(View view){
         String entryNumber = ((TextView)findViewById(R.id.entry_number_login)).getText().toString();
+        final String password = ((TextView)findViewById(R.id.password_login)).getText().toString();
         Query query = FirebaseQuery.getUserByEntryNumber(entryNumber);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,15 +91,22 @@ public class SignInActivity extends AppCompatActivity implements AdapterView.OnI
                 if(iterator.hasNext()) {
                     DataSnapshot dataSnapshot = iterator.next();
                     User user = dataSnapshot.getValue(User.class);
-                    String key = dataSnapshot.getKey();
-                    SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userId",key);
-                    editor.putString("userName",user.getName());
-                    editor.putString("entryNumber",user.getEntryNumber());
-                    editor.apply();
-                    Toast.makeText(getApplicationContext(),"logged in as "+user.getName(),Toast.LENGTH_SHORT).show();
-                    SignInActivity.super.onBackPressed();
+                    if(password.equals(user.getPassword())) {
+                        String key = dataSnapshot.getKey();
+                        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userId", key);
+                        editor.putString("userName", user.getName());
+                        editor.putString("entryNumber", user.getEntryNumber());
+                        editor.putString("room", user.getRoom());
+                        editor.putString("wing", user.getWing());
+                        editor.putString("type",user.getType().toString());
+                        editor.apply();
+                        Toast.makeText(getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
+                        SignInActivity.super.onBackPressed();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"incorrect password",Toast.LENGTH_SHORT).show();
                 }
                 else
                     Toast.makeText(getApplicationContext(),"user does not exist",Toast.LENGTH_SHORT).show();
