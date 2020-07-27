@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.Complain;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.MessFeedback;
@@ -41,7 +42,11 @@ public class FirebaseQuery {
     }
 
     public static Query getAllEvents(){
-        return ref.child("events").orderByChild("dateTime/time").startAt(Double.parseDouble("0"));
+        return ref.child("events").orderByChild("userId");
+    }
+
+    public static Query getUserEvents(String userId){
+        return ref.child("events").orderByChild("userId").equalTo(userId);
     }
 
     public static void addEvent(Event event, Uri imageUri){
@@ -69,8 +74,25 @@ public class FirebaseQuery {
         ref.child("messFeedback").child(key).setValue(messFeedback);
     }
 
+    public static Query getAllMessFeedback(){
+        return ref.child("messFeedback");
+    }
+
+    public Query getUserMessFeedback(String userId){
+        return ref.child("messFeedBack").orderByChild("userId").equalTo(userId);
+    }
+
     public static Query getAllMenu(){
         return ref.child("messMenu");
+    }
+
+    public static Query getAllComplains(){
+        return ref.child("complains");
+    }
+
+    public static void addComplian(Complain complain){
+        String key = ref.child("complains").push().getKey();
+        ref.child("complains").child(key).setValue(complain);
     }
 
 }

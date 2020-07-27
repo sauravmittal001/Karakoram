@@ -1,6 +1,7 @@
 package com.example.karakoram.adapter;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,15 @@ public class EventAdapter extends ArrayAdapter<Event> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View list = convertView;
+
         if (list == null) {
             list = LayoutInflater.from(getContext()).inflate(R.layout.event_listview, parent, false);
         }
 
         Event event = getItem(position);
+
+        View view = list.findViewById(R.id.event_item);
+//        view.setBackground(Drawable.createFromPath("@drawable/common_google_signin_btn_text_light_normal_background"));
 
         mTitle = list.findViewById(R.id.tv_event_title);
         mDescription = list.findViewById(R.id.tv_event_description);

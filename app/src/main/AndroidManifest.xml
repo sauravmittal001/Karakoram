@@ -16,17 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".childFragment.EventResources.EventDescription"></activity>
+        <activity android:name=".childFragment.events.EventDescription" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.ComplaintActivity" />
         <activity android:name=".activity.EventActivity" />
         <activity android:name=".activity.BillActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.UserInfoActivity" />
-        <activity android:name=".activity.HostelBillDescription"/>
-        <activity android:name=".activity.EventFormActivity"/>
-        <activity android:name=".activity.BillFormActivity"/>
+        <activity android:name=".activity.HostelBillDescription" />
+        <activity android:name=".activity.EventFormActivity" />
+        <activity android:name=".activity.BillFormActivity" />
         <activity android:name=".childFragment.bill.fullscreenimage.fullimageActivity" />
         <activity
             android:name=".activity.MainActivity"
@@ -37,7 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SplashScreenActivity"></activity>
+        <activity android:name=".activity.SplashScreenActivity" />
     </application>
 
 </manifest>

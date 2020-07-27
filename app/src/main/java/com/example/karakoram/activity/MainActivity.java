@@ -16,7 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karakoram.R;
+import com.example.karakoram.notificationFragment;
 import com.example.karakoram.parentFragment.HomeFragment;
+import com.example.karakoram.parentFragment.MyStuffFragment;
+import com.example.karakoram.parentFragment.billFragment;
+import com.example.karakoram.parentFragment.messFragment;
 import com.example.karakoram.resource.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -75,6 +79,9 @@ public class MainActivity extends AppCompatActivity  {
                     }
                     else
                         startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                }
+                else if(id==R.id.navigation_uploads){
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 }
                 return true;
             }
@@ -143,15 +150,17 @@ public class MainActivity extends AppCompatActivity  {
                     return openfragment(new HomeFragment());
 
                 case R.id.navigation_mess:
-                    return openfragment(new com.example.karakoram.parentFragment.messFragment());
+                    return openfragment(new messFragment());
 
 
                 case R.id.navigation_bill:
-                    return openfragment(new com.example.karakoram.parentFragment.billFragment());
+                    return openfragment(new billFragment());
 
                 case R.id.navigation_notification:
-                    return openfragment(new com.example.karakoram.notificationFragment());
+                    return openfragment(new notificationFragment());
 
+                case R.id.navigation_my_stuff:
+                    return openfragment(new MyStuffFragment());
             }
 
             return false;

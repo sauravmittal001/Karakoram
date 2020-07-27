@@ -1,4 +1,4 @@
-package com.example.karakoram.childFragment.EventResources;
+package com.example.karakoram.childFragment.events;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -6,10 +6,10 @@ import com.example.karakoram.activity.SignInActivity;
 
 public class User {
 
-    private String department;
     private String name;
-    private String program;
     private String room;
+    private String password;
+    private String wing;
     private UserType type;
     private String entryNumber;
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -18,13 +18,13 @@ public class User {
         this.type = UserType.Admin;
     }
 
-    public User(String name, String entryNumber, String program, String department, String room){
+    public User(String name, String entryNumber, String password, String wing, String room){
         this.name = name;
         this.entryNumber = entryNumber;
-        this.program = program;
-        this.department = department;
         this.room = room;
-        this.type = UserType.Admin;
+        this.wing = wing;
+        this.password = password;
+        this.type = UserType.Student;
     }
 
     public String getName() {
@@ -35,28 +35,12 @@ public class User {
         this.name = name;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public String getRoom() {
         return room;
     }
 
     public void setRoom(String room) {
         this.room = room;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public void setProgram(String program) {
-        this.program = program;
     }
 
     public UserType getType() {
@@ -73,5 +57,21 @@ public class User {
 
     public void setEntryNumber(String entryNumber) {
         this.entryNumber = entryNumber;
+    }
+
+    public String getWing() {
+        return wing;
+    }
+
+    public void setWing(String wing) {
+        this.wing = wing;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
