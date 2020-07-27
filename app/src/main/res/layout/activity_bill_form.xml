@@ -34,6 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:onClick="backPressed"
                     android:contentDescription="Back Button"
                     android:src="@drawable/ic_frame3" />
 
