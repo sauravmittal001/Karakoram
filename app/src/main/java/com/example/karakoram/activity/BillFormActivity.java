@@ -65,7 +65,7 @@ public class BillFormActivity extends AppCompatActivity {
         itemSelected = dropDownArray[categorySpinner.getSelectedItemPosition()];
         Log.i("SPINNER", itemSelected);
         HostelBill bill = new HostelBill();
-        if (imageUri == null || imageUri.equals("")) {
+        if (imageUri == null || String.valueOf(imageUri).equals("")) {
             mError.setVisibility(View.VISIBLE);
             return;
         }
@@ -77,7 +77,7 @@ public class BillFormActivity extends AppCompatActivity {
             return;
         }
         bill.setCategory(Category.valueOf((itemSelected)));
-        bill.setDescription(((EditText) findViewById(R.id.description_input)).getText().toString());
+        bill.setDescription(((EditText) findViewById(R.id.et_description)).getText().toString());
 //        FirebaseQuery.addBill(bill, imageUri);
     }
 
@@ -100,5 +100,10 @@ public class BillFormActivity extends AppCompatActivity {
         } else {
             Log.d("123hello", "upload failure");
         }
+    }
+
+
+    public void backPressed(View view) {
+        onBackPressed();
     }
 }
