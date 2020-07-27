@@ -23,6 +23,9 @@
 
     <color name="aqua">#00FFFF</color>
 
+    <color name="green">#8db600</color>
+    <color name="light_green">#d9ffcc</color>
+
     <!-- background -->
     <color name="background_white">#FFFFFF</color>
     <color name="background_transparent_black">#EAEAEA</color>
