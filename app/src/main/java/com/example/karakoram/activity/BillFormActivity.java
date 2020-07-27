@@ -1,56 +1,104 @@
 package com.example.karakoram.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.views.CustomSpinner;
+import com.example.karakoram.views.CustomSpinnerAdapter;
 
-public class BillFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+import java.util.Objects;
 
-    String[] category = {"Mess", "Maintenance", "Sports", "Cultural", "Others"};
-    String bill_category;
-    Spinner spin;
+public class BillFormActivity extends AppCompatActivity {
+
+    private String[] dropDownArray;
+    private String itemSelected;
+    private CustomSpinner categorySpinner;
+    private Uri imageUri;
+    private TextView mError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_bill_form);
-        spin = findViewById(R.id.category_input);
-        spin.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        spin.setAdapter(aa);
+        setVariables();
+        setViews();
+
+    }
+
+    private void setVariables() {
+        //category spinner array
+        Category[] category = Category.values();
+        dropDownArray = new String[category.length];
+        for (int i = 0; i < category.length; i++)
+            dropDownArray[i] = String.valueOf(category[i]);
+
+//        itemSelected = Objects.requireNonNull(getIntent().getExtras()).getString("category");
+    }
+
+    private void setViews() {
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, dropDownArray);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        categorySpinner = findViewById(R.id.spinner_category);
+        categorySpinner.setAdapter(adapter);
+
+        mError = (TextView) findViewById(R.id.tv_error);
+
     }
 
     public void onClickUploadBill(View view) {
+        itemSelected = dropDownArray[categorySpinner.getSelectedItemPosition()];
+        Log.i("SPINNER", itemSelected);
         HostelBill bill = new HostelBill();
-        bill.setAmount(Integer.parseInt(((EditText) findViewById(R.id.amount_input)).getText().toString()));
-        bill.setCategory(Category.valueOf((bill_category)));
+        if (imageUri == null || imageUri.equals("")) {
+            mError.setVisibility(View.VISIBLE);
+            return;
+        }
+        String amount = String.valueOf(((EditText) findViewById(R.id.et_amount)).getText());
+        if (!amount.equals("")) {
+            bill.setAmount(Integer.parseInt(amount));
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            findViewById(R.id.et_amount).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+            return;
+        }
+        bill.setCategory(Category.valueOf((itemSelected)));
         bill.setDescription(((EditText) findViewById(R.id.description_input)).getText().toString());
-        FirebaseQuery.addBill(bill);
+//        FirebaseQuery.addBill(bill, imageUri);
     }
 
-
-    //Performing action onItemSelected and onNothing selected
-    @Override
-    public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-        bill_category = category[position];
+    public void onClickChooseImage(View view) {
+        findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
+        mError.setVisibility(View.INVISIBLE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        bill_category = "Others";
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            ImageView eventImage = findViewById(R.id.div_bill_image);
+            eventImage.setImageURI(imageUri);
+        } else {
+            Log.d("123hello", "upload failure");
+        }
     }
 }

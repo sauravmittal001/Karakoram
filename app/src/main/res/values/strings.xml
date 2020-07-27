@@ -11,4 +11,8 @@
 
     <string name="subtitle_app">Heads held high we clinch victory</string>
     <string name="subtitle_app2">Staying united we make history</string>
+
+
+    <string name="form_hint">Choose an option</string>
+    <string name="form_hint_dropdown">Select One</string>
 </resources>
