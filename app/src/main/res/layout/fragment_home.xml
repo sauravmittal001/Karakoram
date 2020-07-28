@@ -18,7 +18,7 @@
         android:layout_marginBottom="70dp"
         android:src="@drawable/add_event" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_event"
         android:layout_width="match_parent"
         android:layout_height="611dp"
@@ -29,7 +29,10 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="1dp" />
+        android:layout_marginBottom="1dp"
+        tools:ignore="MissingClass" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/events_heading"

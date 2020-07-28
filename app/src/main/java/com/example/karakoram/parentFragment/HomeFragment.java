@@ -7,24 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.activity.EventActivity;
 import com.example.karakoram.activity.EventFormActivity;
-import com.example.karakoram.resource.Event;
 import com.example.karakoram.adapter.EventAdapter;
 import com.example.karakoram.childFragment.EventResources.EventDescription;
+import com.example.karakoram.resource.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.example.karakoram.activity.EventFormActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,11 +37,12 @@ public class HomeFragment extends Fragment {
 
     /* Views */
     View view;
-    ListView listView;
+    RecyclerView listView;
     FloatingActionButton fab;
 
     /* Adapters */
     EventAdapter adapter;
+
 
 
     public HomeFragment() {
@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = inflater.inflate(R.layout.fragment_home, container, false);
+
         return view;
     }
 
@@ -91,9 +92,12 @@ public class HomeFragment extends Fragment {
 
     private void start() {
         Log.i("ASDF", String.valueOf(event));
-        adapter = new EventAdapter(getActivity(), event);
+        adapter = new EventAdapter(getActivity(), event,key);
         listView = view.findViewById(R.id.list_event);
+        listView.setHasFixedSize(true);
+        listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         listView.setAdapter(adapter);
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -108,7 +112,7 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("key", key.get(i));
                 startActivity(intent);
             }
-        });
+        }); */
     }
 
 }
