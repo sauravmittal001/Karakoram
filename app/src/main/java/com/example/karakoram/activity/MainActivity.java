@@ -1,14 +1,9 @@
 package com.example.karakoram.activity;
 
-import android.app.backup.SharedPreferencesBackupHelper;
-import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +23,6 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -59,13 +53,10 @@ public class MainActivity extends AppCompatActivity  {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id=menuItem.getItemId();
                 if(id==R.id.navigation_complaints){
-                    startActivity(new Intent(MainActivity.this, ComplaintActivity.class));
+                    startActivity(new Intent(MainActivity.this, ComplainActivity.class));
                 }
                 else if(id==R.id.navigation_about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
-                }
-                else if(id==R.id.navigation_upload){
-                    startActivity(new Intent(MainActivity.this, uploadActivity.class));
                 }
                 else if(id==R.id.navigation_logout){
                     if(menuItem.getTitle().equals("logout")){
@@ -82,9 +73,6 @@ public class MainActivity extends AppCompatActivity  {
                     }
                     else
                         startActivity(new Intent(MainActivity.this, SignInActivity.class));
-                }
-                else if(id==R.id.navigation_uploads){
-                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 }
                 return true;
             }
@@ -154,7 +142,6 @@ public class MainActivity extends AppCompatActivity  {
 
                 case R.id.navigation_mess:
                     return openfragment(new messFragment());
-
 
                 case R.id.navigation_bill:
                     return openfragment(new billFragment());

@@ -1,7 +1,6 @@
 package com.example.karakoram.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -13,12 +12,12 @@ import com.example.karakoram.upload_feedback_Fragment;
 import com.google.android.material.tabs.TabLayout;
 import com.example.karakoram.adapter.pageadapter;
 
-public class uploadActivity extends AppCompatActivity {
+public class ComplainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.activity_complain);
 
         //find the view that shows the number category
 
