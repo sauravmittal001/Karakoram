@@ -3,6 +3,7 @@ package com.example.karakoram.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
@@ -10,12 +11,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.karakoram.R;
+import com.example.karakoram.childFragment.bill.fullscreenimage.fullimageActivity;
+import com.example.karakoram.parentFragment.HomeFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.Objects;
+
+import lombok.SneakyThrows;
 
 public class HostelBillDescription extends AppCompatActivity {
 
@@ -47,21 +58,39 @@ public class HostelBillDescription extends AppCompatActivity {
     }
 
     private void initViews() {
-        image = findViewById(R.id.iv_event_image);
         mImageView=(ImageView)findViewById(R.id.imageView);
     }
 
+    @SneakyThrows
     private void setViews() {
         //ImageViews
-//        StorageReference ref = FirebaseStorage.getInstance().getReference(dbImageLocation);
-//        long MAXBYTES = 1024 * 1024;
-//        ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
+        StorageReference ref = FirebaseStorage.getInstance().getReference(dbImageLocation);
+        long MAXBYTES = 1024 * 1024;
+        ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
 //                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 //                image.setImageBitmap(bitmap);
-//            }
-//        });
+                Log.i("AAA", "Imgur");
+
+                RequestOptions requestOption = new RequestOptions()
+                        .placeholder(R.drawable.download_6).centerCrop();
+                Glide.with(getApplicationContext()).load(bytes)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .apply(requestOption)
+                        .into(mImageView);
+            }
+        });
+
+
+//        FutureTarget<File> future = Glide.with(applicationContext)
+//                .load(yourUrl)
+//                .downloadOnly(500, 500);
+//        File cacheFile = future.get();
+
+//        File file = Glide.with(this).asFile().load("https://images.unsplash.com/photo-1593677229754-9a4628d9260b?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60").submit().get();
+//        String path = file.getPath();
     }
 
 

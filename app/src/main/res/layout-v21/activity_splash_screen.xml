@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SplashScreenActivity">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_subtext"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/m2"/>
+
+    <TextView
+        android:id="@+id/tv_subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:layout_above="@id/tv_subtext2"
+        android:text="@string/subtitle_app"
+        android:fontFamily="@font/senregular"
+        android:textColor="@color/text700"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv_subtext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:text="@string/subtitle_app2"
+        android:fontFamily="@font/senregular"
+        android:textColor="@color/text700"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/tallerBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@id/tv_subtext"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginTop="44dp"
+        android:progressBackgroundTint="@color/progress_bar_background_home"
+        android:progressTint="@color/background_black"
+        android:visibility="visible"
+        android:indeterminateDuration="@android:integer/config_longAnimTime"
+        android:indeterminate="true" />
+</RelativeLayout>

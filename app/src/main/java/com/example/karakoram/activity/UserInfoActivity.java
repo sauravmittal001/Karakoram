@@ -1,59 +1,78 @@
 package com.example.karakoram.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.karakoram.R;
 import com.example.karakoram.resource.User;
+import com.example.karakoram.views.CustomSpinner;
+import com.example.karakoram.views.CustomSpinnerAdapter;
+
+import java.util.Objects;
 
 public class UserInfoActivity extends AppCompatActivity {
-    private EditText wingEditText;
-    private EditText roomEditText;
-    private EditText nameEditText;
-    private EditText entryNumberEditText;
+
+    private CustomSpinner floorSpinner, roomNumberSpinner, wingSpinner;
+    private String[] floor, roomNumber, wing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_user_info);
+        initVariables();
+        initViews();
+        setViews();
 
-        wingEditText = findViewById(R.id.wing_edittext);
-        roomEditText = findViewById(R.id.room_edittext);
-        nameEditText = findViewById(R.id.name_edittext);
-        entryNumberEditText = findViewById(R.id.entry_number_edittext);
-        loadData();
     }
 
-    public void saveData(View view)
-    {
-        if(roomEditText.getText().toString().isEmpty()||wingEditText.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(),"Enter the data",Toast.LENGTH_SHORT).show();
-        }
-        else{
-           Toast.makeText(getApplicationContext(),"Wing -  "+wingEditText.getText().toString() +"\n"+"room no. -"+roomEditText.getText().toString(),Toast.LENGTH_SHORT).show();
-        }
-        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+    private void initVariables() {
+        floor = getResources().getStringArray(R.array.floor);
+        roomNumber = getResources().getStringArray(R.array.room_number);
+        wing = getResources().getStringArray(R.array.wing);
+    }
+
+    private void initViews() {
+        floorSpinner = findViewById(R.id.spinner_floor);
+        roomNumberSpinner = findViewById(R.id.spinner_room_number);
+        wingSpinner = findViewById(R.id.spinner_wing);
+    }
+
+    private void setViews() {
+        CustomSpinnerAdapter floorAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, floor);
+        floorAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        floorSpinner.setAdapter(floorAdapter);
+
+        CustomSpinnerAdapter roomNumberAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, roomNumber);
+        roomNumberAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        roomNumberSpinner.setAdapter(roomNumberAdapter);
+
+        CustomSpinnerAdapter wingAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, wing);
+        wingAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        wingSpinner.setAdapter(wingAdapter);
+    }
+
+
+    public void back(View view) {
+        super.onBackPressed();
+    }
+
+    public void save(View view) {
+        String selectedRoom = floor[floorSpinner.getSelectedItemPosition()] + "-" + roomNumber[roomNumberSpinner.getSelectedItemPosition()];
+        String selectedWing = wing[wingSpinner.getSelectedItemPosition()];
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("userName",nameEditText.getText().toString());
-        editor.putString("entryNumber",entryNumberEditText.getText().toString());
-        editor.putString("room",roomEditText.getText().toString());
-        editor.putString("wing",wingEditText.getText().toString());
+        editor.putString("room", selectedRoom);
+        editor.putString("wing", selectedWing);
         editor.apply();
-    }
-
-    public void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-        nameEditText.setText(sharedPreferences.getString("userName",""));
-        entryNumberEditText.setText(sharedPreferences.getString("entryNumber",""));
-        roomEditText.setText(sharedPreferences.getString("room",""));
-        wingEditText.setText(sharedPreferences.getString("wing",""));
-
     }
 
 }

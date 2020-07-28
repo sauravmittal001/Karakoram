@@ -29,7 +29,6 @@ public class HostelBillAdapter extends ArrayAdapter<HostelBill> {
          * going to use this second argument, so it can be any value. Here, we used 0.
          */
         super(context, 0, word);
-        Log.i("ASDF", "print");
     }
 
     @NonNull
