@@ -20,8 +20,10 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.BillActivity;
 import com.example.karakoram.activity.BillFormActivity;
+import com.example.karakoram.activity.MenuDescription;
 import com.example.karakoram.adapter.HostelBillAdapter;
 import com.example.karakoram.adapter.MenuAdapter;
+import com.example.karakoram.childFragment.events.EventDescription;
 import com.example.karakoram.mydialog;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
@@ -41,7 +43,7 @@ public class messMenuFragment extends Fragment {
 
     private ArrayList<String> key = new ArrayList<>();
     private ArrayList<Menu> menuList;
-
+    private String[] days = {"Friday", "Monday", "Saturday", "Sunday", "Thursday", "Tuesday", "Wednesday"};
     /* Views */
     private View view;
     private ListView listView;
@@ -101,10 +103,14 @@ public class messMenuFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Menu m=menuList.get(i);
-                FragmentManager manager=getFragmentManager();
-                mydialog dial=new mydialog();
-                dial.show(manager,"mydialog");
+                Menu m = menuList.get(i);
+                Intent intent = new Intent(getActivity().getApplicationContext(), MenuDescription.class);
+                intent.putExtra("menu", m.getMenuString());
+                intent.putExtra("day", days[i]);
+                startActivity(intent);
+//                FragmentManager manager=getFragmentManager();
+//                mydialog dial=new mydialog();
+//                dial.show(manager,"mydialog");
             }});
     }
 
