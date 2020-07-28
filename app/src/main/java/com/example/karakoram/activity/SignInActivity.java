@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DownloadManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.User;
+import com.example.karakoram.resource.UserType;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -91,7 +93,7 @@ public class SignInActivity extends AppCompatActivity implements AdapterView.OnI
                 if(iterator.hasNext()) {
                     DataSnapshot dataSnapshot = iterator.next();
                     User user = dataSnapshot.getValue(User.class);
-                    if(password.equals(user.getPassword())) {
+                    if(password.equals(user.getPassword()) && user.getType().equals(UserType.Student)) {
                         String key = dataSnapshot.getKey();
                         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -121,6 +123,7 @@ public class SignInActivity extends AppCompatActivity implements AdapterView.OnI
 
     public void onClickLogInAdmin(View view){
         String entryNumber = adminUser;
+        final String password = ((TextView)findViewById(R.id.admin_password_login)).getText().toString();
         Query query = FirebaseQuery.getUserByEntryNumber(entryNumber);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -129,15 +132,22 @@ public class SignInActivity extends AppCompatActivity implements AdapterView.OnI
                 if(iterator.hasNext()) {
                     DataSnapshot dataSnapshot = iterator.next();
                     User user = dataSnapshot.getValue(User.class);
-                    String key = dataSnapshot.getKey();
-                    SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userId",key);
-                    editor.putString("userName",user.getName());
-                    editor.putString("entryNumber",user.getEntryNumber());
-                    editor.apply();
-                    Toast.makeText(getApplicationContext(),"logged in as "+user.getName(),Toast.LENGTH_SHORT).show();
-                    SignInActivity.super.onBackPressed();
+                    if(password.equals(user.getPassword())) {
+                        String key = dataSnapshot.getKey();
+                        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userId", key);
+                        editor.putString("userName", user.getName());
+                        editor.putString("entryNumber", user.getEntryNumber());
+                        editor.putString("room", user.getRoom());
+                        editor.putString("wing", user.getWing());
+                        editor.putString("type", user.getType().toString());
+                        editor.apply();
+                        Toast.makeText(getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
+                        SignInActivity.super.onBackPressed();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"incorrect password",Toast.LENGTH_SHORT).show();
                 }
                 else
                     Toast.makeText(getApplicationContext(),"user does not exist",Toast.LENGTH_SHORT).show();

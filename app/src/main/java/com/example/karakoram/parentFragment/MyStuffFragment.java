@@ -1,5 +1,7 @@
 package com.example.karakoram.parentFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,7 +17,10 @@ import com.example.karakoram.adapter.pageadapter;
 import com.example.karakoram.childFragment.bill.billChildFragment;
 import com.example.karakoram.childFragment.myStuff.EventFragment;
 import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.User;
 import com.google.android.material.tabs.TabLayout;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +70,15 @@ public class MyStuffFragment extends Fragment {
     }
     private void setUpViewPager(ViewPager viewPager){
         pageadapter adapter=new pageadapter(getChildFragmentManager());
-        adapter.addFragment(new EventFragment(),"Events");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        if(sharedPreferences.getString("type","Student").equals("Admin")) {
+            adapter.addFragment(new EventFragment(), "Events");
+            adapter.addFragment(new EventFragment(), "Bills");
+        }
+        else{
+            adapter.addFragment(new EventFragment(), "Mess Feedbacks");
+            adapter.addFragment(new EventFragment(), "Complains");
+        }
         viewPager.setAdapter(adapter);
     }
 }
