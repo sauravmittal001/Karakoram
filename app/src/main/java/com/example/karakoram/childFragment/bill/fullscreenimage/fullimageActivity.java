@@ -29,6 +29,5 @@ public class fullimageActivity extends AppCompatActivity {
         mpager.setCurrentItem(currentbill);
 
 
-
     }
 }

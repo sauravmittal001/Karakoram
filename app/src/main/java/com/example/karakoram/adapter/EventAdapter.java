@@ -1,6 +1,7 @@
 package com.example.karakoram.adapter;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,14 @@ import com.example.karakoram.R;
 import com.example.karakoram.resource.Event;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EventAdapter extends ArrayAdapter<Event> {
 
     TextView mTitle;
     TextView mDescription;
     TextView mTime;
+    TextView mDate;
 
     public EventAdapter(Activity context, ArrayList<Event> word) {
         /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
@@ -35,23 +38,31 @@ public class EventAdapter extends ArrayAdapter<Event> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View list = convertView;
+
         if (list == null) {
             list = LayoutInflater.from(getContext()).inflate(R.layout.event_listview, parent, false);
         }
 
         Event event = getItem(position);
 
+        View view = list.findViewById(R.id.event_item);
+//        view.setBackground(Drawable.createFromPath("@drawable/common_google_signin_btn_text_light_normal_background"));
+
         mTitle = list.findViewById(R.id.tv_event_title);
         mDescription = list.findViewById(R.id.tv_event_description);
-        mTime = list.findViewById(R.id.tv_event_time);
+        mTime = list.findViewById(R.id.tv_event_time_list);
+        mDate = list.findViewById(R.id.tv_event_date_list);
 
         if (event != null) {
             String description = (String) event.getDescription().subSequence(0, Math.min(15, event.getDescription().length())) + "...";
-            String time = String.format("%02d", event.getDateTime().getHours()) + " : " + String.format("%02d", event.getDateTime().getMinutes());
+            Date dateTime = event.getDateTime();
+            String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+            String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
 
             mTitle.setText(event.getTitle());
             mDescription.setText(description);
             mTime.setText(time);
+            mDate.setText(date);
         }
 
         return list;

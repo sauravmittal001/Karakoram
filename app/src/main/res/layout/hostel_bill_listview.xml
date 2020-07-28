@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="88dp"
-    android:background="#00FFFF"
+    android:background="@android:drawable/editbox_dropdown_light_frame"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Bill Amount"
+            android:textAlignment="center"
             android:textSize="25sp" />
 
         <TextView
@@ -24,20 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Truncated description string"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_bill_time"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="18dp"
-        android:layout_weight="1"
-        android:text="00:00"
-        android:textSize="20sp" />
 
 </LinearLayout>

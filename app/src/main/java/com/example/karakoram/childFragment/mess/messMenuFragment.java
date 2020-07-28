@@ -1,66 +1,113 @@
 package com.example.karakoram.childFragment.mess;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.activity.BillActivity;
+import com.example.karakoram.activity.BillFormActivity;
+import com.example.karakoram.adapter.HostelBillAdapter;
+import com.example.karakoram.adapter.MenuAdapter;
+import com.example.karakoram.mydialog;
+import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.Menu;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link messMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class messMenuFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ArrayList<String> key = new ArrayList<>();
+    private ArrayList<Menu> menuList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    /* Views */
+    private View view;
+    private ListView listView;
 
-    public messMenuFragment() {
-        // Required empty public constructor
-    }
+    /* Adapters */
+    private MenuAdapter adapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment messMenuFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static messMenuFragment newInstance(String param1, String param2) {
-        messMenuFragment fragment = new messMenuFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mess_menu, container, false);
+        view= inflater.inflate(R.layout.fragment_mess_menu, container, false);
+        return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+        FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                menuList = new ArrayList<>();
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    Menu menu=new Menu();
+                    String menuString = snapshotItem.getValue(String.class);
+                    menu.setMenuString(menuString);
+                    menuList.add(menu);
+                    key.add(snapshotItem.getKey());
+                }
+                start();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
+            }
+        });
+    }
+
+
+    private void start() {
+        Log.i("ASDF", String.valueOf(menuList));
+        adapter = new MenuAdapter(getActivity(), menuList,key);
+        listView = view.findViewById(R.id.list_menu);
+        listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Menu m=menuList.get(i);
+                FragmentManager manager=getFragmentManager();
+                mydialog dial=new mydialog();
+                dial.show(manager,"mydialog");
+            }});
+    }
+
+
+
 }

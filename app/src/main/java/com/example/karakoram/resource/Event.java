@@ -7,6 +7,8 @@ public class Event {
     private String title;
     private String description;
     private Date dateTime;
+    private String userId;
+    private Date timeStamp;
 
     public Date getDateTime() {
         return dateTime;
@@ -30,5 +32,21 @@ public class Event {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

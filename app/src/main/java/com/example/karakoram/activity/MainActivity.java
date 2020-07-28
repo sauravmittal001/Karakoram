@@ -1,13 +1,22 @@
 package com.example.karakoram.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.karakoram.R;
+import com.example.karakoram.notificationFragment;
 import com.example.karakoram.parentFragment.HomeFragment;
+import com.example.karakoram.parentFragment.MyStuffFragment;
+import com.example.karakoram.parentFragment.billFragment;
+import com.example.karakoram.parentFragment.messFragment;
+import com.example.karakoram.resource.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -37,23 +46,33 @@ public class MainActivity extends AppCompatActivity  {
         //bottom navigation
         navView =  findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
-
-        //sidebar
-        side_navview=(NavigationView)findViewById(R.id.side_navview);
+        side_navview=findViewById(R.id.side_navview);
         header=side_navview.getHeaderView(0);
         side_navview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id=menuItem.getItemId();
                 if(id==R.id.navigation_complaints){
-                    startActivity(new Intent(MainActivity.this, ComplaintActivity.class));
+                    startActivity(new Intent(MainActivity.this, ComplainActivity.class));
                 }
                 else if(id==R.id.navigation_about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 }
                 else if(id==R.id.navigation_logout){
-
+                    if(menuItem.getTitle().equals("logout")){
+                        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        menuItem.setTitle("login/signin");
+                        TextView nameView = header.findViewById(R.id.user_name);
+                        TextView entryNumberView = header.findViewById(R.id.user_entry_number);
+                        nameView.setText("");
+                        entryNumberView.setText("");
+                        Toast.makeText(getApplicationContext(),"logged out",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 }
                 return true;
             }
@@ -77,9 +96,26 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = side_navview.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.navigation_logout);
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        if(userId.equals("loggedOut"))
+            menuItem.setTitle("login/signin");
+        else
+            menuItem.setTitle("logout");
+        TextView nameView = header.findViewById(R.id.user_name);
+        TextView entryNumberView = header.findViewById(R.id.user_entry_number);
+        nameView.setText(sharedPreferences.getString("userName",""));
+        entryNumberView.setText(sharedPreferences.getString("entryNumber",""));
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(toggle.onOptionsItemSelected(item))
-        return true;
+            return true;
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,7 +132,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-   BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -105,15 +141,16 @@ public class MainActivity extends AppCompatActivity  {
                     return openfragment(new HomeFragment());
 
                 case R.id.navigation_mess:
-                    return openfragment(new com.example.karakoram.parentFragment.messFragment());
-
+                    return openfragment(new messFragment());
 
                 case R.id.navigation_bill:
-                    return openfragment(new com.example.karakoram.parentFragment.billFragment());
+                    return openfragment(new billFragment());
 
                 case R.id.navigation_notification:
-                    return openfragment(new com.example.karakoram.notificationFragment());
+                    return openfragment(new notificationFragment());
 
+                case R.id.navigation_my_stuff:
+                    return openfragment(new MyStuffFragment());
             }
 
             return false;
@@ -128,7 +165,7 @@ public class MainActivity extends AppCompatActivity  {
             mdrawer.closeDrawer(GravityCompat.START);
         }
         else
-        super.onBackPressed();
+            super.onBackPressed();
     }
 }
 

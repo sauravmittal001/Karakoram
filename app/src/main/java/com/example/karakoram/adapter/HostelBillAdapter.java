@@ -20,8 +20,6 @@ public class HostelBillAdapter extends ArrayAdapter<HostelBill> {
 
     TextView mAmount;
     TextView mDescription;
-//    TextView mTime;
-    TextView mCategory;
 
     public HostelBillAdapter(Activity context, ArrayList<HostelBill> word) {
 
@@ -31,7 +29,6 @@ public class HostelBillAdapter extends ArrayAdapter<HostelBill> {
          * going to use this second argument, so it can be any value. Here, we used 0.
          */
         super(context, 0, word);
-        Log.i("ASDF", "print");
     }
 
     @NonNull
@@ -46,16 +43,11 @@ public class HostelBillAdapter extends ArrayAdapter<HostelBill> {
 
         mAmount = list.findViewById(R.id.tv_bill_amount);
         mDescription = list.findViewById(R.id.tv_bill_description);
-//        mTime = list.findViewById(R.id.tv_bill_time);
-        mCategory = list.findViewById(R.id.tv_bill_time);
 
         if (hostelBill != null) {
-            String description = (String) hostelBill.getDescription().subSequence(0, Math.min(15, hostelBill.getDescription().length())) + "...";
-//            String time = String.format("%02d", hostelBill.getDateTime().getHours()) + " : " + String.format("%02d", hostelBill.getDateTime().getMinutes());
-            mAmount.setText("hostelBill.getAmount()");
-            mDescription.setText("description");
-//            mTime.setText(time);
-            mCategory.setText("hostelBill.getCategory().name()");
+            String description = hostelBill.getDescription().subSequence(0, Math.min(15, hostelBill.getDescription().length())) + "...";
+            mAmount.setText(String.format("Rs %s", hostelBill.getAmount()));
+            mDescription.setText(hostelBill.getDescription());
         }
         return list;
     }

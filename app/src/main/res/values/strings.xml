@@ -3,9 +3,17 @@
     <string name="title_home">Home</string>
     <string name="title_mess">Mess</string>
     <string name="title_bill">Bill</string>
+    <string name="title_events">Events</string>
     <string name="bill">BILL</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <string name="subtitle_app">Heads held high we clinch victory</string>
+    <string name="subtitle_app2">Staying united we make history</string>
+
+
+    <string name="form_hint">Choose an option</string>
+    <string name="form_hint_dropdown">Select One</string>
 </resources>
