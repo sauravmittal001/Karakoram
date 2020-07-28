@@ -6,9 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,6 +22,7 @@ import com.example.karakoram.activity.BillActivity;
 import com.example.karakoram.activity.BillFormActivity;
 import com.example.karakoram.adapter.HostelBillAdapter;
 import com.example.karakoram.adapter.MenuAdapter;
+import com.example.karakoram.mydialog;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.Menu;
@@ -46,6 +49,9 @@ public class messMenuFragment extends Fragment {
     /* Adapters */
     private MenuAdapter adapter;
 
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +74,7 @@ public class messMenuFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 menuList = new ArrayList<>();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    Menu menu = new Menu();
+                    Menu menu=new Menu();
                     String menuString = snapshotItem.getValue(String.class);
                     menu.setMenuString(menuString);
                     menuList.add(menu);
@@ -90,5 +96,18 @@ public class messMenuFragment extends Fragment {
         adapter = new MenuAdapter(getActivity(), menuList,key);
         listView = view.findViewById(R.id.list_menu);
         listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Menu m=menuList.get(i);
+                FragmentManager manager=getFragmentManager();
+                mydialog dial=new mydialog();
+                dial.show(manager,"mydialog");
+            }});
     }
+
+
+
 }
