@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="88dp"
-    android:background="@drawable/side_nav_bar"
+    style="@style/listview"
     android:orientation="horizontal"
     android:id="@+id/event_item_id">
 
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Event Title"
+            android:fontFamily="@font/senbold"
             android:textAlignment="center"
             android:textSize="25sp" />
 
@@ -26,9 +27,15 @@
             android:id="@+id/tv_event_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/senregular"
             android:text="Truncated description string"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:maxLines="1"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:textSize="20sp"
+            android:singleLine="true"
+            tools:ignore="EllipsizeMaxLines" />
 
 
     </LinearLayout>
@@ -36,12 +43,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
+        android:background="#F1E688"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_event_time_list"
             android:layout_width="match_parent"
+            android:fontFamily="@font/senbold"
             android:layout_height="39dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
@@ -54,6 +63,7 @@
 
         <TextView
             android:id="@+id/tv_event_date_list"
+            android:fontFamily="@font/senbold"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_gravity="center_vertical"

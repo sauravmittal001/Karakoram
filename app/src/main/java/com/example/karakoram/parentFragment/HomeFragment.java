@@ -1,15 +1,17 @@
 package com.example.karakoram.parentFragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +19,6 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.EventFormActivity;
 import com.example.karakoram.adapter.EventAdapter;
-import com.example.karakoram.childFragment.EventResources.EventDescription;
 import com.example.karakoram.resource.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,7 +27,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class HomeFragment extends Fragment {
@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     View view;
     RecyclerView listView;
     FloatingActionButton fab;
+    Drawable mdivider;
 
     /* Adapters */
     EventAdapter adapter;
@@ -94,8 +95,13 @@ public class HomeFragment extends Fragment {
         Log.i("ASDF", String.valueOf(event));
         adapter = new EventAdapter(getActivity(), event,key);
         listView = view.findViewById(R.id.list_event);
-        listView.setHasFixedSize(true);
+        //listView.setHasFixedSize(true);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
+        //mdivider.setBounds(getParentFragment().getPaddingLeft(),0,16,0);
+        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL);
+        itemdecor.setDrawable(mdivider);
+        listView.addItemDecoration(itemdecor);
         listView.setAdapter(adapter);
         /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

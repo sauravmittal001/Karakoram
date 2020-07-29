@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/side_nav_bar"
     tools:context=".parentFragment.HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,8 +20,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_event"
         android:layout_width="match_parent"
-        android:layout_height="611dp"
-        android:layout_below="@+id/events_heading"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -34,18 +32,7 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/events_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="105dp"
-        android:layout_marginEnd="105dp"
-        android:background="@android:drawable/spinner_dropdown_background"
-        android:text="@string/title_events"
-        android:textAlignment="center"
-        android:textSize="36sp" />
+
 
 
 </RelativeLayout>

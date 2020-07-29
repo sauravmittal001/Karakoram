@@ -102,9 +102,13 @@ import java.util.Date;
      public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
          Event event = getItem(position);
          if (event != null) {
-             String description = (String) event.getDescription().subSequence(0, Math.min(15, event.getDescription().length())) + "...";
+             //String description = (String) event.getDescription().subSequence(0, Math.min(15, event.getDescription().length())) + "...";
+             String description=(String) event.getDescription();
              Date dateTime = event.getDateTime();
-             String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+             int num=dateTime.getHours();
+             String str="AM";
+             if(num>12){num=num-12; str="PM";}
+             String time = String.format("%02d", num) + " : " + String.format("%02d", dateTime.getMinutes())+" "+str;
              String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
 
              holder.mTitle.setText(event.getTitle());
