@@ -106,7 +106,7 @@ public class billChildFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), BillActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), HostelBillDescription.class);
                 intent.putExtra("key", key.get(i));
                 startActivity(intent);
             }

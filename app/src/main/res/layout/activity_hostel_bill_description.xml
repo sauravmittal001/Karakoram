@@ -1,31 +1,19 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
-
-    <!-- @drawable/user_image: image which is visible before the actual image from firebase is loaded -->
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_event_image"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:src="@drawable/user_image"-->
-<!--        android:contentDescription="Event image fetched from firebase" />-->
+    android:background="@color/cardview_dark_background"
+    tools:ignore="PrivateResource">
 
 
-    <ImageView
-        android:id="@+id/imageView"
+    <com.example.karakoram.DynamicImageView
+        android:id="@+id/div_bill_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_gravity="center"
+        android:contentDescription="Bill uploaded image"
+        android:src="@drawable/m2"
+        android:scaleType="centerInside" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_background" />
-
-
-
-
-</LinearLayout>
+</ScrollView>

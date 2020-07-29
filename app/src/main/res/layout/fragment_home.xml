@@ -27,7 +27,7 @@
         android:layout_gravity="start|bottom"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="70dp"
-        android:src="@drawable/ic_refresh" />
+        android:src="@drawable/maple_leaf" />
 
     <ListView
         android:id="@+id/list_event"

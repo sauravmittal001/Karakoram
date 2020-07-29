@@ -1,29 +1,26 @@
 package com.example.karakoram.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.karakoram.R;
-import com.example.karakoram.childFragment.bill.fullscreenimage.fullimageActivity;
-import com.example.karakoram.parentFragment.HomeFragment;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
 import java.util.Objects;
 
 import lombok.SneakyThrows;
@@ -34,9 +31,6 @@ public class HostelBillDescription extends AppCompatActivity {
     String key;
     String dbImageLocation;
 
-    /*Views*/
-    ImageView image;
-
 
     private ScaleGestureDetector mScaleGestureDetector;
     private float mScaleFactor = 1.0f;
@@ -45,20 +39,26 @@ public class HostelBillDescription extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_hostel_bill_description);
+
         initVariables();
         initViews();
-        setViews();
+        setViewsss();
+
     }
 
     private void initVariables() {
-        key = getIntent().getExtras().getString("key");
-        dbImageLocation = "hostelBillImages/" + "payroll_seq" + ".png";
+        key = Objects.requireNonNull(getIntent().getExtras()).getString("key");
+        dbImageLocation = "hostelBillImages/" + "-MCm_9FDgiWWwqk_UwWp" + ".png";
         mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 
     private void initViews() {
-        mImageView=(ImageView)findViewById(R.id.imageView);
+        mImageView = (ImageView) findViewById(R.id.div_bill_image);
     }
 
     @SneakyThrows
@@ -74,7 +74,7 @@ public class HostelBillDescription extends AppCompatActivity {
                 Log.i("AAA", "Imgur");
 
                 RequestOptions requestOption = new RequestOptions()
-                        .placeholder(R.drawable.download_6).centerCrop();
+                        .fitCenter();
                 Glide.with(getApplicationContext()).load(bytes)
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .transition(DrawableTransitionOptions.withCrossFade())
@@ -93,21 +93,50 @@ public class HostelBillDescription extends AppCompatActivity {
 //        String path = file.getPath();
     }
 
+    private void setViewsss() {
 
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
-            mScaleFactor *= scaleGestureDetector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f,
-                    Math.min(mScaleFactor, 10.0f));
-            mImageView.setScaleX(mScaleFactor);
-            mImageView.setScaleY(mScaleFactor);
-            return true;
-        }
+        StorageReference ref = FirebaseStorage.getInstance().getReference();
+        ref.child(dbImageLocation).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                loadGlideImage(uri.toString());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
     }
+
+
+    private void loadGlideImage(String url) {
+        RequestOptions requestOption = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter();
+        Glide.with(getApplicationContext())
+                .load(url)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(requestOption)
+                .into(mImageView);
+    }
+
+
 
     public boolean onTouchEvent(MotionEvent motionEvent) {
         mScaleGestureDetector.onTouchEvent(motionEvent);
         return true;
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+            mScaleFactor *= scaleGestureDetector.getScaleFactor();
+            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
+            mImageView.setScaleX(mScaleFactor);
+            mImageView.setScaleY(mScaleFactor);
+            return true;
+        }
     }
 }
