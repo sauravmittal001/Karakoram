@@ -12,22 +12,29 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:openDrawer="start"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:openDrawer="start">
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="56dp" />
+            android:layout_marginBottom="56dp"
+            android:background="#FFFFFF" />
 
 
         <com.google.android.material.navigation.NavigationView
+            android:id="@+id/side_navview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:layout_marginTop="57dp"
+            android:layout_marginBottom="57dp"
+            android:background="@color/colorAccent"
             app:headerLayout="@layout/header"
-            android:id="@+id/side_navview"
             app:menu="@menu/side_bar">
 
         </com.google.android.material.navigation.NavigationView>
@@ -39,7 +46,10 @@
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_orange_light"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:itemHorizontalTranslationEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
