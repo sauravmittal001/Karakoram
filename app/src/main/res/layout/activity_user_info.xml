@@ -156,6 +156,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
                         android:background="@drawable/spinner_background"
                         android:dropDownWidth="wrap_content"
                         android:entries="@array/floor" />
@@ -165,6 +167,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
                         android:background="@drawable/spinner_background"
                         android:dropDownWidth="wrap_content"
                         android:entries="@array/room_number" />
@@ -295,7 +299,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="36dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -305,7 +309,7 @@
                     android:layout_marginStart="35dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginEnd="35dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/user_info_save_button"
                     android:fontFamily="@font/senregular"
                     android:onClick="save"
@@ -314,6 +318,18 @@
 
 
             </LinearLayout>
+
+            <!-- disclaimer footer -->
+            <TextView
+                android:id="@+id/tv_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="48dp"
+                android:lineSpacingExtra="2sp"
+                android:text="User details are attached to forms and feedback"
+                android:textColor="@color/text700"
+                android:textSize="12sp" />
 
         </LinearLayout>
 

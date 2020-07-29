@@ -21,6 +21,9 @@ import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -33,7 +36,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private String[] floor, roomNumber, wing;
     private EditText mCurrent, mNew, mRetype;
     private TextView mName, mEntryNumber;
-    private String userPassword = "", userEntryNumber, userName;
+    private String userPassword, userEntryNumber, userName, userRoomNumber, userFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +60,27 @@ public class UserInfoActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         userEntryNumber = sharedPreferences.getString("entryNumber", "DEFAULT");
         userName = sharedPreferences.getString("userName", "DEFAULT");
+        String[] location = sharedPreferences.getString("room", "A-01").split("-");
+        Log.i("USER_ROOM", String.valueOf(location));
+        userRoomNumber = location[0];
+        userFloor = location[1];
 
         Query query = FirebaseQuery.getUserByEntryNumber(userEntryNumber);
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-//                if (iterator.hasNext()) {
-//                    DataSnapshot dataSnapshot = iterator.next();
-//                    User user = dataSnapshot.getValue(User.class);
-//                    userPassword = user.getPassword();
-//                }
-//            }
-//        });
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                if (iterator.hasNext()) {
+                    DataSnapshot dataSnapshot = iterator.next();
+                    User user = dataSnapshot.getValue(User.class);
+                    userPassword = user.getPassword();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void initViews() {
@@ -92,10 +103,18 @@ public class UserInfoActivity extends AppCompatActivity {
         CustomSpinnerAdapter floorAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, floor);
         floorAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         floorSpinner.setAdapter(floorAdapter);
+        if (userFloor != null) {
+            int spinnerPosition = floorAdapter.getPosition(userFloor);
+            floorSpinner.setSelection(spinnerPosition);
+        }
 
         CustomSpinnerAdapter roomNumberAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, roomNumber);
         roomNumberAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         roomNumberSpinner.setAdapter(roomNumberAdapter);
+        if (userRoomNumber != null) {
+            int spinnerPosition = roomNumberAdapter.getPosition(userRoomNumber);
+            roomNumberSpinner.setSelection(spinnerPosition);
+        }
 
 //        CustomSpinnerAdapter wingAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, wing);
 //        wingAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
@@ -108,11 +127,11 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        String selectedRoom = floor[floorSpinner.getSelectedItemPosition()] + "-" + roomNumber[roomNumberSpinner.getSelectedItemPosition()];
+        String location = floor[floorSpinner.getSelectedItemPosition()] + "-" + roomNumber[roomNumberSpinner.getSelectedItemPosition()];
 //        String selectedWing = wing[wingSpinner.getSelectedItemPosition()];
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("room", selectedRoom);
+        editor.putString("room", location);
 //        editor.putString("wing", selectedWing);
         editor.apply();
 
@@ -128,7 +147,10 @@ public class UserInfoActivity extends AppCompatActivity {
                 return;
             }
         }
-        //save password in firebase
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("users/" + userEntryNumber + "/password").setValue(mCurrent.getText().toString());
+        ref.child("users/" + userEntryNumber + "/room").setValue(location);
         super.onBackPressed();
     }
 
