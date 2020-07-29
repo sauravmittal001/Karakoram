@@ -19,7 +19,6 @@ import com.google.android.material.tabs.TabLayout;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link messFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class messFragment extends Fragment {

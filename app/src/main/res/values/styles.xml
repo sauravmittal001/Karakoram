@@ -10,10 +10,6 @@
 
     </style>
 
-    <style name="ActionBar" parent="Theme.AppCompat">
-        <item name="android:background">@color/colorAccent</item>
-    </style>
-
     <style name="CategoryTab" parent="Widget.Design.TabLayout">
         <item name="tabBackground">@color/colorPrimary</item>
         <item name="tabSelectedTextColor">@color/colorAccent</item>
@@ -55,6 +51,12 @@
         <item name="android:fontFamily">@font/senregular</item>
         <item name="android:textSize">12sp</item>
         <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="listview">
+        <item name="android:background">#40000000</item>
+        <item name="paddingStart">16dp</item>
+        <item name="paddingEnd">16dp</item>
     </style>
 
 </resources>
