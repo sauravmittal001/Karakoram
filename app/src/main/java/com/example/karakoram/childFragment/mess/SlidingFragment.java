@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import com.bumptech.glide.load.engine.Resource;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.cache.HomeCache;
+import com.example.karakoram.cache.MessMenuCache;
 import com.example.karakoram.childFragment.bill.signIn.AdminFragment;
 import com.example.karakoram.childFragment.bill.signIn.ResidentFragment;
 import com.example.karakoram.resource.Event;
@@ -37,13 +39,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class SlidingFragment extends Fragment {
+    //    private String[] day = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     View view;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-//    private String[] day = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    private List<String> days = new ArrayList<>();
-    private List<String[]> allDayMenu = new ArrayList<>();
+    private ArrayList<String> days = new ArrayList<>();
+    private ArrayList<String[]> allDayMenu = new ArrayList<>();
+    private MessMenuCache cache;
 
     public SlidingFragment() {
     }
@@ -51,8 +54,6 @@ public class SlidingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        initVariables();
-//        initViews();
     }
 
     @Override
@@ -61,13 +62,28 @@ public class SlidingFragment extends Fragment {
         viewPager = view.findViewById(R.id.vp_menu);
         tabLayout = view.findViewById(R.id.tb_counter_menu);
         Context context = container.getContext();
+        cache = new MessMenuCache(context);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initVariables();
+        try {
+            allDayMenu = cache.getMenuArray();
+            days = cache.getDayArray();
+            Log.i("CacheLog", "events: " + allDayMenu);
+            Log.i("CacheLog", "keys: " + days);
+            if (allDayMenu.isEmpty() || days.isEmpty()) {
+                Log.i("CacheLog", "lists were empty");
+                initVariables();
+            }
+            setupViews();
+            Log.i("CacheLog", "try block");
+        } catch (Exception e) {
+            Log.i("CacheLog", "some problem in getting cached content");
+            initVariables();
+        }
     }
 
     private void initVariables() {
@@ -85,6 +101,12 @@ public class SlidingFragment extends Fragment {
                         allDayMenu.add(menu);
                         days.add(snapshotItem.getKey());
                     }
+                    try {
+                        cache.setDayArray(days);
+                        cache.setMenuArray(allDayMenu);
+                    }catch (Exception ignored) {
+                        Log.i("CacheLog", "cache files are not getting updated");
+                    }
                     setupViews();
                 }
                 @Override
@@ -92,11 +114,6 @@ public class SlidingFragment extends Fragment {
                     Log.d("firebase error", "Something went wrong");
                 }
             });
-    }
-
-    private void initViews() {
-        this.viewPager = view.findViewById(R.id.vp_menu);
-        tabLayout = view.findViewById(R.id.tb_counter_menu);
     }
 
     private void setupViews() {
