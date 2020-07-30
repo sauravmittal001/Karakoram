@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
         //mdivider.setBounds(getParentFragment().getPaddingLeft(),0,16,0);
-        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.HORIZONTAL);
         itemdecor.setDrawable(mdivider);
         listView.addItemDecoration(itemdecor);
         listView.setAdapter(adapter);

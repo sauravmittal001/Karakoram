@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.myViewHolder> {
 
-    TextView mAmount;
-    TextView mDescription;
     Context mcontext;
     ArrayList<HostelBill> bill;
     ArrayList<String> key;
@@ -40,27 +38,6 @@ public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.my
        this.key=key;
         Log.i("ASDF", "print");
     }
-
-  /*  @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View list = convertView;
-        if (list == null) {
-            list = LayoutInflater.from(getContext()).inflate(R.layout.hostel_bill_listview, parent, false);
-        }
-
-        HostelBill hostelBill = getItem(position);
-
-        mAmount = list.findViewById(R.id.tv_bill_amount);
-        mDescription = list.findViewById(R.id.tv_bill_description);
-
-        if (hostelBill != null) {
-            String description = hostelBill.getDescription().subSequence(0, Math.min(15, hostelBill.getDescription().length())) + "...";
-            mAmount.setText(String.format("Rs %s", hostelBill.getAmount()));
-            mDescription.setText(hostelBill.getDescription());
-        }
-        return list;
-    } */
 
     @NonNull
     @Override

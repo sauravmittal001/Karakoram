@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
+    android:background="@drawable/theme4"
     tools:context=".parentFragment.HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,8 +38,6 @@
             tools:ignore="MissingClass" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 
 
 </RelativeLayout>
