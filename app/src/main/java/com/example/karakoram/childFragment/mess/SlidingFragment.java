@@ -1,30 +1,21 @@
 package com.example.karakoram.childFragment.mess;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
-
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.load.engine.Resource;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.cache.HomeCache;
 import com.example.karakoram.cache.MessMenuCache;
-import com.example.karakoram.childFragment.bill.signIn.AdminFragment;
-import com.example.karakoram.childFragment.bill.signIn.ResidentFragment;
-import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.views.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -32,10 +23,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class SlidingFragment extends Fragment {
@@ -87,38 +76,39 @@ public class SlidingFragment extends Fragment {
     }
 
     private void initVariables() {
-            FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    allDayMenu.clear();
-                    days.clear();
-                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                        Menu menuObject = snapshotItem.getValue(Menu.class);
-                        String[] menu = new String[3];
-                        menu[0] = menuObject.getBreakFast();
-                        menu[1] = menuObject.getLunch();
-                        menu[2] = menuObject.getDinner();
-                        allDayMenu.add(menu);
-                        days.add(snapshotItem.getKey());
-                    }
-                    try {
-                        cache.setDayArray(days);
-                        cache.setMenuArray(allDayMenu);
-                    }catch (Exception ignored) {
-                        Log.i("CacheLog", "cache files are not getting updated");
-                    }
-                    setupViews();
+        FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allDayMenu.clear();
+                days.clear();
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    Menu menuObject = snapshotItem.getValue(Menu.class);
+                    String[] menu = new String[3];
+                    menu[0] = menuObject.getBreakFast();
+                    menu[1] = menuObject.getLunch();
+                    menu[2] = menuObject.getDinner();
+                    allDayMenu.add(menu);
+                    days.add(snapshotItem.getKey());
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("firebase error", "Something went wrong");
+                try {
+                    cache.setDayArray(days);
+                    cache.setMenuArray(allDayMenu);
+                } catch (Exception ignored) {
+                    Log.i("CacheLog", "cache files are not getting updated");
                 }
-            });
+                setupViews();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
+            }
+        });
     }
 
     private void setupViews() {
         tabLayout.setupWithViewPager(viewPager, true);
-        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2)/3;
+        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
         this.setupViewPager(viewPager);
     }
 

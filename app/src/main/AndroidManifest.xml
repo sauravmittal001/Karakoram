@@ -23,7 +23,6 @@
         tools:targetApi="m">
         <activity android:name=".activity.WingMapActivity"/>
         <activity android:name=".activity.ComplainFormActivity" />
-        <activity android:name=".activity.NewSignInActivity" />
         <activity android:name=".childFragment.events.EventDescription" />
         <activity android:name=".activity.ComplainActivity" />
         <activity android:name=".activity.MainActivity" />
