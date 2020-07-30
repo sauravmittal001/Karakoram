@@ -2,7 +2,6 @@ package com.example.karakoram.parentFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,25 +16,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.EventFormActivity;
 import com.example.karakoram.adapter.EventAdapter;
-import com.example.karakoram.childFragment.events.EventDescription;
-import com.example.karakoram.resource.User;
 import com.example.karakoram.cache.HomeCache;
 import com.example.karakoram.resource.Event;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 import lombok.SneakyThrows;
 
@@ -50,7 +44,6 @@ public class HomeFragment extends Fragment {
     /* Views */
     View view;
     RecyclerView listView;
-    FloatingActionButton fab;
     Drawable mdivider;
 
     /* Adapters */
@@ -102,10 +95,13 @@ public class HomeFragment extends Fragment {
 
     private void setViews() {
 
-        view.findViewById(R.id.fab_event_refresh).setOnClickListener(new View.OnClickListener() {
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
                 refreshListView();
+                adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 

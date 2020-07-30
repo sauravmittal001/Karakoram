@@ -74,9 +74,7 @@ public class messMenuFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 menuList = new ArrayList<>();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    Menu menu=new Menu();
-                    String menuString = snapshotItem.getValue(String.class);
-                    menu.setMenuString(menuString);
+                    Menu menu = snapshotItem.getValue(Menu.class);
                     menuList.add(menu);
                     key.add(snapshotItem.getKey());
                 }

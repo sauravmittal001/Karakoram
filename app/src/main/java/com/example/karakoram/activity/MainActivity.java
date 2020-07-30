@@ -149,9 +149,6 @@ public class MainActivity extends AppCompatActivity  {
                 case R.id.navigation_bill:
                     return openfragment(new billFragment());
 
-                case R.id.navigation_notification:
-                    return openfragment(new notificationFragment());
-
                 case R.id.navigation_my_stuff:
                     return openfragment(new MyStuffFragment());
             }

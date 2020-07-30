@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:id="@+id/event_item_id"
     style="@style/listview"
-    android:orientation="horizontal"
-    android:id="@+id/event_item_id">
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
+        android:background="@color/background_white"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
@@ -18,24 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Event Title"
             android:fontFamily="@font/senbold"
+            android:text="Event Title"
             android:textAlignment="center"
             android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tv_event_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/senregular"
-            android:text="Truncated description string"
-            android:textAlignment="center"
-            android:maxLines="1"
-            android:layout_marginLeft="10dp"
-            android:ellipsize="end"
-            android:textSize="20sp"
-            android:singleLine="true"
-            tools:ignore="EllipsizeMaxLines" />
 
 
     </LinearLayout>
@@ -44,35 +32,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#F1E688"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_event_time_list"
             android:layout_width="match_parent"
-            android:fontFamily="@font/senbold"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
+            android:fontFamily="@font/senregular"
+            android:gravity="center_vertical"
             android:text="00:00"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="14sp"
             tools:ignore="RtlCompat" />
 
         <TextView
             android:id="@+id/tv_event_date_list"
-            android:fontFamily="@font/senbold"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
+            android:fontFamily="@font/senregular"
+            android:gravity="center_vertical"
             android:text="00:00"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="14sp"
             tools:ignore="RtlCompat" />
     </LinearLayout>
 

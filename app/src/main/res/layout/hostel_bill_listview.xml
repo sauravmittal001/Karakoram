@@ -10,22 +10,20 @@
         android:layout_width="0dp"
         android:layout_height="88dp"
         android:layout_weight="0.5"
-        android:background="#F6EC97"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_bill_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="25dp"
-            android:text="Bill amount"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/senbold"
+            android:paddingLeft="10dp"
+            android:text="Bill amount"
             android:textAlignment="center"
             android:textSize="20sp" />
-
-
 
 
     </LinearLayout>
@@ -35,24 +33,25 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/tv_bill_description"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/senregular"
             android:layout_height="wrap_content"
-            android:paddingTop="25dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:ellipsize="end"
+            android:fontFamily="@font/senregular"
+            android:lines="2"
+            android:maxLines="2"
+            android:paddingLeft="10dp"
+            android:paddingTop="25dp"
+            android:paddingRight="10dp"
+            android:singleLine="false"
             android:text="Truncated description string"
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:lines="2"
-            android:singleLine="false"
-            android:maxLines="2" />
+            android:textSize="20sp" />
 
 
     </LinearLayout>

@@ -86,6 +86,10 @@ public class FirebaseQuery {
         return ref.child("messMenu");
     }
 
+    public  static Query getMenu(String day){
+        return ref.child("messMenu").child(day);
+    }
+
     public static Query getAllComplains(){
         return ref.child("complains");
     }
