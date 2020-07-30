@@ -1,260 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tree"
+    android:id="@+id/ll_sign_in"
+    android:keepScreenOn="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_purple"
+    android:orientation="vertical"
+    android:padding="25dp"
     tools:context=".activity.SignInActivity">
 
-    <!--    <ListView-->
-    <!--        android:id="@+id/userList"-->
-    <!--        android:layout_width="299dp"-->
-    <!--        android:layout_height="483dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <TableLayout
-        android:id="@+id/userDetails"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adminUserDetailsLogin">
+        android:orientation="vertical">
 
-        <TableRow
-            android:id="@+id/entry_number_row"
+        <!--form -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/background_rect_section_task_sign_in"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UserId/Entry Number"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/entry_number"
+            <!-- title -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="42dp">
 
-        </TableRow>
 
-        <TableRow
-            android:id="@+id/password_row"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/senbold"
+                    android:lineSpacingMultiplier="1.25"
+                    android:text="Login/Signup"
+                    android:textColor="@color/text700"
+                    android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top"
+                    android:lineSpacingMultiplier="1.5"
+                    android:text="Only for Karakoram residents"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
 
-            <EditText
-                android:id="@+id/password"
+            </LinearLayout>
+
+            <!-- user type -->
+            <LinearLayout
+                android:id="@+id/ll_user_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
 
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/senregular"
+                    android:gravity="top"
+                    android:lineSpacingMultiplier="1.14"
+                    android:text="User"
+                    android:textColor="@color/text700"
+                    android:textSize="14sp" />
 
-        <TableRow
-            android:id="@+id/room_row"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_rounded_section_task"
+                    android:gravity="center_vertical"
+                    android:minHeight="28dp">
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Room No."
-                android:textSize="18sp" />
+                    <com.example.karakoram.views.CustomSpinner
+                        android:id="@+id/spinner_user_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/spinner_background"
+                        android:dropDownWidth="match_parent"
+                        android:entries="@array/user_type" />
+                </LinearLayout>
 
-            <EditText
-                android:id="@+id/room"
+            </LinearLayout>
+
+            <!-- position input -->
+            <LinearLayout
+                android:id="@+id/ll_admin_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="24dp"
+                android:visibility="gone"
+                android:orientation="vertical">
 
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/senregular"
+                    android:gravity="top"
+                    android:lineSpacingMultiplier="1.14"
+                    android:text="Admin position"
+                    android:textColor="@color/text700"
+                    android:textSize="14sp" />
 
-        <TableRow
-            android:id="@+id/wing_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_rounded_section_task"
+                    android:gravity="center_vertical"
+                    android:minHeight="28dp">
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wing"
-                android:textSize="18sp" />
+                    <com.example.karakoram.views.CustomSpinner
+                        android:id="@+id/spinner_admin_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/spinner_background"
+                        android:dropDownWidth="match_parent"
+                        android:entries="@array/admin_position" />
+                </LinearLayout>
 
-            <EditText
-                android:id="@+id/wing"
+            </LinearLayout>
+
+            <!-- entry number -->
+            <LinearLayout
+                android:id="@+id/ll_entry_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_login_entry_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/senregular"
+                    android:gravity="top"
+                    android:lineSpacingMultiplier="1.14"
+                    android:text="Entry number (Only for students)"
+                    android:textColor="@color/text700"
+                    android:textSize="14sp" />
 
-    </TableLayout>
 
-    <TableLayout
-        android:id="@+id/userDetailsLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+                <EditText
+                    android:id="@+id/et_login_entry_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_rounded_section_task"
+                    android:fontFamily="@font/senbold"
+                    android:importantForAutofill="no"
+                    android:lineSpacingMultiplier="1.5"
+                    android:padding="12dp"
+                    android:textColor="@color/text700"
+                    android:textSize="16sp" />
 
-        <TableRow
-            android:id="@+id/entry_number_row_login"
+            </LinearLayout>
+
+            <!-- Password input -->
+            <LinearLayout
+                android:id="@+id/rl_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="28dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/senregular"
+                    android:gravity="top"
+                    android:lineSpacingMultiplier="1.14"
+                    android:text="Password"
+                    android:textColor="@color/text700"
+                    android:textSize="14sp" />
+
+
+                <EditText
+                    android:id="@+id/et_login_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/background_rounded_section_task"
+                    android:fontFamily="@font/senbold"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:lineSpacingMultiplier="1.5"
+                    android:padding="12dp"
+                    android:textColor="@color/text700"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- button -->
+        <LinearLayout
+            android:id="@+id/ll_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/form_submit_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:font="@font/senregular"
+                android:onClick="onClickContinue"
+                android:text="Continue"
+                tools:ignore="UnusedAttribute" />
 
             <TextView
-                android:id="@+id/textView3_login"
+                android:id="@+id/tv_login_forgot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User Id/Entry Number"
-                android:textSize="18sp" />
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/senbold"
+                android:text="Forgot password?"
+                android:onClick="onForgotPassword"
+                android:textColor="@color/purple"
+                android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/entry_number_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+        </LinearLayout>
 
-        </TableRow>
+    </LinearLayout>
 
-        <TableRow
-            android:id="@+id/password_row_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView4_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/password_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
-
-        </TableRow>
-
-    </TableLayout>
-
-    <TableLayout
-        android:id="@+id/adminUserDetailsLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsLogin">
-
-        <TableRow
-            android:id="@+id/admin_entry_number_row_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/admin_textView3_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Admin User Id"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/category_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/admin_password_row_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/admin_textView4_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/admin_password_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
-
-        </TableRow>
-
-    </TableLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickSignIn"
-        android:text="Sign In"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetails" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickLogIn"
-        android:text="Student Login"
-        app:layout_constraintBottom_toTopOf="@+id/adminUserDetailsLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsLogin" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickLogInAdmin"
-        android:text="Admin Login"
-        app:layout_constraintBottom_toTopOf="@+id/userDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adminUserDetailsLogin" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
