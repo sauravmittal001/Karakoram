@@ -52,4 +52,8 @@
         <item name="android:singleLine">false</item>
     </style>
 
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:fontFamily">@font/senregular</item>
+    </style>
+
 </resources>

@@ -18,6 +18,20 @@
         <item>Admin</item>
     </string-array>
 
+    <string-array name="complaint_category">
+        <item></item>
+        <item>Maintenance</item>
+        <item>Mess</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="complaint_anonymity">
+        <item></item>
+        <item>Public</item>
+        <item>Only admin</item>
+        <item>No one</item>
+    </string-array>
+
     <string-array name="bill_catergory">
         <item>Maintenance</item>
         <item>Mess</item>
@@ -27,6 +41,7 @@
     </string-array>
 
     <string-array name="wing">
+        <item></item>
         <item>Junior</item>
         <item>Senior</item>
         <item>Ultra</item>
