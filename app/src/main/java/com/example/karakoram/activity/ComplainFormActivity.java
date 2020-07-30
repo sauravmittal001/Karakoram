@@ -182,7 +182,7 @@ public class ComplainFormActivity extends AppCompatActivity {
 
     public void onSubmitComplaint(View view) {
         String userId = sharedPreferences.getString("userId","loggedOut");
-        if(userId.equals("loggedOut") && false)
+        if(userId.equals("loggedOut"))
             Toast.makeText(getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
         else {
             Complain complain = new Complain();
