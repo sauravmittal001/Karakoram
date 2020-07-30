@@ -32,4 +32,6 @@
 
     <!-- colors -->
     <color name="hint">#333E3E3E</color>
+    <color name="view_pager_dots_unselected">#E9E9F4</color>
+    <color name="view_pager_dots_selected">#5A5A5A</color>
 </resources>

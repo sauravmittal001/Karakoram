@@ -11,17 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.karakoram.R;
+import com.example.karakoram.childFragment.mess.SlidingFragment;
 import com.example.karakoram.childFragment.mess.messFeedbackFragment;
 import com.example.karakoram.childFragment.mess.messMenuFragment;
 import com.example.karakoram.childFragment.mess.messUSTFragment;
 import com.example.karakoram.adapter.pageadapter;
 import com.google.android.material.tabs.TabLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link messFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class messFragment extends Fragment {
 
     View myfragment;
@@ -81,7 +77,8 @@ public class messFragment extends Fragment {
     }
     private void setUpViewPager(ViewPager viewPager){
         pageadapter adapter=new pageadapter(getChildFragmentManager());
-        adapter.addFragment(new messMenuFragment(),"Menu");
+        adapter.addFragment(new SlidingFragment(), "NEW");
+//        adapter.addFragment(new messMenuFragment(),"Menu");
         adapter.addFragment(new messFeedbackFragment(),"Feedback");
         adapter.addFragment(new messUSTFragment(),"UST");
         viewPager.setAdapter(adapter);

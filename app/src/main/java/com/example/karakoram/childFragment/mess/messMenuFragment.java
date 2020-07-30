@@ -51,9 +51,6 @@ public class messMenuFragment extends Fragment {
     /* Adapters */
     private MenuAdapter adapter;
 
-
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +75,7 @@ public class messMenuFragment extends Fragment {
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                     Menu menu=new Menu();
                     String menuString = snapshotItem.getValue(String.class);
-                    menu.setMenuString(menuString);
+//                    menu.setMenuString(menuString);
                     menuList.add(menu);
                     key.add(snapshotItem.getKey());
                 }
@@ -105,7 +102,7 @@ public class messMenuFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Menu m = menuList.get(i);
                 Intent intent = new Intent(getActivity().getApplicationContext(), MenuDescription.class);
-                intent.putExtra("menu", m.getMenuString());
+//                intent.putExtra("menu", m.getMenuString());
                 intent.putExtra("day", days[i]);
                 startActivity(intent);
 //                FragmentManager manager=getFragmentManager();
