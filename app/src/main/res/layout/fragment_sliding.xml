@@ -1,40 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".childFragment.mess.SlidingFragment">
-
-    <!--        <LinearLayout-->
-    <!--            android:id="@+id/lv_top"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="24dp"-->
-    <!--            android:orientation="horizontal">-->
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/iv_top_icon"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:contentDescription="Top banner icon"-->
-    <!--                android:src="@drawable/m2" />-->
-
-    <!--        </LinearLayout>-->
+    android:background="@color/white"
+    tools:context=".childFragment.mess.SlidingFragment"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_sign_in"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="25dp"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        tools:context=".activity.SignInActivity">
+        android:orientation="vertical">
 
         <com.example.karakoram.views.CustomViewPager
             android:id="@+id/vp_menu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            android:layout_height="wrap_content">
+
         </com.example.karakoram.views.CustomViewPager>
 
     </LinearLayout>
@@ -46,7 +30,9 @@
         app:tabBackground="@drawable/dot_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:tabPaddingEnd="7dp"
-        app:tabPaddingStart="7dp" />
+        app:tabPaddingEnd="10dp"
+        app:tabPaddingStart="10dp" />
 
-</FrameLayout>
+
+
+</LinearLayout>

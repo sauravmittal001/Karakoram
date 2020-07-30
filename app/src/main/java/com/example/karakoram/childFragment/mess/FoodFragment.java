@@ -81,7 +81,7 @@ public class FoodFragment extends Fragment {
         breakfast.setText(breakfastMenu);
         lunch.setText(lunchMenu);
         dinner.setText(dinnerMenu);
-        mDay.setText(day);
+        mDay.setText(day + "'s Menu");
 
         String type = sharedPreferences.getString("type", "DEFAULT");
         if (!type.equals(UserType.Admin.name())) {
