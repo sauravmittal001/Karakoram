@@ -138,16 +138,17 @@ public class UserInfoActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             if (!mCurrent.getText().toString().equals(userPassword)) {
                 mCurrent.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                showSnackbar("Current password is incorrect");
+//                showSnackbar("Current password is incorrect");
+                Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (!mNew.getText().toString().equals(mRetype.getText().toString())) {
                 mRetype.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                showSnackbar("New and Retype do not match");
+//                showSnackbar("New and Retype do not match");
+                Toast.makeText(this, "New and Retype do not match", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("users/" + userEntryNumber + "/password").setValue(mCurrent.getText().toString());
         ref.child("users/" + userEntryNumber + "/room").setValue(location);
