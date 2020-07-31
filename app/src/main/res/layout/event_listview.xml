@@ -5,7 +5,6 @@
     style="@style/listview"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="#80000000"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -18,9 +17,10 @@
         <TextView
             android:id="@+id/tv_event_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="60dp"
+            android:background="#80FFFFFF"
             android:fontFamily="@font/senbold"
+            android:gravity="center_vertical"
             android:text="Event Title"
             android:textAlignment="center"
             android:textSize="25sp" />
@@ -37,11 +37,12 @@
         <TextView
             android:id="@+id/tv_event_time_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
+            android:background="#80FFFFFF"
             android:fontFamily="@font/senregular"
             android:gravity="center_vertical"
             android:text="00:00"
@@ -52,12 +53,13 @@
         <TextView
             android:id="@+id/tv_event_date_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="20dp"
             android:layout_weight="1"
+            android:background="#80FFFFFF"
             android:fontFamily="@font/senregular"
             android:gravity="center_vertical"
             android:text="00:00"
