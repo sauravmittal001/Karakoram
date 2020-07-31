@@ -3,6 +3,7 @@ package com.example.karakoram.parentFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.icu.lang.UCharacter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -149,12 +150,11 @@ public class HomeFragment extends Fragment {
         //listView.setHasFixedSize(true);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
-        //mdivider.setBounds(getParentFragment().getPaddingLeft(),0,16,0);
-        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.HORIZONTAL);
+//        mdivider.setBounds(20,20,20,20);
+        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),LinearLayoutManager.VERTICAL);
         itemdecor.setDrawable(mdivider);
         listView.addItemDecoration(itemdecor);
         listView.setAdapter(adapter);
     }
-
 
 }
