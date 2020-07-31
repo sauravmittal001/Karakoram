@@ -28,7 +28,7 @@ public class MessMenuCache {
 
     Context CONTEXT;
     String MENU_FILE_NAME = "Menu.txt";
-    String DAY_FILE_NAME = "Key.txt";
+    String DAY_FILE_NAME = "Day.txt";
 
     String BREAKFAST = "breakFast";
     String LUNCH = "lunch";
