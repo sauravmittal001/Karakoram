@@ -8,10 +8,10 @@
     tools:context=".childFragment.mess.SlidingFragment"
     android:orientation="vertical">
 
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swipe_refresh_menu"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,17 +28,17 @@
 
         </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tb_counter_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabBackground="@drawable/dot_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"
-            app:tabPaddingEnd="10dp"
-            app:tabPaddingStart="10dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tb_counter_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/dot_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabPaddingEnd="10dp"
+        app:tabPaddingStart="10dp" />
 
 
 

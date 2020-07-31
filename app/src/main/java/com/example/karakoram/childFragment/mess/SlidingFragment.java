@@ -80,10 +80,10 @@ public class SlidingFragment extends Fragment {
         FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("123hello","hi");
                 allDayMenu.clear();
                 days.clear();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    Log.d("123hello",snapshotItem.getKey());
                     Menu menuObject = snapshotItem.getValue(Menu.class);
                     allDayMenu.add(menuObject);
                     days.add(snapshotItem.getKey());
@@ -105,18 +105,18 @@ public class SlidingFragment extends Fragment {
     }
 
     private void setupViews() {
+        ViewPager viewPager = view.findViewById(R.id.vp_menu);
         tabLayout.setupWithViewPager(viewPager, true);
-        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
+        viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
         this.setupViewPager(viewPager);
-//        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_menu);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                initVariables();
-//                setupViewPager(viewPager);
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_menu);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initVariables();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -124,6 +124,7 @@ public class SlidingFragment extends Fragment {
         for (int i = 0; i < days.size(); i++) {
             String day = days.get(i);
             Menu menu = allDayMenu.get(i);
+//            FoodFragment foodFragment = new FoodFragment(day,menu);
             adapter.addFragment(new FoodFragment(day, menu), "FOOD");
         }
         viewPager.setAdapter(adapter);

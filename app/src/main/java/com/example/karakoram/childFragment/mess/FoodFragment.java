@@ -2,6 +2,7 @@ package com.example.karakoram.childFragment.mess;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,6 @@ public class FoodFragment extends Fragment {
     private TextView mDay;
     private Button mMenuChange;
 
-    private static DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     private SharedPreferences sharedPreferences;
 
     public FoodFragment() {
@@ -44,6 +44,8 @@ public class FoodFragment extends Fragment {
         this.breakfastMenu = menu.getBreakFast();
         this.lunchMenu = menu.getLunch();
         this.dinnerMenu = menu.getDinner();
+        if(day.equals("Friday"))
+            Log.d("123hello",breakfastMenu);
     }
 
     @Override
@@ -55,8 +57,11 @@ public class FoodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_food, container, false);
+        if(day.equals("Friday"))
+            Log.d("123hello",this.breakfastMenu);
         initVariables();
         initViews();
+        setViews();
         return view;
     }
 
@@ -67,7 +72,6 @@ public class FoodFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setViews();
     }
 
     private void initViews() {
