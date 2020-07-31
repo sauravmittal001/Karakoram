@@ -2,11 +2,16 @@ package com.example.karakoram.childFragment.myStuff;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,7 +54,7 @@ public class EventFragment extends Fragment {
 
     /* Views */
     private View view;
-    private ListView listView;
+    private RecyclerView listView;
 
     /* Adapters */
     private EventAdapter adapter;
@@ -95,23 +100,15 @@ public class EventFragment extends Fragment {
 
     private void start() {
         Log.i("ASDF", String.valueOf(event));
-        adapter = new EventAdapter(getActivity(), event);
-        listView = view.findViewById(R.id.billlistView);
+        adapter = new EventAdapter(getActivity(), event,key);
+        listView = view.findViewById(R.id.list_event);
+        //listView.setHasFixedSize(true);
+        listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        Drawable mdivider = ContextCompat.getDrawable(view.getContext(), R.drawable.divider);
+        //mdivider.setBounds(getParentFragment().getPaddingLeft(),0,16,0);
+        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL);
+        itemdecor.setDrawable(mdivider);
+        listView.addItemDecoration(itemdecor);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Date dateTime = event.get(i).getDateTime();
-                String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
-                Intent intent = new Intent(getActivity().getApplicationContext(), EventDescription.class);
-                intent.putExtra("title", event.get(i).getTitle());
-                intent.putExtra("description", event.get(i).getDescription());
-                intent.putExtra("time", time);
-                intent.putExtra("date", date);
-                intent.putExtra("key", key.get(i));
-                startActivity(intent);
-            }
-        });
     }
 }

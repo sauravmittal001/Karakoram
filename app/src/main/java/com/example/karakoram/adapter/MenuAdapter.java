@@ -48,7 +48,6 @@ public class MenuAdapter extends ArrayAdapter<Menu> {
 
         if (menu != null) {
             mDay.setText(days.get(position));
-            mMenuString.setText(menu.getMenuString());
         }
         return list;
     }

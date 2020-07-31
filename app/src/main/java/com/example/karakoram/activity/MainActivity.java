@@ -2,8 +2,11 @@ package com.example.karakoram.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karakoram.R;
+import com.example.karakoram.adapter.pageadapter;
 import com.example.karakoram.notificationFragment;
 import com.example.karakoram.parentFragment.HomeFragment;
 import com.example.karakoram.parentFragment.MyStuffFragment;
@@ -21,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -53,7 +58,11 @@ public class MainActivity extends AppCompatActivity  {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id=menuItem.getItemId();
                 if(id==R.id.navigation_complaints){
-                    startActivity(new Intent(MainActivity.this, ComplainActivity.class));
+                    SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+                    if(sharedPreferences.getString("type","Student").equals("Admin"))
+                        startActivity(new Intent(MainActivity.this, ComplainActivity.class));
+                    else
+                        startActivity(new Intent(MainActivity.this, ComplainFormActivity.class));
                 }
                 else if(id==R.id.navigation_about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
@@ -146,9 +155,6 @@ public class MainActivity extends AppCompatActivity  {
                 case R.id.navigation_bill:
                     return openfragment(new billFragment());
 
-                case R.id.navigation_notification:
-                    return openfragment(new notificationFragment());
-
                 case R.id.navigation_my_stuff:
                     return openfragment(new MyStuffFragment());
             }
@@ -166,6 +172,13 @@ public class MainActivity extends AppCompatActivity  {
         }
         else
             super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_menu,menu);
+        return true;
     }
 }
 

@@ -2,38 +2,35 @@ package com.example.karakoram.parentFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.icu.lang.UCharacter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.EventFormActivity;
 import com.example.karakoram.adapter.EventAdapter;
-import com.example.karakoram.childFragment.events.EventDescription;
-import com.example.karakoram.resource.User;
 import com.example.karakoram.cache.HomeCache;
 import com.example.karakoram.resource.Event;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Date;
-
-import static android.content.Context.MODE_PRIVATE;
 
 import lombok.SneakyThrows;
 
@@ -47,12 +44,14 @@ public class HomeFragment extends Fragment {
 
     /* Views */
     View view;
-    ListView listView;
+    RecyclerView listView;
+    Drawable mdivider;
 
     /* Adapters */
     EventAdapter adapter;
 
     HomeCache cache;
+
 
     public HomeFragment() {
     }
@@ -97,10 +96,13 @@ public class HomeFragment extends Fragment {
 
     private void setViews() {
 
-        view.findViewById(R.id.fab_event_refresh).setOnClickListener(new View.OnClickListener() {
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
                 refreshListView();
+                adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -141,25 +143,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void start() {
-        adapter = new EventAdapter(getActivity(), event);
-        listView = view.findViewById(R.id.list_event);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Date dateTime = event.get(i).getDateTime();
-                String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
-                Intent intent = new Intent(getActivity().getApplicationContext(), EventDescription.class);
-                intent.putExtra("title", event.get(i).getTitle());
-                intent.putExtra("description", event.get(i).getDescription());
-                intent.putExtra("time", time);
-                intent.putExtra("date", date);
-                intent.putExtra("key", key.get(i));
-                startActivity(intent);
-            }
-        });
-    }
 
+        Log.i("ASDF", String.valueOf(event));
+        adapter = new EventAdapter(getActivity(), event,key);
+        listView = view.findViewById(R.id.list_event);
+        //listView.setHasFixedSize(true);
+        listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
+//        mdivider.setBounds(20,20,20,20);
+        DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),LinearLayoutManager.VERTICAL);
+        itemdecor.setDrawable(mdivider);
+        listView.addItemDecoration(itemdecor);
+        listView.setAdapter(adapter);
+    }
 
 }

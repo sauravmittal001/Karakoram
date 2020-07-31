@@ -73,11 +73,11 @@ public class EventFormActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month + 1, day);
+        showDate(year, 1, 1);
 
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         min = calendar.get(Calendar.MINUTE);
-        showTime(hour, min);
+        showTime(23, 59);
     }
 
 

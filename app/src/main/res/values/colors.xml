@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#730505</color>
+    <color name="colorPrimaryDark">#3E3E3E</color>
+    <color name="colorAccent">#FA9654</color>
 
     <color name="white">#FFFFFF</color>
 
     <color name="light_grey">#E8E8E8</color>
     <color name="grey">#DCDCDC</color>
     <color name="transparent_black">#EAEAEA</color>
+    <color name="very_light_grey">#f7f7f7</color>
     <color name="progress_bar_background_home">#333E3E3E</color>
     <color name="background_black">#3E3E3E</color>
     <color name="text700">#3E3E3E</color>
     <color name="text680">#3E3E3E</color>
+    <color name="text500">#d6d6d6</color>
     <color name="black">#000000</color>
 
     <color name="purple">#6C63FF</color>
@@ -32,4 +34,6 @@
 
     <!-- colors -->
     <color name="hint">#333E3E3E</color>
+    <color name="view_pager_dots_unselected">#E9E9F4</color>
+    <color name="view_pager_dots_selected">#5A5A5A</color>
 </resources>

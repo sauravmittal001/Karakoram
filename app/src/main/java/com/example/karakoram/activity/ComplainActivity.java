@@ -28,16 +28,10 @@ public class ComplainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.viewpager);
 
         // Create an adapter that knows which fragment should be shown on each page
-        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
         pageadapter adapter = new pageadapter(getSupportFragmentManager());
-        if(sharedPreferences.getString("type","Student").equals("Admin")) {
-            adapter.addFragment(new upload_event_Fragment(), "Mess");
-            adapter.addFragment(new upload_feedback_Fragment(), "Maint");
-            adapter.addFragment(new upload_complain_Fragment(), "Others");
-        }
-        else {
-            adapter.addFragment(new messFeedbackFragment(), "Form");
-        }
+        adapter.addFragment(new upload_event_Fragment(), "Mess");
+        adapter.addFragment(new upload_feedback_Fragment(), "Maint");
+        adapter.addFragment(new upload_complain_Fragment(), "Others");
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
