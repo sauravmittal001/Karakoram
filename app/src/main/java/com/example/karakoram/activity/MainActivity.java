@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karakoram.R;
+import com.example.karakoram.adapter.pageadapter;
 import com.example.karakoram.notificationFragment;
 import com.example.karakoram.parentFragment.HomeFragment;
 import com.example.karakoram.parentFragment.MyStuffFragment;
@@ -57,7 +58,11 @@ public class MainActivity extends AppCompatActivity  {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id=menuItem.getItemId();
                 if(id==R.id.navigation_complaints){
-                    startActivity(new Intent(MainActivity.this, ComplainActivity.class));
+                    SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+                    if(sharedPreferences.getString("type","Student").equals("Admin"))
+                        startActivity(new Intent(MainActivity.this, ComplainActivity.class));
+                    else
+                        startActivity(new Intent(MainActivity.this, ComplainFormActivity.class));
                 }
                 else if(id==R.id.navigation_about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));

@@ -18,6 +18,7 @@
         android:layout_marginBottom="70dp"
         android:src="@drawable/add_event" />
 
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"

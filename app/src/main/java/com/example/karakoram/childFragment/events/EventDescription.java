@@ -45,6 +45,10 @@ public class EventDescription extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_event_description);
         initVariables();
         initViews();
