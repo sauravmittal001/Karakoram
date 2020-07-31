@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.karakoram.FirebaseQuery;
@@ -34,7 +35,7 @@ public class SlidingFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ArrayList<String> days = new ArrayList<>();
-    private ArrayList<String[]> allDayMenu = new ArrayList<>();
+    private ArrayList<Menu> allDayMenu = new ArrayList<>();
     private MessMenuCache cache;
 
     public SlidingFragment() {
@@ -82,12 +83,9 @@ public class SlidingFragment extends Fragment {
                 allDayMenu.clear();
                 days.clear();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    Log.d("123hello",snapshotItem.getKey());
                     Menu menuObject = snapshotItem.getValue(Menu.class);
-                    String[] menu = new String[3];
-                    menu[0] = menuObject.getBreakFast();
-                    menu[1] = menuObject.getLunch();
-                    menu[2] = menuObject.getDinner();
-                    allDayMenu.add(menu);
+                    allDayMenu.add(menuObject);
                     days.add(snapshotItem.getKey());
                 }
                 try {
@@ -110,25 +108,26 @@ public class SlidingFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager, true);
         this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
         this.setupViewPager(viewPager);
+//        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_menu);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                initVariables();
+//                setupViewPager(viewPager);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         for (int i = 0; i < days.size(); i++) {
             String day = days.get(i);
-            String[] menu = allDayMenu.get(i);
+            Menu menu = allDayMenu.get(i);
             adapter.addFragment(new FoodFragment(day, menu), "FOOD");
         }
         viewPager.setAdapter(adapter);
         updatePagerView();
-//        final Handler handler = new Handler();
-//        final Runnable changeView = new Runnable() {
-//            public void run() {
-//                updatePagerView();
-//                handler.postDelayed(this, 4000);
-//            }
-//        };
-//        handler.postDelayed(changeView, 3000);
     }
 
     private void updatePagerView() {

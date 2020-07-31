@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.User;
@@ -38,11 +39,11 @@ public class FoodFragment extends Fragment {
     public FoodFragment() {
     }
 
-    public FoodFragment(String day, String[] menu) {
+    public FoodFragment(String day, Menu menu) {
         this.day = day;
-        this.breakfastMenu = menu[0];
-        this.lunchMenu = menu[1];
-        this.dinnerMenu = menu[2];
+        this.breakfastMenu = menu.getBreakFast();
+        this.lunchMenu = menu.getLunch();
+        this.dinnerMenu = menu.getDinner();
     }
 
     @Override
@@ -95,12 +96,23 @@ public class FoodFragment extends Fragment {
         mMenuChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Menu menuObject = new Menu();
-                menuObject.setBreakFast(breakfast.getText().toString());
-                menuObject.setLunch(lunch.getText().toString());
-                menuObject.setDinner(dinner.getText().toString());
-                ref.child("messMenu").child(day).setValue(menuObject);
-                Toast.makeText(getActivity().getApplicationContext(),"menu updated",Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId","loggedOut");
+                String userType = sharedPreferences.getString("type","Student");
+                if(userId.equals("loggedOut"))
+                    Toast.makeText(getActivity().getApplicationContext(),"please login to continue",Toast.LENGTH_SHORT).show();
+                else {
+                    if(userType.equals("Student"))
+                        Toast.makeText(getActivity().getApplicationContext(),"you are not authorised to perform this action",Toast.LENGTH_SHORT).show();
+                    else {
+                        Menu menuObject = new Menu();
+                        menuObject.setBreakFast(breakfast.getText().toString());
+                        menuObject.setLunch(lunch.getText().toString());
+                        menuObject.setDinner(dinner.getText().toString());
+                        FirebaseQuery.updateMenu(menuObject, day);
+                        Toast.makeText(getActivity().getApplicationContext(), "menu updated", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }

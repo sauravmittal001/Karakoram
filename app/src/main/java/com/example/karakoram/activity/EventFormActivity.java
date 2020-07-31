@@ -23,6 +23,7 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.User;
+import com.example.karakoram.resource.UserType;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -84,47 +85,55 @@ public class EventFormActivity extends AppCompatActivity {
     public void onClickCreateEvent(View view) {
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId","loggedOut");
+        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
         if(userId.equals("loggedOut"))
             Toast.makeText(getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
         else {
-            Event event = new Event();
-            String title = String.valueOf(mTitle.getText());
-            String description = String.valueOf(mDescription.getText());
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                if (title.equals("")) {
-                    mTitle.setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
-                    return;
-                } else {
-                    mTitle.setBackground(getDrawable(R.drawable.background_rounded_section_task));
+            if(userType.equals(UserType.Student))
+                Toast.makeText(getApplicationContext(),"you are not authorised to perform this action", Toast.LENGTH_SHORT).show();
+            else {
+                Event event = new Event();
+                String title = String.valueOf(mTitle.getText());
+                String description = String.valueOf(mDescription.getText());
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    if (title.equals("")) {
+                        mTitle.setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                        return;
+                    } else {
+                        mTitle.setBackground(getDrawable(R.drawable.background_rounded_section_task));
+                    }
+                    if (description.equals("")) {
+                        mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                        return;
+                    } else {
+                        mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task));
+                    }
+                    if (!isDateFilled) {
+                        dateView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
+                        return;
+                    } else {
+                        dateView.setBackground(getDrawable(R.drawable.background_rect_section_task));
+                    }
+                    if (!isTimeFilled) {
+                        timeView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
+                        return;
+                    } else {
+                        timeView.setBackground(getDrawable(R.drawable.background_rect_section_task));
+                    }
                 }
-                if (description.equals("")) {
-                    mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                if (imageUri == null || String.valueOf(imageUri).equals("")) {
+                    mError.setVisibility(View.VISIBLE);
                     return;
-                } else {
-                    mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task));
                 }
-                if (!isDateFilled) {
-                    dateView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                    return;
-                } else {
-                    dateView.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                }
-                if (!isTimeFilled) {
-                    timeView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                    return;
-                } else {
-                    timeView.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                }
+                event.setDateTime(new Date(year - 1900, month - 1, day, hour, min));
+                event.setTitle(title);
+                event.setDescription(description);
+                event.setUserId(userId);
+                event.setTimeStamp(new Date());
+                FirebaseQuery.addEvent(event, imageUri);
+                Toast.makeText(getApplicationContext(), "event added/updated", Toast.LENGTH_SHORT).show();
+                super.onBackPressed();
             }
-            if (imageUri == null || String.valueOf(imageUri).equals("")) {
-                mError.setVisibility(View.VISIBLE);
-                return;
-            }
-            event.setDateTime(new Date(year - 1900, month - 1, day, hour, min));
-            event.setTitle(title);
-            event.setDescription(description);
-            Log.i("AAAA", description);
-            FirebaseQuery.addEvent(event, imageUri);
         }
     }
 

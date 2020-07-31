@@ -7,6 +7,7 @@ import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complain;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
 import com.google.firebase.database.DatabaseReference;
@@ -31,10 +32,6 @@ public class FirebaseQuery {
 
     public static Query getUserByEntryNumber(String entryNumber){
         return ref.child("users").orderByChild("entryNumber").equalTo(entryNumber);
-    }
-
-    public static Query getUserByKey(String key){
-        return ref.child("users").child(key);
     }
 
     public static Query getEvent(String key){
@@ -88,6 +85,10 @@ public class FirebaseQuery {
 
     public  static Query getMenu(String day){
         return ref.child("messMenu").child(day);
+    }
+
+    public static  void updateMenu(Menu menu, String day){
+        ref.child("messMenu").child(day).setValue(menu);
     }
 
     public static Query getAllComplains(){
