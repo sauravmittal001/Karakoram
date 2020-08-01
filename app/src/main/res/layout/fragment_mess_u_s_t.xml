@@ -3,23 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/theme5lite"
     tools:context=".childFragment.mess.messUSTFragment"
     android:layout_marginBottom="56dp">
 
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:id="@+id/bill_listView">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="35sp"
-        android:gravity="center"
-        android:text="hello UST fragment" />
-
-    </LinearLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

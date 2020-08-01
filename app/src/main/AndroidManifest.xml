@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.WingMapActivity"/>
+        <activity android:name=".activity.ustDescription"></activity>
+        <activity android:name=".activity.WingMapActivity" />
         <activity android:name=".activity.ComplainFormActivity" />
         <activity android:name=".childFragment.events.EventDescription" />
         <activity android:name=".activity.ComplainActivity" />
