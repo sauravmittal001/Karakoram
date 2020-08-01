@@ -17,6 +17,7 @@ import com.example.karakoram.R;
 import com.example.karakoram.activity.ustDescription;
 import com.example.karakoram.resource.MessFeedback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,13 +53,15 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
                 int i=vHolder.getAdapterPosition();
                 Intent intent = new Intent(mcontext, ustDescription.class);
                 intent.putExtra("key", key.get(i));
-                intent.putExtra("Meal", feedbacks.get(i).getMeal().name());
+
                 intent.putExtra("description", feedbacks.get(i).getDescription());
                 intent.putExtra("rating", feedbacks.get(i).getRating());
                 intent.putExtra("userdetails",feedbacks.get(i).getUserId());
                  Date dateTime = feedbacks.get(i).getTimestamp();
+                String day= new SimpleDateFormat("EE").format(dateTime);
                 String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
                 intent.putExtra("date", date);
+                intent.putExtra("Meal", day+"/ "+feedbacks.get(i).getMeal().name());
                 mcontext.startActivity(intent);
             }
         });
@@ -72,13 +75,15 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
         if (messFeedback != null) {
             String description = messFeedback.getDescription();
             int rating=messFeedback.getRating();
-            holder.mRating.setNumStars(rating);
+            holder.mRating.setNumStars(3);
+            holder.mRating.setStepSize(1);
             holder.mRating.setRating(rating);
            // holder.mRating.setText(Integer.toString(messFeedback.getRating()));
             holder.mDescription.setText(messFeedback.getDescription());
             holder.mMeal.setText(messFeedback.getMeal().name());
             Date dateTime = messFeedback.getTimestamp();
-            String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
+            String date= new SimpleDateFormat("EE").format(dateTime);
+           // String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
             holder.mDate.setText(date);
         }
     }

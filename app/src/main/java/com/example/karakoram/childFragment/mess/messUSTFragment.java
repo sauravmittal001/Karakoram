@@ -38,13 +38,17 @@ public class messUSTFragment extends Fragment {
     private View view;
     private RecyclerView listView;
     Drawable mdivider;
+    String x="str";
 
     private USTadapter adapter;
 
-    public messUSTFragment() {
-
+    public messUSTFragment(String x) {
+       this.x=x;
     }
 
+    public messUSTFragment(){
+
+    }
 
 
     @Override
@@ -66,24 +70,48 @@ public class messUSTFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d("check", "onActivityCreated: "+x);
 
-        FirebaseQuery.getAllMessFeedback().addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                feedbacks=new ArrayList<>();
-                for(DataSnapshot snapshotItem:snapshot.getChildren()){
-                    feedbacks.add(snapshotItem.getValue(MessFeedback.class));
-                    key.add(snapshotItem.getKey());
+        if(x.equals("str")){
+            FirebaseQuery.getAllMessFeedback().addListenerForSingleValueEvent(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    feedbacks=new ArrayList<>();
+                    for(DataSnapshot snapshotItem:snapshot.getChildren()){
+                        feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    start();
                 }
-                start();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
+
+      else {
+
+          FirebaseQuery.getUserMessFeedback(x).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    feedbacks = new ArrayList<>();
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    start();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
 
 
 

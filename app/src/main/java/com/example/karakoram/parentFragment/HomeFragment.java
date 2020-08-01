@@ -3,7 +3,6 @@ package com.example.karakoram.parentFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.icu.lang.UCharacter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +27,7 @@ import com.example.karakoram.resource.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -52,8 +52,13 @@ public class HomeFragment extends Fragment {
 
     HomeCache cache;
 
+    String x="str";
 
     public HomeFragment() {
+    }
+
+    HomeFragment(String x){
+        this.x=x;
     }
 
     @Override
@@ -118,7 +123,35 @@ public class HomeFragment extends Fragment {
     private void refreshListView() {
         event.clear();
         key.clear();
-        FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        if(x.equals("str")){
+            FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
+                @SneakyThrows
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        event.add(snapshotItem.getValue(Event.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    try {
+                        cache.setKeyArray(key);
+                        cache.setValueArray(event);
+                    } catch (Exception ignored) {
+                        Log.i("HomeCacheLog", "cache files are not getting updated");
+                    }
+                    start();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
+
+        else{
+        FirebaseQuery.getUserEvents(x).addListenerForSingleValueEvent(new ValueEventListener() {
             @SneakyThrows
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,7 +162,7 @@ public class HomeFragment extends Fragment {
                 try {
                     cache.setKeyArray(key);
                     cache.setValueArray(event);
-                }catch (Exception ignored) {
+                } catch (Exception ignored) {
                     Log.i("HomeCacheLog", "cache files are not getting updated");
                 }
                 start();
@@ -141,6 +174,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    }
+
 
     private void start() {
 

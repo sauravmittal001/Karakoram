@@ -1,7 +1,6 @@
 package com.example.karakoram;
 
 import android.net.Uri;
-import android.util.Log;
 
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complain;
@@ -78,7 +77,7 @@ public class FirebaseQuery {
         return ref.child("messFeedback");
     }
 
-    public Query getUserMessFeedback(String userId){
+    public static Query getUserMessFeedback(String userId){
         return ref.child("messFeedBack").orderByChild("userId").equalTo(userId);
     }
 

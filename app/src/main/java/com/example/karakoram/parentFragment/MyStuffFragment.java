@@ -1,23 +1,23 @@
 package com.example.karakoram.parentFragment;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.karakoram.R;
 import com.example.karakoram.adapter.pageadapter;
 import com.example.karakoram.childFragment.bill.billChildFragment;
-import com.example.karakoram.childFragment.myStuff.EventFragment;
+import com.example.karakoram.childFragment.mess.messUSTFragment;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.User;
+import com.example.karakoram.upload_complain_Fragment;
 import com.google.android.material.tabs.TabLayout;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -71,13 +71,15 @@ public class MyStuffFragment extends Fragment {
     private void setUpViewPager(ViewPager viewPager){
         pageadapter adapter=new pageadapter(getChildFragmentManager());
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String userid=sharedPreferences.getString("userId","logedOut");
+        Log.d(userid, "setUpViewPager: "+userid);
         if(sharedPreferences.getString("type","Student").equals("Admin")) {
-            adapter.addFragment(new EventFragment(), "Events");
-            adapter.addFragment(new EventFragment(), "Bills");
+            adapter.addFragment(new HomeFragment(userid), "Events");
+            adapter.addFragment(new billChildFragment(Category.Cultural), "Bills");
         }
         else{
-            adapter.addFragment(new EventFragment(), "Mess Feedbacks");
-            adapter.addFragment(new EventFragment(), "Complains");
+            adapter.addFragment(new messUSTFragment(userid), "Mess Feedbacks");
+            adapter.addFragment(new upload_complain_Fragment(), "Complains");
         }
         viewPager.setAdapter(adapter);
     }

@@ -66,7 +66,8 @@ public class ustDescription extends AppCompatActivity {
         mDate.setText(date);
         mDescription.setText(description);
         mUserid.setText(userid);
-        mRating.setNumStars(rating);
+        mRating.setNumStars(3);
+        mRating.setStepSize(1);
         mRating.setRating(rating);
 
 
