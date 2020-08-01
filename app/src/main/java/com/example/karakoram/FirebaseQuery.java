@@ -83,12 +83,8 @@ public class FirebaseQuery {
         return ref.child("messMenu");
     }
 
-    public  static Query getMenu(String day){
-        return ref.child("messMenu").child(day);
-    }
-
-    public static  void updateMenu(Menu menu, String day){
-        ref.child("messMenu").child(day).setValue(menu);
+    public static  void updateMenu(Menu menu, int day){
+        ref.child("messMenu").child(String.valueOf(day)).setValue(menu);
     }
 
     public static Query getAllComplains(){

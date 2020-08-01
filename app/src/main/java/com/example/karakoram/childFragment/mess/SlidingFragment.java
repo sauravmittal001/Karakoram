@@ -116,7 +116,7 @@ public class SlidingFragment extends Fragment {
         for (int i = 0; i < days.size(); i++) {
             String day = days.get(i);
             Menu menu = allDayMenu.get(i);
-            adapter.addFragment(new FoodFragment(menu, this), "FOOD");
+            adapter.addFragment(new FoodFragment(menu, this,i), "FOOD");
         }
         viewPager.setAdapter(adapter);
         updatePagerView();

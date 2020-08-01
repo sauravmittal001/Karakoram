@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/colorAccent"
     android:fillViewport="true"
     tools:context=".childFragment.mess.FoodFragment">
 
@@ -12,216 +12,215 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-
-            android:background="@drawable/background_rect_section_task_sign_in"
-            android:orientation="vertical">
-
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="24dp"
-                android:paddingTop="24dp"
-                android:paddingEnd="42dp"
-                android:paddingBottom="24dp">
+                android:layout_margin="10dp"
 
-                <!--                    <ImageView-->
-                <!--                        android:id="@+id/iv_back_button"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_gravity="start"-->
-                <!--                        android:contentDescription="Back Button"-->
-                <!--                        android:onClick="backPressed"-->
-                <!--                        android:src="@drawable/ic_frame3" />-->
-
-                <TextView
-                    android:id="@+id/tv_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/senbold"
-                    android:lineSpacingMultiplier="1.25"
-                    android:text="Day's Menu"
-                    android:textColor="@color/text700"
-                    android:textSize="24sp" />
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/tv_menu_description"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:gravity="top"-->
-                <!--                    android:lineSpacingMultiplier="1.5"-->
-                <!--                    android:text="Today's Menu"-->
-                <!--                    android:textColor="@color/text700"-->
-                <!--                    android:textSize="16sp" />-->
-
-            </LinearLayout>
-
-
-            <!-- breakfast input -->
-            <LinearLayout
-                android:id="@+id/rl_breakfast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
+                android:background="@drawable/background_rect_section_task_sign_in"
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:id="@+id/tv_breakfast"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/senbold"
-                    android:gravity="top"
-                    android:lineSpacingMultiplier="1.14"
-                    android:text="Breakfast"
-                    android:textColor="@color/text700"
-                    android:textSize="14sp" />
-
-
-                <EditText
-                    android:id="@+id/et_breakfast_menu"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/background_rect_section_task"
-                    android:enabled="true"
-                    android:fontFamily="@font/senregular"
-                    android:inputType="textMultiLine"
-                    android:padding="12dp"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingTop="24dp"
+                    android:paddingEnd="42dp"
+                    android:paddingBottom="24dp">
+
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/iv_back_button"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_gravity="start"-->
+                    <!--                        android:contentDescription="Back Button"-->
+                    <!--                        android:onClick="backPressed"-->
+                    <!--                        android:src="@drawable/ic_frame3" />-->
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/senbold"
+                        android:lineSpacingMultiplier="1.25"
+                        android:text="Day's Menu"
+                        android:textColor="@color/text700"
+                        android:textSize="24sp" />
+
+                    <!--                <TextView-->
+                    <!--                    android:id="@+id/tv_menu_description"-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:layout_marginTop="8dp"-->
+                    <!--                    android:gravity="top"-->
+                    <!--                    android:lineSpacingMultiplier="1.5"-->
+                    <!--                    android:text="Today's Menu"-->
+                    <!--                    android:textColor="@color/text700"-->
+                    <!--                    android:textSize="16sp" />-->
+
+                </LinearLayout>
+
+
+                <!-- breakfast input -->
+                <LinearLayout
+                    android:id="@+id/rl_breakfast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_breakfast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/senbold"
+                        android:gravity="top"
+                        android:lineSpacingMultiplier="1.14"
+                        android:text="Breakfast"
+                        android:textColor="@color/text700"
+                        android:textSize="14sp" />
+
+
+                    <EditText
+                        android:id="@+id/et_breakfast_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/background_rect_section_task"
+                        android:enabled="true"
+                        android:fontFamily="@font/senregular"
+                        android:inputType="textMultiLine"
+                        android:padding="12dp"
+                        android:textColor="@color/text700"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- lunch input -->
+                <LinearLayout
+                    android:id="@+id/rl_lunch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_lunch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/senbold"
+                        android:gravity="top"
+                        android:lineSpacingMultiplier="1.14"
+                        android:text="Lunch"
+                        android:textColor="@color/text700"
+                        android:textSize="14sp" />
+
+
+                    <!--                <EditText-->
+                    <!--                    android:id="@+id/et_lunch_menu"-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:layout_marginStart="1dp"-->
+                    <!--                    android:layout_marginTop="8dp"-->
+                    <!--                    android:background="@drawable/background_rounded_section_task"-->
+                    <!--                    android:fontFamily="@font/senbold"-->
+                    <!--                    android:hint="Enter event title"-->
+                    <!--                    android:importantForAutofill="no"-->
+                    <!--                    android:lineSpacingMultiplier="1.5"-->
+                    <!--                    android:padding="12dp"-->
+                    <!--                    android:textColor="@color/text700"-->
+                    <!--                    android:textSize="16sp" />-->
+
+                    <EditText
+                        android:id="@+id/et_lunch_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/background_rect_section_task"
+                        android:fontFamily="@font/senregular"
+                        android:inputType="textMultiLine"
+                        android:padding="12dp"
+                        android:textColor="@color/text700"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- dinner input -->
+                <LinearLayout
+                    android:id="@+id/rl_dinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_dinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/senbold"
+                        android:gravity="top"
+                        android:lineSpacingMultiplier="1.14"
+                        android:text="Dinner"
+                        android:textColor="@color/text700"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/et_dinner_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/background_rect_section_task"
+                        android:fontFamily="@font/senregular"
+                        android:inputType="textMultiLine"
+                        android:padding="12dp"
+                        android:textColor="@color/text700"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- button -->
+                <Button
+                    android:id="@+id/button_change_menu_food_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/form_submit_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:font="@font/senregular"
+                    android:text="Change Mess Menu"
                     android:textColor="@color/text700"
-                    android:textSize="16sp" />
+                    tools:targetApi="o" />
+
 
             </LinearLayout>
 
-            <!-- lunch input -->
-            <LinearLayout
-                android:id="@+id/rl_lunch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/tv_lunch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/senbold"
-                    android:gravity="top"
-                    android:lineSpacingMultiplier="1.14"
-                    android:text="Lunch"
-                    android:textColor="@color/text700"
-                    android:textSize="14sp" />
-
-
-                <!--                <EditText-->
-                <!--                    android:id="@+id/et_lunch_menu"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginStart="1dp"-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:background="@drawable/background_rounded_section_task"-->
-                <!--                    android:fontFamily="@font/senbold"-->
-                <!--                    android:hint="Enter event title"-->
-                <!--                    android:importantForAutofill="no"-->
-                <!--                    android:lineSpacingMultiplier="1.5"-->
-                <!--                    android:padding="12dp"-->
-                <!--                    android:textColor="@color/text700"-->
-                <!--                    android:textSize="16sp" />-->
-
-                <EditText
-                    android:id="@+id/et_lunch_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/background_rect_section_task"
-                    android:fontFamily="@font/senregular"
-                    android:inputType="textMultiLine"
-                    android:padding="12dp"
-                    android:textColor="@color/text700"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- dinner input -->
-            <LinearLayout
-                android:id="@+id/rl_dinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/tv_dinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/senbold"
-                    android:gravity="top"
-                    android:lineSpacingMultiplier="1.14"
-                    android:text="Dinner"
-                    android:textColor="@color/text700"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/et_dinner_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/background_rect_section_task"
-                    android:fontFamily="@font/senregular"
-                    android:inputType="textMultiLine"
-                    android:padding="12dp"
-                    android:textColor="@color/text700"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- button -->
-            <Button
-                android:id="@+id/button_change_menu_food_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="35dp"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/form_submit_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:font="@font/senregular"
-                android:text="Change Mess Menu"
-                android:textColor="@color/text700"
-                tools:targetApi="o" />
-
-
-        </LinearLayout>
-
-    </ScrollView>
+        </ScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

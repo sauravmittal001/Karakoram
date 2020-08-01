@@ -32,18 +32,20 @@ public class FoodFragment extends Fragment {
     private TextView mDay;
     private Button mMenuChange;
     private SlidingFragment slidingFragment;
+    private int dayIndex;
 
     private SharedPreferences sharedPreferences;
 
     public FoodFragment() {
     }
 
-    public FoodFragment(Menu menu, SlidingFragment slidingFragment) {
+    public FoodFragment(Menu menu, SlidingFragment slidingFragment, int dayIndex) {
         this.day = menu.getDay();
         this.breakfastMenu = menu.getBreakFast();
         this.lunchMenu = menu.getLunch();
         this.dinnerMenu = menu.getDinner();
         this.slidingFragment = slidingFragment;
+        this.dayIndex = dayIndex;
     }
 
     @Override
@@ -118,7 +120,8 @@ public class FoodFragment extends Fragment {
                         menuObject.setBreakFast(breakfast.getText().toString());
                         menuObject.setLunch(lunch.getText().toString());
                         menuObject.setDinner(dinner.getText().toString());
-                        FirebaseQuery.updateMenu(menuObject, day);
+                        menuObject.setDay(day);
+                        FirebaseQuery.updateMenu(menuObject, dayIndex);
                         Toast.makeText(getActivity().getApplicationContext(), "menu updated", Toast.LENGTH_SHORT).show();
                     }
                 }

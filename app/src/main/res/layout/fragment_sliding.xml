@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".childFragment.mess.SlidingFragment"
-    android:orientation="vertical">
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+    tools:context=".childFragment.mess.SlidingFragment">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.example.karakoram.views.CustomViewPager
+            android:id="@+id/vp_menu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <com.example.karakoram.views.CustomViewPager
-                android:id="@+id/vp_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        </com.example.karakoram.views.CustomViewPager>
 
-            </com.example.karakoram.views.CustomViewPager>
-
-        </LinearLayout>
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tb_counter_menu"
@@ -32,7 +32,6 @@
         app:tabIndicatorHeight="0dp"
         app:tabPaddingEnd="10dp"
         app:tabPaddingStart="10dp" />
-
 
 
 </LinearLayout>
