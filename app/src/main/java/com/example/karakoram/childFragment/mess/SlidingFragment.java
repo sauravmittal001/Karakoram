@@ -76,7 +76,7 @@ public class SlidingFragment extends Fragment {
         }
     }
 
-    private void initVariables() {
+    public void initVariables() {
         FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -86,7 +86,7 @@ public class SlidingFragment extends Fragment {
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                     Menu menuObject = snapshotItem.getValue(Menu.class);
                     allDayMenu.add(menuObject);
-                    days.add(snapshotItem.getKey());
+                    days.add(menuObject.getDay());
                 }
                 try {
                     cache.setDayArray(days);
@@ -105,18 +105,10 @@ public class SlidingFragment extends Fragment {
     }
 
     private void setupViews() {
-        ViewPager viewPager = view.findViewById(R.id.vp_menu);
+        viewPager = view.findViewById(R.id.vp_menu);
         tabLayout.setupWithViewPager(viewPager, true);
         viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
-        this.setupViewPager(viewPager);
-        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_menu);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initVariables();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        setupViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -124,8 +116,7 @@ public class SlidingFragment extends Fragment {
         for (int i = 0; i < days.size(); i++) {
             String day = days.get(i);
             Menu menu = allDayMenu.get(i);
-//            FoodFragment foodFragment = new FoodFragment(day,menu);
-            adapter.addFragment(new FoodFragment(day, menu), "FOOD");
+            adapter.addFragment(new FoodFragment(menu, this), "FOOD");
         }
         viewPager.setAdapter(adapter);
         updatePagerView();
@@ -135,7 +126,6 @@ public class SlidingFragment extends Fragment {
         Calendar sCalendar = Calendar.getInstance();
         String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
         int nextPosition = days.indexOf(dayLongName);
-//        int nextPosition = (viewPager.getCurrentItem() < viewPager.getAdapter().getCount() - 1) ? viewPager.getCurrentItem() + 1 : 0;
-        viewPager.setCurrentItem(nextPosition, true);
+        viewPager.setCurrentItem(nextPosition, false);
     }
 }

@@ -2,7 +2,6 @@ package com.example.karakoram.childFragment.mess;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -33,19 +31,19 @@ public class FoodFragment extends Fragment {
     private EditText breakfast, lunch, dinner;
     private TextView mDay;
     private Button mMenuChange;
+    private SlidingFragment slidingFragment;
 
     private SharedPreferences sharedPreferences;
 
     public FoodFragment() {
     }
 
-    public FoodFragment(String day, Menu menu) {
-        this.day = day;
+    public FoodFragment(Menu menu, SlidingFragment slidingFragment) {
+        this.day = menu.getDay();
         this.breakfastMenu = menu.getBreakFast();
         this.lunchMenu = menu.getLunch();
         this.dinnerMenu = menu.getDinner();
-        if(day.equals("Friday"))
-            Log.d("123hello",breakfastMenu);
+        this.slidingFragment = slidingFragment;
     }
 
     @Override
@@ -57,8 +55,6 @@ public class FoodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_food, container, false);
-        if(day.equals("Friday"))
-            Log.d("123hello",this.breakfastMenu);
         initVariables();
         initViews();
         setViews();
@@ -75,11 +71,11 @@ public class FoodFragment extends Fragment {
     }
 
     private void initViews() {
-        mMenuChange = (Button) view.findViewById(R.id.button_change_menu_food_fragment);
-        breakfast = (EditText) view.findViewById(R.id.et_breakfast_menu);
-        lunch = (EditText) view.findViewById(R.id.et_lunch_menu);
-        dinner = (EditText) view.findViewById(R.id.et_dinner_menu);
-        mDay = (TextView) view.findViewById(R.id.tv_day);
+        mMenuChange = view.findViewById(R.id.button_change_menu_food_fragment);
+        breakfast = view.findViewById(R.id.et_breakfast_menu);
+        lunch = view.findViewById(R.id.et_lunch_menu);
+        dinner = view.findViewById(R.id.et_dinner_menu);
+        mDay = view.findViewById(R.id.tv_day);
     }
 
     private void setViews() {
@@ -88,6 +84,15 @@ public class FoodFragment extends Fragment {
         lunch.setText(lunchMenu);
         dinner.setText(dinnerMenu);
         mDay.setText(day + "'s Menu");
+
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_menu);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                slidingFragment.initVariables();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         String type = sharedPreferences.getString("type", "DEFAULT");
         if (!type.equals(UserType.Admin.name())) {

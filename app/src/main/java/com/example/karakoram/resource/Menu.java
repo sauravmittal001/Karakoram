@@ -5,6 +5,7 @@ public class Menu {
     private String breakFast;
     private String lunch;
     private String dinner;
+    private String day;
 
     public String getBreakFast() {
         return breakFast;
@@ -28,5 +29,13 @@ public class Menu {
 
     public void setDinner(String dinner) {
         this.dinner = dinner;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

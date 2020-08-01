@@ -34,6 +34,7 @@ public class MessMenuCache {
     String BREAKFAST = "breakFast";
     String LUNCH = "lunch";
     String DINNER = "dinner";
+    String DAY = "day";
 
     private MessMenuCache() {
     }
@@ -126,6 +127,7 @@ public class MessMenuCache {
                     menu.setBreakFast((String) Obj.get(BREAKFAST));
                     menu.setLunch((String) Obj.get(LUNCH));
                     menu.setDinner((String) Obj.get(DINNER));
+                    menu.setDay((String) Obj.get(DAY));
                     allDayMenu.add(menu);
                 }
             }
@@ -154,6 +156,7 @@ public class MessMenuCache {
             menuJSON.put(BREAKFAST, menu.getBreakFast());
             menuJSON.put(LUNCH, menu.getLunch());
             menuJSON.put(DINNER, menu.getDinner());
+            menuJSON.put(DAY, menu.getDay());
             JSON.put(String.valueOf(i++), menuJSON);
         }
 
