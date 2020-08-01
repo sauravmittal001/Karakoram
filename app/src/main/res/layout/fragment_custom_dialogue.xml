@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".childFragment.mess.CustomDialogueFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_rect_custom_dialogue"
+            android:orientation="vertical">
+
+            <!-- buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp">
+
+                <Button
+                    android:id="@+id/button_dialogue_breakfast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/meal_feedback_button_selected"
+                    android:layout_marginEnd="12dp"
+                    android:text="breakfast"
+                    android:fontFamily="@font/senbold"
+                    android:textColor="@color/darker_yellow">
+                </Button>
+
+                <Button
+                    android:id="@+id/button_dialogue_lunch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/meal_feedback_button_unselected"
+                    android:layout_marginEnd="12dp"
+                    android:text="lunch"
+                    android:fontFamily="@font/senbold"
+                    android:textColor="@color/text700">
+                </Button>
+
+                <Button
+                    android:id="@+id/button_dialogue_dinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/meal_feedback_button_unclick"
+                    android:text="dinner"
+                    android:fontFamily="@font/senregular"
+                    android:textColor="@color/transparent_black">
+                </Button>
+
+            </LinearLayout>
+
+            <!-- stars -->
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                android:id="@+id/aaaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srb_starSize="85dp"
+                app:srb_starBorderWidth="15"
+                app:srb_starCornerRadius="20"
+                app:srb_numberOfStars="3"
+                app:srb_rating="0"
+                app:srb_stepSize="1"
+                app:srb_borderColor="@color/darker_yellow"
+                app:srb_fillColor="@color/darker_yellow" />
+
+            <!-- describe -->
+            <TextView
+                android:id="@+id/tv_star_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_gravity="center"
+                android:text="Good!"
+                android:textColor="@color/text700"/>
+
+            <!-- ok text button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                android:layout_marginEnd="24dp">
+
+                <TextView
+                    android:id="@+id/tv_dialogue_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Give Review"
+                    android:padding="18dp"
+                    android:fontFamily="@font/senbold"
+                    android:textSize="18sp"
+                    android:textColor="@color/lime"/>
+
+                <TextView
+                    android:id="@+id/tv_dialogue_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ok"
+                    android:padding="18dp"
+                    android:fontFamily="@font/senbold"
+                    android:textSize="18sp"
+                    android:textColor="@color/lime"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

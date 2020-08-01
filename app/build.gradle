@@ -50,4 +50,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
+    compile 'com.iarcuschin:simpleratingbar:0.1.5'
+
 }

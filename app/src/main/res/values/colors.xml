@@ -22,8 +22,12 @@
 
     <color name="orange_red">#FF4500</color>
     <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="darker_yellow">#ffdf3b</color>
+    <color name="light_yellow">#fff5c4</color>
 
     <color name="aqua">#00FFFF</color>
+    <color name="lime">#64d7b0</color>
 
     <color name="green">#8db600</color>
     <color name="light_green">#d9ffcc</color>

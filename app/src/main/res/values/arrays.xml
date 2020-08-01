@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- bills -->
+    <string-array name="bill_catergory">
+        <item>Maintenance</item>
+        <item>Mess</item>
+        <item>Sports</item>
+        <item>Cult</item>
+        <item>Others</item>
+    </string-array>
+
+    <!-- user info -->
+
     <string-array name="admin_position">
         <item></item>
         <item>Developer</item>
@@ -23,63 +34,6 @@
         <item>Sports Secy</item>
         <item>Cult secy</item>
         <item>Warden</item>
-    </string-array>
-
-    <string-array name="complaint_category">
-        <item></item>
-        <item>Maintenance</item>
-        <item>Mess</item>
-        <item>Other</item>
-    </string-array>
-
-    <string-array name="complaint_anonymity">
-        <item></item>
-        <item>Public</item>
-        <item>Only admin</item>
-        <item>No one</item>
-    </string-array>
-
-    <string-array name="maintenance_area">
-        <item></item>
-        <item>Washbasin</item>
-        <item>Washroom</item>
-        <item>Bathroom</item>
-        <item>Washing Machines</item>
-        <item>Geysers (Bathrooms)</item>
-        <item>Geysers (Drinking Water)</item>
-        <item> Water Problem (Washroom)</item>
-        <item>Water Problem (Drinking Water)</item>
-        <item>Gym Room</item>
-        <item>ISC Room</item>
-        <item>Common Room</item>
-        <item>Reading Room</item>
-        <item>TV Room</item>
-        <item>Music Room</item>
-        <item>RCA Room</item>
-        <item>Common Areas</item>
-    </string-array>
-
-    <string-array name="mess_area">
-        <item></item>
-        <item>Cleanliness</item>
-        <item>Infrastructure</item>
-        <item>Other</item>
-    </string-array>
-
-    <string-array name="bill_catergory">
-        <item>Maintenance</item>
-        <item>Mess</item>
-        <item>Sports</item>
-        <item>Cult</item>
-        <item>Others</item>
-    </string-array>
-
-    <string-array name="wing">
-        <item></item>
-        <item>Junior</item>
-        <item>Senior</item>
-        <item>Ultra</item>
-        <item>End</item>
     </string-array>
 
     <string-array name="floor">
@@ -166,6 +120,73 @@
         <item>74</item>
         <item>75</item>
         <item>76</item>
+    </string-array>
+
+    <!-- complaint form -->
+
+    <string-array name="complaint_category">
+        <item></item>
+        <item>Maintenance</item>
+        <item>Mess</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="complaint_anonymity">
+        <item></item>
+        <item>Public</item>
+        <item>Only admin</item>
+        <item>No one</item>
+    </string-array>
+
+    <string-array name="maintenance_area">
+        <item></item>
+        <item>Washbasin</item>
+        <item>Washroom</item>
+        <item>Bathroom</item>
+        <item>Washing Machines</item>
+        <item>Geysers (Bathrooms)</item>
+        <item>Geysers (Drinking Water)</item>
+        <item> Water Problem (Washroom)</item>
+        <item>Water Problem (Drinking Water)</item>
+        <item>Gym Room</item>
+        <item>ISC Room</item>
+        <item>Common Room</item>
+        <item>Reading Room</item>
+        <item>TV Room</item>
+        <item>Music Room</item>
+        <item>RCA Room</item>
+        <item>Common Areas</item>
+    </string-array>
+
+    <string-array name="mess_area">
+        <item></item>
+        <item>Cleanliness</item>
+        <item>Infrastructure</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="wing">
+        <item></item>
+        <item>Junior</item>
+        <item>Senior</item>
+        <item>Ultra</item>
+        <item>End</item>
+    </string-array>
+
+    <!-- food feedback -->
+    <string-array name="meal_time">
+        <item></item>
+        <item>breakfast</item>
+        <item>lunch</item>
+<!--        <item>Snacks</item>-->
+        <item>dinner</item>
+    </string-array>
+
+    <string-array name="feedback_anonymity">
+        <item></item>
+        <item>I Don\'t Want My Feedback To be Anonymous</item>
+        <item>I want it to be anonymous but not from the developers</item>
+        <item>I want it to be completely anonymous</item>
     </string-array>
 
 </resources>
