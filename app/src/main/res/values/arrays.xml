@@ -39,6 +39,33 @@
         <item>No one</item>
     </string-array>
 
+    <string-array name="maintenance_area">
+        <item></item>
+        <item>Washbasin</item>
+        <item>Washroom</item>
+        <item>Bathroom</item>
+        <item>Washing Machines</item>
+        <item>Geysers (Bathrooms)</item>
+        <item>Geysers (Drinking Water)</item>
+        <item> Water Problem (Washroom)</item>
+        <item>Water Problem (Drinking Water)</item>
+        <item>Gym Room</item>
+        <item>ISC Room</item>
+        <item>Common Room</item>
+        <item>Reading Room</item>
+        <item>TV Room</item>
+        <item>Music Room</item>
+        <item>RCA Room</item>
+        <item>Common Areas</item>
+    </string-array>
+
+    <string-array name="mess_area">
+        <item></item>
+        <item>Cleanliness</item>
+        <item>Infrastructure</item>
+        <item>Other</item>
+    </string-array>
+
     <string-array name="bill_catergory">
         <item>Maintenance</item>
         <item>Mess</item>
