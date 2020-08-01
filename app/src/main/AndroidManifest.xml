@@ -22,9 +22,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity android:name=".activity.WingMapActivity"/>
-        <activity android:name=".activity.ComplainFormActivity" />
-        <activity android:name=".childFragment.events.EventDescription" />
-        <activity android:name=".activity.ComplainActivity" />
+        <activity android:name=".activity.ComplaintFormActivity" />
+        <activity android:name=".activity.EventDescription" />
+        <activity android:name=".activity.ComplaintActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.EventActivity" />

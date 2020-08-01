@@ -2,8 +2,6 @@ package com.example.karakoram.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karakoram.R;
-import com.example.karakoram.adapter.pageadapter;
-import com.example.karakoram.notificationFragment;
 import com.example.karakoram.parentFragment.HomeFragment;
 import com.example.karakoram.parentFragment.MyStuffFragment;
 import com.example.karakoram.parentFragment.billFragment;
@@ -25,7 +21,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -60,9 +55,9 @@ public class MainActivity extends AppCompatActivity  {
                 if(id==R.id.navigation_complaints){
                     SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
                     if(sharedPreferences.getString("type","Student").equals("Admin"))
-                        startActivity(new Intent(MainActivity.this, ComplainActivity.class));
+                        startActivity(new Intent(MainActivity.this, ComplaintActivity.class));
                     else
-                        startActivity(new Intent(MainActivity.this, ComplainFormActivity.class));
+                        startActivity(new Intent(MainActivity.this, ComplaintFormActivity.class));
                 }
                 else if(id==R.id.navigation_about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));

@@ -1,6 +1,5 @@
 package com.example.karakoram.childFragment.myStuff;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,29 +16,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.activity.BillActivity;
-import com.example.karakoram.activity.BillFormActivity;
-import com.example.karakoram.activity.EventActivity;
 import com.example.karakoram.adapter.EventAdapter;
-import com.example.karakoram.adapter.HostelBillAdapter;
-import com.example.karakoram.childFragment.events.EventDescription;
-import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Event;
-import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.User;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 

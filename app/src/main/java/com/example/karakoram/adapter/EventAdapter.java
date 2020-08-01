@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Event;
-import com.example.karakoram.childFragment.events.EventDescription;
+import com.example.karakoram.activity.EventDescription;
 
 import java.util.ArrayList;
 import java.util.Date;

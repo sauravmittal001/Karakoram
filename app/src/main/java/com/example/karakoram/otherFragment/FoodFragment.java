@@ -1,4 +1,4 @@
-package com.example.karakoram.childFragment.mess;
+package com.example.karakoram.otherFragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.childFragment.mess.SlidingFragment;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
@@ -33,7 +34,6 @@ public class FoodFragment extends Fragment {
     private Button mMenuChange;
     private SlidingFragment slidingFragment;
     private int dayIndex;
-
     private SharedPreferences sharedPreferences;
 
     public FoodFragment() {

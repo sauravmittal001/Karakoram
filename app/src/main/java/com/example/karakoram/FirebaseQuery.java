@@ -1,10 +1,9 @@
 package com.example.karakoram;
 
 import android.net.Uri;
-import android.util.Log;
 
 import com.example.karakoram.resource.Category;
-import com.example.karakoram.resource.Complain;
+import com.example.karakoram.resource.Complaint;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.Menu;
@@ -14,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class FirebaseQuery {
 
@@ -38,6 +38,10 @@ public class FirebaseQuery {
         return ref.child("events").child(key);
     }
 
+    public static StorageReference getEventImageRef(String key){
+        return storage.getReference("eventImages/"+key+".png");
+    }
+
     public static Query getAllEvents(){
         return ref.child("events").orderByChild("userId");
     }
@@ -58,6 +62,10 @@ public class FirebaseQuery {
 
     public static Query getBill(String key){
         return ref.child("hostelBills").child(key);
+    }
+
+    public static StorageReference getBillImageRef(String key){
+        return storage.getReference("hostelBillImages/"+key+".png");
     }
 
     public static void addBill(HostelBill bill, Uri imageUri){
@@ -87,13 +95,19 @@ public class FirebaseQuery {
         ref.child("messMenu").child(String.valueOf(day)).setValue(menu);
     }
 
-    public static Query getAllComplains(){
-        return ref.child("complains");
+    public static Query getAllComplaints(){
+        return ref.child("complaints");
     }
 
-    public static void addComplian(Complain complain){
-        String key = ref.child("complains").push().getKey();
-        ref.child("complains").child(key).setValue(complain);
+    public static void addCompliant(Complaint complaint){
+        String key = ref.child("complaints").push().getKey();
+        ref.child("complaints").child(key).setValue(complaint);
+    }
+
+    public static void addCompliant(Complaint complaint, Uri imageUri){
+        String key = ref.child("complaints").push().getKey();
+        ref.child("complaints").child(key).setValue(complaint);
+        storage.getReference("/complaintImages/"+key+".png").putFile(imageUri);
     }
 
 }

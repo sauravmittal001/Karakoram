@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorAccent"
     android:fillViewport="true"
-    tools:context=".childFragment.mess.FoodFragment">
+    tools:context=".otherFragment.FoodFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_menu"

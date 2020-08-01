@@ -55,13 +55,44 @@
         <item>Music Room</item>
         <item>RCA Room</item>
         <item>Common Areas</item>
+        <item>Others</item>
     </string-array>
 
     <string-array name="mess_area">
         <item></item>
         <item>Cleanliness</item>
         <item>Infrastructure</item>
-        <item>Other</item>
+        <item>Food</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="maintenance_area_enums">
+        <item></item>
+        <item>Washbasin</item>
+        <item>Washroom</item>
+        <item>Bathroom</item>
+        <item>Washing_Machines</item>
+        <item>Bathroom_Geyser</item>
+        <item>Drinking_Water_Geyser</item>
+        <item>Bathroom_Water_Issue</item>
+        <item>Drinking_Water_Issue</item>
+        <item>Gym</item>
+        <item>ISC</item>
+        <item>Common_Room</item>
+        <item>Reading_Room</item>
+        <item>TV_Room</item>
+        <item>Music_Room</item>
+        <item>RCA_Room</item>
+        <item>Common_Areas</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="mess_area_enums">
+        <item></item>
+        <item>Mess_Maintenance</item>
+        <item>Mess_Infra</item>
+        <item>Mess_Food</item>
+        <item>Others</item>
     </string-array>
 
     <string-array name="bill_catergory">
@@ -70,14 +101,6 @@
         <item>Sports</item>
         <item>Cult</item>
         <item>Others</item>
-    </string-array>
-
-    <string-array name="wing">
-        <item></item>
-        <item>Junior</item>
-        <item>Senior</item>
-        <item>Ultra</item>
-        <item>End</item>
     </string-array>
 
     <string-array name="floor">
