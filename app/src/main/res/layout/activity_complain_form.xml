@@ -122,9 +122,9 @@
 
         </LinearLayout>
 
-        <!-- anonymity input -->
+        <!-- maintenance area input -->
         <LinearLayout
-            android:id="@+id/ll_anonymity"
+            android:id="@+id/ll_complain_maintenance_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -139,12 +139,11 @@
                 android:layout_marginEnd="90dp"
                 android:fontFamily="@font/senregular"
                 android:lineSpacingMultiplier="1.14"
-                android:text="Anonymous to:"
+                android:text="Complaint area"
                 android:textColor="@color/text700"
                 android:textSize="14sp" />
 
             <LinearLayout
-                android:id="@+id/ll_anonymity_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -156,7 +155,50 @@
                 android:minHeight="28dp">
 
                 <com.example.karakoram.views.CustomSpinner
-                    android:id="@+id/spinner_anonymity"
+                    android:id="@+id/spinner_complain_maintenance_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/spinner_background"
+                    android:dropDownWidth="match_parent"
+                    android:entries="@array/complaint_anonymity" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- mess area input -->
+        <LinearLayout
+            android:id="@+id/ll_complain_mess_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="90dp"
+                android:fontFamily="@font/senregular"
+                android:lineSpacingMultiplier="1.14"
+                android:text="Complaint area"
+                android:textColor="@color/text700"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/background_rounded_section_task"
+                android:gravity="center_vertical"
+                android:minHeight="28dp">
+
+                <com.example.karakoram.views.CustomSpinner
+                    android:id="@+id/spinner_complain_mess_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/spinner_background"
@@ -356,9 +398,9 @@
             android:layout_gravity="center"
             android:layout_marginBottom="12dp"
             android:lineSpacingExtra="2sp"
-            android:text="User details attached unless anonymous"
+            android:text="Your details attached to this form"
             android:textColor="@color/text700"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:textSize="12sp" />
 
         <!-- complain image text -->

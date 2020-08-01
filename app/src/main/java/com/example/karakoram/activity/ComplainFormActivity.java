@@ -29,14 +29,15 @@ import java.util.Objects;
 
 public class ComplainFormActivity extends AppCompatActivity {
 
-    private CustomSpinner categorySpinner, floorSpinner, roomNumberSpinner, wingSpinner, anonymitySpinner;
-    private String[] categoryArray, floorArray, roomNumberArray, wingArray, anonymityArray;
+    private CustomSpinner categorySpinner, floorSpinner, roomNumberSpinner, wingSpinner, anonymitySpinner, maintenanceAreaSpinner, messAreaSpinner;
+    private String[] categoryArray, floorArray, roomNumberArray, wingArray, anonymityArray, maintenanceAreaArray, messAreaArray;
     private Uri imageUri;
-    private TextView mError;
+//    private TextView mError;
     private EditText mDescription;
     private Button mButton;
     private String userRoomNumber, userFloor, userEntryNumber;
     private SharedPreferences sharedPreferences;
+    Boolean isImageAttached = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class ComplainFormActivity extends AppCompatActivity {
     }
 
     private void setViews() {
-        mError = (TextView) findViewById(R.id.tv_complain_details);
+//        mError = (TextView) findViewById(R.id.tv_complain_details);
         mDescription = (EditText) findViewById(R.id.et_complain_description);
         mButton = findViewById(R.id.button_complain_submit);
         setSpinners();
@@ -98,11 +99,24 @@ public class ComplainFormActivity extends AppCompatActivity {
             roomNumberSpinner.setSelection(spinnerPosition);
         }
 
-        anonymityArray = getResources().getStringArray(R.array.complaint_anonymity);
-        CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, anonymityArray);
-        anonymityAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        anonymitySpinner = findViewById(R.id.spinner_anonymity);
-        anonymitySpinner.setAdapter(anonymityAdapter);
+//        anonymityArray = getResources().getStringArray(R.array.complaint_anonymity);
+//        CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, anonymityArray);
+//        anonymityAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+//        anonymitySpinner = findViewById(R.id.spinner_anonymity);
+//        anonymitySpinner.setAdapter(anonymityAdapter);
+
+
+        maintenanceAreaArray = getResources().getStringArray(R.array.maintenance_area);
+        CustomSpinnerAdapter maintenanceAreaAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, maintenanceAreaArray);
+        maintenanceAreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        maintenanceAreaSpinner = findViewById(R.id.spinner_complain_maintenance_area);
+        maintenanceAreaSpinner.setAdapter(maintenanceAreaAdapter);
+
+        messAreaArray = getResources().getStringArray(R.array.mess_area);
+        CustomSpinnerAdapter messAreaAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, messAreaArray);
+        messAreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        messAreaSpinner = findViewById(R.id.spinner_complain_mess_area);
+        messAreaSpinner.setAdapter(messAreaAdapter);
 
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,12 +126,21 @@ public class ComplainFormActivity extends AppCompatActivity {
                 if (category.equals("Maintenance")) {
                     findViewById(R.id.ll_complaint_wing).setVisibility(View.VISIBLE);
                     findViewById(R.id.ll_complaint_room_number).setVisibility(View.VISIBLE);
-                    findViewById(R.id.ll_anonymity).setVisibility(View.GONE);
-                    mError.setVisibility(View.GONE);
-                } else if (category.equals("Mess") || category.equals("Other")) {
+//                    findViewById(R.id.ll_anonymity).setVisibility(View.GONE);
+//                    mError.setVisibility(View.GONE);
+                    findViewById(R.id.ll_complain_maintenance_area).setVisibility(View.VISIBLE);
+                    findViewById(R.id.ll_complain_mess_area).setVisibility(View.GONE);
+                } else if (category.equals("Mess")) {
                     findViewById(R.id.ll_complaint_wing).setVisibility(View.GONE);
                     findViewById(R.id.ll_complaint_room_number).setVisibility(View.GONE);
-                    findViewById(R.id.ll_anonymity).setVisibility(View.VISIBLE);
+//                    findViewById(R.id.ll_anonymity).setVisibility(View.VISIBLE);
+                    findViewById(R.id.ll_complain_maintenance_area).setVisibility(View.GONE);
+                    findViewById(R.id.ll_complain_mess_area).setVisibility(View.VISIBLE);
+                } else if (category.equals("Other")) {
+                    findViewById(R.id.ll_complaint_wing).setVisibility(View.GONE);
+                    findViewById(R.id.ll_complaint_room_number).setVisibility(View.GONE);
+                    findViewById(R.id.ll_complain_maintenance_area).setVisibility(View.GONE);
+                    findViewById(R.id.ll_complain_mess_area).setVisibility(View.GONE);
                 }
             }
             @Override
@@ -127,26 +150,26 @@ public class ComplainFormActivity extends AppCompatActivity {
 
         });
 
-        anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String anonymity = anonymity = anonymityArray[anonymitySpinner.getSelectedItemPosition()];
-                if (anonymity.equals("Public")) {
-                    mError.setVisibility(View.VISIBLE);
-                    mError.setText("Your details are visible to public");
-                } else if (anonymity.equals("Only admin")) {
-                    mError.setVisibility(View.VISIBLE);
-                    mError.setText("Your details are visible only to admin");
-                } else if (anonymity.equals("No one")) {
-                    mError.setVisibility(View.VISIBLE);
-                    mError.setText("Your details are not visible");
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
+//        anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//                String anonymity = anonymity = anonymityArray[anonymitySpinner.getSelectedItemPosition()];
+//                if (anonymity.equals("Public")) {
+//                    mError.setVisibility(View.VISIBLE);
+//                    mError.setText("Your details are visible to public");
+//                } else if (anonymity.equals("Only admin")) {
+//                    mError.setVisibility(View.VISIBLE);
+//                    mError.setText("Your details are visible only to admin");
+//                } else if (anonymity.equals("No one")) {
+//                    mError.setVisibility(View.VISIBLE);
+//                    mError.setText("Your details are not visible");
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parentView) {
+//                // your code here
+//            }
+//        });
 
 
     }
@@ -161,12 +184,15 @@ public class ComplainFormActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            //TODO: unchecked code
+            findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
             imageUri = data.getData();
             ImageView complainImage = findViewById(R.id.div_complain_image);
             complainImage.setImageURI(imageUri);
+            isImageAttached = true;
         } else {
+            findViewById(R.id.tv_image).setVisibility(View.GONE);
             Log.d("123hello", "upload failure");
         }
     }
@@ -187,10 +213,12 @@ public class ComplainFormActivity extends AppCompatActivity {
         else {
             Complain complain = new Complain();
             String category = categoryArray[categorySpinner.getSelectedItemPosition()];
-            String anonymity;
+//            String anonymity;
+            String messArea, maintenanceArea;
             String description = String.valueOf(mDescription.getText());
             String wing;
             String room = floorArray[floorSpinner.getSelectedItemPosition()] + "-" + roomNumberArray[roomNumberSpinner.getSelectedItemPosition()];
+
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 if(categorySpinner.getSelectedItemPosition() == 0) {
@@ -198,13 +226,29 @@ public class ComplainFormActivity extends AppCompatActivity {
                     return;
                 } else
                     findViewById(R.id.ll_category_input).setBackground(getDrawable(R.drawable.background_rounded_section_task));
-                if (!category.equals("Maintenance")) {
-                    if (anonymitySpinner.getSelectedItemPosition() == 0) {
-                        findViewById(R.id.ll_anonymity_spinner).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                if (category.equals("Maintenance")) {
+                    if (maintenanceAreaSpinner.getSelectedItemPosition() == 0) {
+                        findViewById(R.id.ll_complain_maintenance_area).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
                         return;
                     } else {
-                        findViewById(R.id.ll_anonymity_spinner).setBackground(getDrawable(R.drawable.background_rounded_section_task));
-                        anonymity = anonymityArray[anonymitySpinner.getSelectedItemPosition()];
+                        findViewById(R.id.ll_complain_maintenance_area).setBackground(getDrawable(R.drawable.background_rounded_section_task));
+                        maintenanceArea = maintenanceAreaArray[maintenanceAreaSpinner.getSelectedItemPosition()];
+                    }
+//                    if (anonymitySpinner.getSelectedItemPosition() == 0) {
+//                        findViewById(R.id.ll_anonymity_spinner).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+//                        return;
+//                    } else {
+//                        findViewById(R.id.ll_anonymity_spinner).setBackground(getDrawable(R.drawable.background_rounded_section_task));
+//                        anonymity = anonymityArray[anonymitySpinner.getSelectedItemPosition()];
+//                    }
+                }
+                if (category.equals("Mess")) {
+                    if (messAreaSpinner.getSelectedItemPosition() == 0) {
+                        findViewById(R.id.ll_complain_mess_area).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                        return;
+                    } else {
+                        findViewById(R.id.ll_complain_mess_area).setBackground(getDrawable(R.drawable.background_rounded_section_task));
+                        messArea = messAreaArray[messAreaSpinner.getSelectedItemPosition()];
                     }
                 }
                 if (description.equals("")) {
@@ -231,6 +275,8 @@ public class ComplainFormActivity extends AppCompatActivity {
 //            complain.setWing(wing); make enum
 //            complain.setRoomNumber(room);
 //            complain.setAnonymity(anonymity); //make enum
+//            complain.setIsImageAttached(isImageAttached);
+
 
 
             new AlertDialog.Builder(this, R.style.MyDialogTheme)
