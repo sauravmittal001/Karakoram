@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- labels -->
     <LinearLayout
         android:id="@+id/lv_top"
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- labels -->
+            <!-- heading -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +56,7 @@
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/senbold"
                     android:lineSpacingMultiplier="1.25"
-                    android:text="User Details"
+                    android:text="My account"
                     android:textColor="@color/text700"
                     android:textSize="24sp" />
 
@@ -66,19 +67,37 @@
                     android:layout_marginTop="8dp"
                     android:gravity="top"
                     android:lineSpacingMultiplier="1.5"
-                    android:text="Information used to pre-fill complaint and food feedback forms (excluding anonymous submits)"
+                    android:text="Change password here. User details are attached to every form (excluding anonymous)"
                     android:textColor="@color/text700"
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- user detail -->
+            <!-- change password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/senbold"
+                    android:textColor="@color/text700"
+                    android:text="User details"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <!-- entry no -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -87,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/senregular"
+                    android:textColor="@color/text700"
                     android:text="Entry Number: "
                     android:textSize="18sp" />
 
@@ -114,6 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/senregular"
+                    android:textColor="@color/text700"
                     android:text="Name: "
                     android:textSize="18sp" />
 
@@ -143,6 +164,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/senregular"
                     android:text="Room Number: "
+                    android:textColor="@color/text700"
                     android:textSize="18sp" />
 
                 <LinearLayout
@@ -208,11 +230,32 @@
 <!--                </LinearLayout>-->
 
 
+            <!-- change password -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/senbold"
+                    android:textColor="@color/text700"
+                    android:text="Change password"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -227,8 +270,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:layout_marginTop="24dp"
                         android:fontFamily="@font/senregular"
+                        android:textColor="@color/text700"
                         android:text="Current: "
                         android:textSize="18sp" />
 
@@ -238,6 +281,7 @@
                         android:gravity="right"
                         android:layout_marginTop="24dp"
                         android:fontFamily="@font/senregular"
+                        android:textColor="@color/text700"
                         android:text="New: "
                         android:textSize="18sp" />
 
@@ -247,6 +291,7 @@
                         android:gravity="right"
                         android:layout_marginTop="24dp"
                         android:fontFamily="@font/senregular"
+                        android:textColor="@color/text700"
                         android:text="Retype New: "
                         android:textSize="18sp" />
 
@@ -263,7 +308,6 @@
                         android:id="@+id/et_current"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
                         android:fontFamily="@font/senbold"
                         android:background="@drawable/background_rect_section_task"
                         android:inputType="textPassword"
