@@ -113,6 +113,10 @@ public class FirebaseQuery {
         return ref.child("complaints").orderByChild("category").equalTo("Others");
     }
 
+    public static Query getUserComplaints(String userID){
+        return ref.child("complaints").orderByChild("userId").equalTo(userID);
+    }
+
     public static void addCompliant(Complaint complaint){
         String key = ref.child("complaints").push().getKey();
         ref.child("complaints").child(key).setValue(complaint);

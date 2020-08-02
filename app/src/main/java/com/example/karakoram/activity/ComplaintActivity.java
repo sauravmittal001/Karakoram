@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.karakoram.R;
 import com.example.karakoram.otherFragment.complaintChildFragment;
+import com.example.karakoram.resource.Category;
 import com.google.android.material.tabs.TabLayout;
 import com.example.karakoram.adapter.pageadapter;
 
@@ -24,9 +25,9 @@ public class ComplaintActivity extends AppCompatActivity {
 
         // Create an adapter that knows which fragment should be shown on each page
         pageadapter adapter = new pageadapter(getSupportFragmentManager());
-        adapter.addFragment(new complaintChildFragment(), "Mess");
-        adapter.addFragment(new complaintChildFragment(), "Maint");
-        adapter.addFragment(new complaintChildFragment(), "Others");
+        adapter.addFragment(new complaintChildFragment(Category.Mess,false), "Mess");
+        adapter.addFragment(new complaintChildFragment(Category.Maintenance,false), "Maint");
+        adapter.addFragment(new complaintChildFragment(Category.Others,false), "Others");
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);

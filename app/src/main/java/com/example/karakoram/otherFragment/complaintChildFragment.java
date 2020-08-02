@@ -6,9 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,7 +19,7 @@ import android.view.ViewGroup;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.adapter.ComplaintAdapter;
-import com.example.karakoram.cache.HomeCache;
+import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
 import com.example.karakoram.resource.MaintComplaint;
 import com.example.karakoram.resource.MessComplaint;
@@ -42,16 +40,12 @@ public class complaintChildFragment extends Fragment {
     ComplaintAdapter adapter;
     ArrayList<String> key = new ArrayList<>();
     ArrayList<Complaint> complaints = new ArrayList<>();
+    Category category;
+    boolean getAllCategory;
 
-    public complaintChildFragment() {
-        // Required empty public constructor
-    }
-
-    public static complaintChildFragment newInstance(String param1, String param2) {
-        complaintChildFragment fragment = new complaintChildFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public complaintChildFragment(Category category, boolean getAllCategory) {
+        this.category = category;
+        this.getAllCategory = getAllCategory;
     }
 
     @Override
@@ -97,55 +91,60 @@ public class complaintChildFragment extends Fragment {
     private void refreshListView() {
         complaints.clear();
         key.clear();
-        FirebaseQuery.getOtherComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
-            @SneakyThrows
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    complaints.add(snapshotItem.getValue(Complaint.class));
-                    key.add(snapshotItem.getKey());
+
+        if(getAllCategory || category.equals(Category.Mess)) {
+            FirebaseQuery.getMessComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
+                @SneakyThrows
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        complaints.add(snapshotItem.getValue(MessComplaint.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    start();
                 }
-                start();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
-
-        FirebaseQuery.getMessComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
-            @SneakyThrows
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    complaints.add(snapshotItem.getValue(MessComplaint.class));
-                    key.add(snapshotItem.getKey());
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
                 }
-                start();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
-
-        FirebaseQuery.getMaintComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
-            @SneakyThrows
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    complaints.add(snapshotItem.getValue(MaintComplaint.class));
-                    key.add(snapshotItem.getKey());
+            });
+        }
+        if(getAllCategory || category.equals(Category.Maintenance)) {
+            FirebaseQuery.getMaintComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
+                @SneakyThrows
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        complaints.add(snapshotItem.getValue(MaintComplaint.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    start();
                 }
-                start();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
+        if(getAllCategory || category.equals(Category.Others)){
+            FirebaseQuery.getOtherComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
+                @SneakyThrows
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        complaints.add(snapshotItem.getValue(Complaint.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    start();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
     }
 }

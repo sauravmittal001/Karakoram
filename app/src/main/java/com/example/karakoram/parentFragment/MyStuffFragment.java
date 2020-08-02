@@ -78,7 +78,7 @@ public class MyStuffFragment extends Fragment {
         }
         else{
             adapter.addFragment(new mystuffUST(), "Mess Feedbacks");
-            adapter.addFragment(new complaintChildFragment(), "Complains");
+            adapter.addFragment(new complaintChildFragment(null,true), "Complains");
         }
         viewPager.setAdapter(adapter);
     }

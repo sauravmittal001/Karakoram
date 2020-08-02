@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/theme5lite"
     tools:context=".childFragment.mess.messUSTFragment"
     android:layout_marginBottom="56dp">
 
