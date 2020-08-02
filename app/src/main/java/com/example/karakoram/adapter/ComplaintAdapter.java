@@ -22,6 +22,7 @@ import com.example.karakoram.activity.EventDescription;
 import com.example.karakoram.resource.MaintComplaint;
 import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.Status;
+import com.google.android.gms.common.util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
     Context mcontext;
     ArrayList<Complaint> complaints;
     ArrayList<String> key;
+    String[] maintAreaList, maintAreaEnumList, messAreaList, messAreaEnumList;
 
     public ComplaintAdapter(Context mcontext, ArrayList<Complaint> complaints, ArrayList<String> key) {
         /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
@@ -48,7 +50,10 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
         this.mcontext=mcontext;
         this.complaints = complaints;
         this.key=key;
-
+        this.maintAreaList = mcontext.getResources().getStringArray(R.array.maintenance_area);
+        this.maintAreaEnumList = mcontext.getResources().getStringArray(R.array.maintenance_area_enums);
+        this.messAreaList = mcontext.getResources().getStringArray(R.array.mess_area);
+        this.messAreaEnumList = mcontext.getResources().getStringArray(R.array.mess_area_enums);
     }
 
     @NonNull
@@ -91,10 +96,16 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
             else
                 holder.mStatusButton.setImageDrawable(mcontext.getResources().getDrawable(green_status));
 
-            if(complaint.getCategory().equals(Category.Maintenance))
-                holder.mArea.setText(((MaintComplaint)complaint).getComplaintArea().toString());
-            else if(complaint.getCategory().equals(Category.Mess))
-                holder.mArea.setText(((MessComplaint)complaint).getComplaintArea().toString());
+            if(complaint.getCategory().equals(Category.Maintenance)) {
+                String areaEnum = ((MaintComplaint) complaint).getComplaintArea().toString();
+                int pos = ArrayUtils.toArrayList(maintAreaEnumList).indexOf(areaEnum);
+                holder.mArea.setText(maintAreaList[pos]);
+            }
+            else if(complaint.getCategory().equals(Category.Mess)) {
+                String areaEnum = ((MessComplaint) complaint).getComplaintArea().toString();
+                int pos = ArrayUtils.toArrayList(messAreaEnumList).indexOf(areaEnum);
+                holder.mArea.setText(messAreaList[pos]);
+            }
             else
                 holder.mArea.setText(complaint.getDescription());
 
