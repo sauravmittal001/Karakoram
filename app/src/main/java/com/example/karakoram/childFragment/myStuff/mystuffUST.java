@@ -18,33 +18,39 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.adapter.EventAdapter;
-import com.example.karakoram.resource.Event;
+import com.example.karakoram.adapter.USTadapter;
+import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
-public class EventFragment extends Fragment {
 
+public class mystuffUST extends Fragment {
+
+
+    /* Variables */
     private ArrayList<String> key = new ArrayList<>();
-    private ArrayList<Event> event;
+    private ArrayList<MessFeedback>feedbacks;
+
 
     /* Views */
     private View view;
     private RecyclerView listView;
+    Drawable mdivider;
 
-    /* Adapters */
-    private EventAdapter adapter;
+
+    private USTadapter adapter;
+
+
+
+    public mystuffUST(){
+
+    }
 
 
     @Override
@@ -52,53 +58,62 @@ public class EventFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view= inflater.inflate(R.layout.fragment_home, container, false);
-        return view;
+        // Inflate the layout for this fragment
+       view= inflater.inflate(R.layout.fragment_mess_u_s_t, container, false);
+       return view;
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        view.findViewById(R.id.fab_event).setVisibility(View.GONE);
 
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-        Query query;
-        String userId = sharedPreferences.getString("userId","loggedOut");
-        query = FirebaseQuery.getUserEvents(userId);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                event = new ArrayList<>();
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    event.add(snapshotItem.getValue(Event.class));
-                    key.add(snapshotItem.getKey());
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String userid=sharedPreferences.getString("userId","logedOut");
+
+
+
+          FirebaseQuery.getUserMessFeedback(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    feedbacks = new ArrayList<>();
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    start();
                 }
-                start();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+
     }
 
 
+
     private void start() {
-        Log.i("ASDF", String.valueOf(event));
-        adapter = new EventAdapter(getActivity(), event,key);
-        listView = view.findViewById(R.id.list_event);
-        //listView.setHasFixedSize(true);
+        Log.i("ASDF", String.valueOf(feedbacks));
+        adapter = new USTadapter(getActivity(), feedbacks,key);
+        listView = view.findViewById(R.id.bill_listView);
+        listView.setHasFixedSize(true);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        Drawable mdivider = ContextCompat.getDrawable(view.getContext(), R.drawable.divider);
+
+        mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
         //mdivider.setBounds(getParentFragment().getPaddingLeft(),0,16,0);
         DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL);
         itemdecor.setDrawable(mdivider);
         listView.addItemDecoration(itemdecor);
         listView.setAdapter(adapter);
+
     }
 }

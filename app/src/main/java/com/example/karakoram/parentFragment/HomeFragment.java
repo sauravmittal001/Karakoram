@@ -52,14 +52,11 @@ public class HomeFragment extends Fragment {
 
     HomeCache cache;
 
-    String x="str";
 
     public HomeFragment() {
     }
 
-    HomeFragment(String x){
-        this.x=x;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -125,7 +122,7 @@ public class HomeFragment extends Fragment {
         key.clear();
 
 
-        if(x.equals("str")){
+
             FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
                 @SneakyThrows
                 @Override
@@ -150,31 +147,8 @@ public class HomeFragment extends Fragment {
             });
         }
 
-        else{
-        FirebaseQuery.getUserEvents(x).addListenerForSingleValueEvent(new ValueEventListener() {
-            @SneakyThrows
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    event.add(snapshotItem.getValue(Event.class));
-                    key.add(snapshotItem.getKey());
-                }
-                try {
-                    cache.setKeyArray(key);
-                    cache.setValueArray(event);
-                } catch (Exception ignored) {
-                    Log.i("HomeCacheLog", "cache files are not getting updated");
-                }
-                start();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
-    }
-    }
+
 
 
     private void start() {
