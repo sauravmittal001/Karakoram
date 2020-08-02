@@ -2,227 +2,195 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".childFragment.mess.messFeedbackFragment">
 
-    <com.iarcuschin.simpleratingbar.SimpleRatingBar
-        android:id="@+id/aaaa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:srb_starSize="85dp"
-        app:srb_starBorderWidth="15"
-        app:srb_starCornerRadius="20"
-        app:srb_numberOfStars="3"
-        app:srb_rating="0"
-        app:srb_stepSize="1"
-        app:srb_borderColor="@color/transparent_black"
-        app:srb_fillColor="@color/darker_yellow" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="74dp">
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="74dp">
 
-            android:orientation="vertical">
-
-            <RatingBar
-                android:id="@+id/mess_feedback_rating_bar"
-                style="?android:attr/ratingBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:isIndicator="false"
-                android:numStars="3"
-                android:stepSize="1" />
-
-            <TextView
-                android:id="@+id/tv_star_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/senregular"
-                android:lineSpacingExtra="2sp"
-                android:text="You Found Today's food satisfactory"
-                android:textColor="@color/text700"
-                android:textSize="12sp"
-                android:visibility="invisible" />
-
-            <!-- meal time input-->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:fontFamily="@font/senregular"
-                    android:lineSpacingMultiplier="1.14"
-                    android:text="Meal time: "
-                    android:textColor="@color/text700"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:id="@+id/ll_feedback_meal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:background="@drawable/background_rounded_section_task"
-                    android:gravity="center_vertical"
-                    android:minHeight="28dp">
-
-                    <com.example.karakoram.views.CustomSpinner
-                        android:id="@+id/spinner_feedback_meal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_background"
-                        android:dropDownWidth="wrap_content"
-                        android:entries="@array/meal_time" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- meal menu -->
-            <TextView
-                android:id="@+id/tv_feedback_meal_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:background="@drawable/background_rounded_section_task"
-                android:fontFamily="@font/senregular"
-                android:importantForAutofill="no"
-                android:lineSpacingMultiplier="1.5"
-                android:padding="12dp"
-                android:textColor="@color/text700"
-                android:textSize="12sp" />
 
-
-            <!-- anonymity input -->
-            <LinearLayout
-                android:id="@+id/ll_complain_mess_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:orientation="vertical">
 
-                <TextView
+                <!-- stars -->
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/srb_mess_feedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="90dp"
-                    android:fontFamily="@font/senregular"
-                    android:lineSpacingMultiplier="1.14"
-                    android:text="Anonymity"
-                    android:textColor="@color/text700"
-                    android:textSize="14sp" />
+                    android:layout_gravity="center"
+                    app:srb_starSize="50dp"
+                    app:srb_starCornerRadius="0"
+                    app:srb_numberOfStars="3"
+                    app:srb_rating="0"
+                    app:srb_stepSize="1"
+                    app:srb_borderColor="@color/white"
+                    app:srb_starBackgroundColor="@color/grey"
+                    app:srb_fillColor="@color/darker_yellow" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_star_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/senregular"
+                    android:lineSpacingExtra="2sp"
+                    android:text="You Found Today's food satisfactory"
+                    android:textColor="@color/text700"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+
+                <!-- meal time input-->
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/background_rounded_section_task"
-                    android:gravity="center_vertical"
-                    android:minHeight="28dp">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <com.example.karakoram.views.CustomSpinner
-                        android:id="@+id/spinner_feedback_anonymity"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/spinner_background"
-                        android:dropDownWidth="match_parent"
-                        android:entries="@array/feedback_anonymity" />
+                    <LinearLayout
+                        android:id="@+id/ll_feedback_meal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:background="@drawable/background_rounded_section_task"
+                        android:gravity="center_vertical"
+                        android:minHeight="28dp">
+
+                        <com.example.karakoram.views.CustomSpinner
+                            android:id="@+id/spinner_feedback_meal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_background"
+                            android:dropDownWidth="wrap_content"
+                            android:entries="@array/meal_time" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <!-- Description input -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
+                <!-- meal menu -->
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/senregular"
-                    android:gravity="top"
-                    android:lineSpacingMultiplier="1.14"
-                    android:text="Suggestion/Description"
-                    android:textColor="@color/text700"
-                    android:textSize="14sp" />
-
-
-                <EditText
-                    android:id="@+id/et_feedback_description"
+                    android:id="@+id/tv_feedback_meal_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
-                    android:layout_marginTop="8dp"
                     android:background="@drawable/background_rounded_section_task"
-                    android:fontFamily="@font/senbold"
-                    android:hint="Optional"
+                    android:fontFamily="@font/senregular"
                     android:importantForAutofill="no"
-                    android:inputType="textMultiLine"
                     android:lineSpacingMultiplier="1.5"
                     android:padding="12dp"
                     android:textColor="@color/text700"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
+
+                <!-- anonymity input -->
+                <LinearLayout
+                    android:id="@+id/ll_complain_mess_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="90dp"
+                        android:fontFamily="@font/senregular"
+                        android:lineSpacingMultiplier="1.14"
+                        android:text="Anonymity"
+                        android:textColor="@color/text700"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/background_rounded_section_task"
+                        android:gravity="center_vertical"
+                        android:minHeight="28dp">
+
+                        <com.example.karakoram.views.CustomSpinner
+                            android:id="@+id/spinner_feedback_anonymity"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/spinner_background"
+                            android:dropDownWidth="match_parent"
+                            android:entries="@array/feedback_anonymity" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Description input -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/et_feedback_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/background_rounded_section_task"
+                        android:fontFamily="@font/senbold"
+                        android:hint="Write a review.."
+                        android:importantForAutofill="no"
+                        android:inputType="textMultiLine"
+                        android:lineSpacingMultiplier="1.5"
+                        android:padding="12dp"
+                        android:textColor="@color/text700"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+                <!-- submit button -->
+                <Button
+                    android:id="@+id/button_feedback_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/form_submit_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:font="@font/senregular"
+                    android:text="Submit"
+                    android:textColor="@color/text700"
+                    tools:targetApi="o" />
+
+                <TextView
+                    android:id="@+id/tv_feedback_complaint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/senextrabold"
+                    android:lineSpacingExtra="2sp"
+                    android:text="File complaint?"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
 
             </LinearLayout>
 
-
-            <!-- submit button -->
-            <Button
-                android:id="@+id/button_feedback_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/form_submit_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:font="@font/senregular"
-                android:text="Submit"
-                android:textColor="@color/text700"
-                tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/tv_feedback_complaint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:fontFamily="@font/senextrabold"
-                android:lineSpacingExtra="2sp"
-                android:text="File complaint?"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
+        </ScrollView>
 
 </LinearLayout>
