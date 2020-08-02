@@ -1,6 +1,7 @@
 package com.example.karakoram;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
@@ -64,6 +65,10 @@ public class FirebaseQuery {
         return ref.child("hostelBills").child(key);
     }
 
+    public static  Query getUserBill(String userId){
+        return ref.child("hostelBills").orderByChild("userId").equalTo(userId);
+    }
+
     public static StorageReference getBillImageRef(String key){
         return storage.getReference("hostelBillImages/"+key+".png");
     }
@@ -83,8 +88,9 @@ public class FirebaseQuery {
         return ref.child("messFeedback");
     }
 
-    public Query getUserMessFeedback(String userId){
-        return ref.child("messFeedBack").orderByChild("userId").equalTo(userId);
+    public static Query getUserMessFeedback(String userId){
+//        Log.d("123hello",userId);
+        return ref.child("messFeedback").orderByChild("userId").equalTo(userId);
     }
 
     public static Query getAllMenu(){

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.icu.lang.UCharacter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +33,7 @@ import com.example.karakoram.resource.UserType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -64,6 +64,8 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -140,29 +142,36 @@ public class HomeFragment extends Fragment {
     private void refreshListView() {
         event.clear();
         key.clear();
-        FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
-            @SneakyThrows
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    event.add(snapshotItem.getValue(Event.class));
-                    key.add(snapshotItem.getKey());
-                }
-                try {
-                    cache.setKeyArray(key);
-                    cache.setValueArray(event);
-                }catch (Exception ignored) {
-                    Log.i("HomeCacheLog", "cache files are not getting updated");
-                }
-                start();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
-            }
-        });
-    }
+
+
+            FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
+                @SneakyThrows
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        event.add(snapshotItem.getValue(Event.class));
+                        key.add(snapshotItem.getKey());
+                    }
+                    try {
+                        cache.setKeyArray(key);
+                        cache.setValueArray(event);
+                    } catch (Exception ignored) {
+                        Log.i("HomeCacheLog", "cache files are not getting updated");
+                    }
+                    start();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
+
+
+
+
 
     private void start() {
 

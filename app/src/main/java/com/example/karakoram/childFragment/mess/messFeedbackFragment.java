@@ -1,5 +1,6 @@
 package com.example.karakoram.childFragment.mess;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +20,11 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Meal;
 import com.example.karakoram.resource.MessFeedback;
+import com.example.karakoram.resource.User;
 
 import java.util.Date;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +77,10 @@ public class messFeedbackFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MessFeedback messFeedback = new MessFeedback();
-                messFeedback.setUserId("user");
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+                String userid=sharedPreferences.getString("userId","logedOut");
+                Log.d("upload ", "onClick: "+userid);
+                messFeedback.setUserId(userid);
                 messFeedback.setTimestamp(new Date());
                 messFeedback.setDescription(((EditText) getView().findViewById(R.id.description_input)).getText().toString());
                 messFeedback.setRating(Integer.parseInt(((EditText) getView().findViewById(R.id.rating_input)).getText().toString()));

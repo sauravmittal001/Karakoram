@@ -1,6 +1,7 @@
 package com.example.karakoram.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +17,11 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.User;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class BillFormActivity extends AppCompatActivity {
@@ -77,6 +80,10 @@ public class BillFormActivity extends AppCompatActivity {
             findViewById(R.id.et_amount).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
             return;
         }
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        bill.setUserId(userId);
+        bill.setTimeStamp(new Date());
         bill.setCategory(Category.valueOf((itemSelected)));
         bill.setDescription(((EditText) findViewById(R.id.et_description)).getText().toString());
         FirebaseQuery.addBill(bill, imageUri);

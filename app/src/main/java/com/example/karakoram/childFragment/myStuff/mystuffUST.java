@@ -1,5 +1,6 @@
-package com.example.karakoram.childFragment.mess;
+package com.example.karakoram.childFragment.myStuff;
 
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,14 +20,17 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.adapter.USTadapter;
 import com.example.karakoram.resource.MessFeedback;
+import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
 
-public class messUSTFragment extends Fragment {
+
+public class mystuffUST extends Fragment {
 
 
     /* Variables */
@@ -44,7 +48,7 @@ public class messUSTFragment extends Fragment {
 
 
 
-    public messUSTFragment(){
+    public mystuffUST(){
 
     }
 
@@ -70,28 +74,27 @@ public class messUSTFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-            FirebaseQuery.getAllMessFeedback().addListenerForSingleValueEvent(new ValueEventListener()
-            {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    feedbacks=new ArrayList<>();
-                    for(DataSnapshot snapshotItem:snapshot.getChildren()){
-                        feedbacks.add(snapshotItem.getValue(MessFeedback.class));
-                        key.add(snapshotItem.getKey());
-                    }
-                    start();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String userid=sharedPreferences.getString("userId","logedOut");
+
+        FirebaseQuery.getUserMessFeedback(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                feedbacks = new ArrayList<>();
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                    key.add(snapshotItem.getKey());
                 }
+                start();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("firebase error", "Something went wrong");
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
+            }
+        });
 
-
-
-
+    }
 
 
 
