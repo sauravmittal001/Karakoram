@@ -8,6 +8,8 @@ public class MaintComplaint extends Complaint {
     private String room;
     private Wing wing;
 
+    public MaintComplaint(){}
+
     public MaintComplaint(SharedPreferences sharedPreferences) {
         super(sharedPreferences);
         this.category = Category.Maintenance;

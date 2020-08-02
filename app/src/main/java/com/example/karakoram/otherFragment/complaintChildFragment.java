@@ -1,66 +1,151 @@
 package com.example.karakoram.otherFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.adapter.ComplaintAdapter;
+import com.example.karakoram.cache.HomeCache;
+import com.example.karakoram.resource.Complaint;
+import com.example.karakoram.resource.MaintComplaint;
+import com.example.karakoram.resource.MessComplaint;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link complaintChildFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+import lombok.SneakyThrows;
+
 public class complaintChildFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView listView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    Context context;
+    View view;
+    ComplaintAdapter adapter;
+    ArrayList<String> key = new ArrayList<>();
+    ArrayList<Complaint> complaints = new ArrayList<>();
 
     public complaintChildFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment upload_complain_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static complaintChildFragment newInstance(String param1, String param2) {
         complaintChildFragment fragment = new complaintChildFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        view = inflater.inflate(R.layout.fragment_complaint_child, container, false);
+        context = container.getContext();
+        return view;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_complaint_child, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setViews();
+        refreshListView();
+    }
+
+    @CallSuper
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
+
+    private void setViews() {
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_complaints);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setViews();
+                refreshListView();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void start() {
+        adapter = new ComplaintAdapter(getActivity(), complaints, key);
+        listView = view.findViewById(R.id.list_complaints);
+        listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        listView.setAdapter(adapter);
+    }
+
+    private void refreshListView() {
+        complaints.clear();
+        key.clear();
+        FirebaseQuery.getOtherComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
+            @SneakyThrows
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    complaints.add(snapshotItem.getValue(Complaint.class));
+                    key.add(snapshotItem.getKey());
+                }
+                start();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
+            }
+        });
+
+        FirebaseQuery.getMessComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
+            @SneakyThrows
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    complaints.add(snapshotItem.getValue(MessComplaint.class));
+                    key.add(snapshotItem.getKey());
+                }
+                start();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
+            }
+        });
+
+        FirebaseQuery.getMaintComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
+            @SneakyThrows
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    complaints.add(snapshotItem.getValue(MaintComplaint.class));
+                    key.add(snapshotItem.getKey());
+                }
+                start();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
+            }
+        });
     }
 }

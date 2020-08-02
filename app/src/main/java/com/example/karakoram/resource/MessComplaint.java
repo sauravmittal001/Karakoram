@@ -6,6 +6,8 @@ public class MessComplaint extends Complaint {
 
     private ComplaintArea complaintArea;
 
+    public MessComplaint(){}
+
     public MessComplaint(SharedPreferences sharedPreferences) {
         super(sharedPreferences);
         this.category = Category.Mess;

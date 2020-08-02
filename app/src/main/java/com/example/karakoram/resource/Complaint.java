@@ -15,6 +15,8 @@ public class Complaint {
     protected String description;
     protected boolean isImageAttached;
 
+    public Complaint(){}
+
     public Complaint(SharedPreferences sharedPreferences){
         userId = sharedPreferences.getString("userId","loggedOut");
         userName = sharedPreferences.getString("userName","NA");

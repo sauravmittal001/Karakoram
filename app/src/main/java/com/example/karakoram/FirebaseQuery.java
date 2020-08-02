@@ -95,8 +95,16 @@ public class FirebaseQuery {
         ref.child("messMenu").child(String.valueOf(day)).setValue(menu);
     }
 
-    public static Query getAllComplaints(){
-        return ref.child("complaints");
+    public static Query getMaintComplaints(){
+        return ref.child("complaints").orderByChild("category").equalTo("Maintenance");
+    }
+
+    public static Query getMessComplaints(){
+        return ref.child("complaints").orderByChild("category").equalTo("Mess");
+    }
+
+    public static Query getOtherComplaints(){
+        return ref.child("complaints").orderByChild("category").equalTo("Others");
     }
 
     public static void addCompliant(Complaint complaint){
