@@ -28,7 +28,7 @@
         <activity android:name=".activity.ComplaintFormActivity" />
         <activity android:name=".activity.EventDescription" />
         <activity android:name=".activity.ComplaintActivity" />
-        <activity android:name=".activity.ustDescription" />
+        <activity android:name=".activity.UstDescription" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.EventActivity" />
