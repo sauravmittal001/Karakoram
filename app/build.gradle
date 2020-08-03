@@ -51,5 +51,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
     compile 'com.iarcuschin:simpleratingbar:0.1.5'
+    implementation 'com.jsibbold:zoomage:1.3.1'
 
 }
