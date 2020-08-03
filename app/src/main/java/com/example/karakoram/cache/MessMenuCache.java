@@ -131,9 +131,12 @@ public class MessMenuCache {
                     allDayMenu.add(menu);
                 }
             }
-        } catch (IOException | JSONException e) {
+        }
+        catch (IOException | JSONException e) {
+            Log.i("DEBUG", String.valueOf(e));
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             if (fis != null) {
                 try {
                     fis.close();

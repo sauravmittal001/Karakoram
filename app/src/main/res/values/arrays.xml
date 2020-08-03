@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- user info -->
+
     <string-array name="user_type">
         <item></item>
         <item>Student</item>
@@ -30,12 +32,6 @@
         <item>Other</item>
     </string-array>
 
-    <string-array name="complaint_anonymity">
-        <item></item>
-        <item>Public</item>
-        <item>Only admin</item>
-        <item>No one</item>
-    </string-array>
 
     <string-array name="maintenance_area">
         <item></item>
@@ -92,14 +88,6 @@
         <item>Mess_Maintenance</item>
         <item>Mess_Infra</item>
         <item>Mess_Food</item>
-        <item>Others</item>
-    </string-array>
-
-    <string-array name="bill_catergory">
-        <item>Maintenance</item>
-        <item>Mess</item>
-        <item>Sports</item>
-        <item>Cult</item>
         <item>Others</item>
     </string-array>
 
@@ -187,6 +175,13 @@
         <item>74</item>
         <item>75</item>
         <item>76</item>
+    </string-array>
+
+    <string-array name="feedback_anonymity">
+        <item></item>
+        <item>I Don\'t Want My Feedback To be Anonymous</item>
+        <item>I want it to be anonymous but not from the developers</item>
+        <item>I want it to be completely anonymous</item>
     </string-array>
 
 </resources>
