@@ -128,4 +128,16 @@ public class FirebaseQuery {
         storage.getReference("/complaintImages/"+key+".png").putFile(imageUri);
     }
 
+    public static void updateComplaint(String key, Complaint complaint){
+        ref.child("complaints").child(key).setValue(complaint);
+    }
+
+    public static void updateComplaint(String key, Complaint complaint, Uri imageUri){
+        ref.child("complaints").child(key).setValue(complaint);
+        storage.getReference("/complaintImages/"+key+".png").putFile(imageUri);
+    }
+
+    public static void removeComplaintImage(String key){
+        storage.getReference("/complaintImages/"+key+".png").delete();
+    }
 }

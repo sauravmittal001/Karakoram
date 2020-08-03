@@ -29,7 +29,7 @@
         <item></item>
         <item>Maintenance</item>
         <item>Mess</item>
-        <item>Other</item>
+        <item>Others</item>
     </string-array>
 
 
@@ -178,10 +178,15 @@
     </string-array>
 
     <string-array name="feedback_anonymity">
-        <item></item>
-        <item>I Don\'t Want My Feedback To be Anonymous</item>
-        <item>I want it to be anonymous but not from the developers</item>
-        <item>I want it to be completely anonymous</item>
+        <item>visible to all</item>
+        <item>visible only to admins</item>
+        <item>anonymous to all</item>
+    </string-array>
+
+    <string-array name="feedback_anonymity_enum">
+        <item>Public</item>
+        <item>Only_Admin</item>
+        <item>Anonymous</item>
     </string-array>
 
 </resources>

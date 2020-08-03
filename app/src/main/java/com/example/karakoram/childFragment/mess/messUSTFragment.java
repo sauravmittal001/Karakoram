@@ -89,12 +89,6 @@ public class messUSTFragment extends Fragment {
             });
         }
 
-
-
-
-
-
-
     private void start() {
         Log.i("ASDF", String.valueOf(feedbacks));
         adapter = new USTadapter(getActivity(), feedbacks,key);
@@ -103,7 +97,6 @@ public class messUSTFragment extends Fragment {
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
-        //mdivider.setBounds(getParentFragment().getPaddingLeft(),0,16,0);
         DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL);
         itemdecor.setDrawable(mdivider);
         listView.addItemDecoration(itemdecor);

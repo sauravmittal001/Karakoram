@@ -1,5 +1,6 @@
 package com.example.karakoram.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
 import com.example.karakoram.activity.ustDescription;
+import com.example.karakoram.resource.Anonymity;
 import com.example.karakoram.resource.MessFeedback;
 
 import java.text.SimpleDateFormat;
@@ -56,12 +58,15 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
 
                 intent.putExtra("description", feedbacks.get(i).getDescription());
                 intent.putExtra("rating", feedbacks.get(i).getRating());
-                intent.putExtra("userdetails",feedbacks.get(i).getUserId());
-                 Date dateTime = feedbacks.get(i).getTimestamp();
+                if(feedbacks.get(i).getAnonymity().equals(Anonymity.Anonymous))
+                    intent.putExtra("userName","Anonymous");
+                else
+                    intent.putExtra("userName",feedbacks.get(i).getUserName());
+                Date dateTime = feedbacks.get(i).getTimestamp();
                 String day= new SimpleDateFormat("EE").format(dateTime);
                 String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
                 intent.putExtra("date", date);
-                intent.putExtra("Meal", day+"/ "+feedbacks.get(i).getMeal().name());
+                intent.putExtra("Meal", day+" "+feedbacks.get(i).getMeal().name());
                 mcontext.startActivity(intent);
             }
         });
@@ -78,13 +83,12 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
             holder.mRating.setNumStars(3);
             holder.mRating.setStepSize(1);
             holder.mRating.setRating(rating);
-           // holder.mRating.setText(Integer.toString(messFeedback.getRating()));
             holder.mDescription.setText(messFeedback.getDescription());
             holder.mMeal.setText(messFeedback.getMeal().name());
-            Date dateTime = messFeedback.getTimestamp();
-            String date= new SimpleDateFormat("EE").format(dateTime);
-           // String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
-            holder.mDate.setText(date);
+            Date timestamp = messFeedback.getTimestamp();
+            String[] days = mcontext.getResources().getStringArray(R.array.days);
+            String day = days[timestamp.getDay()];
+            holder.mDay.setText(day);
         }
     }
 
@@ -99,7 +103,7 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
 
         LinearLayout ust_list_view;
         TextView mMeal;
-        TextView mDate;
+        TextView mDay;
         RatingBar mRating;
         TextView mDescription;
 
@@ -110,7 +114,7 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
             mRating = itemView.findViewById(R.id.feedback_star);
             mDescription = itemView.findViewById(R.id.feedback_details);
             mMeal=itemView.findViewById(R.id.meal_type);
-            mDate=itemView.findViewById(R.id.date_stamp);
+            mDay=itemView.findViewById(R.id.day_stamp);
             ust_list_view=(LinearLayout)itemView.findViewById(R.id.ust_item_id);
 
         }

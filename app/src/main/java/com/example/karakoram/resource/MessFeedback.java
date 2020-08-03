@@ -6,9 +6,11 @@ public class MessFeedback {
 
     private Date timestamp;
     private String userId;
+    private String userName;
     private String description;
     private int rating;
     private Meal meal;
+    private Anonymity anonymity;
 
     public Date getTimestamp() {
         return timestamp;
@@ -48,5 +50,21 @@ public class MessFeedback {
 
     public void setMeal(Meal meal) {
         this.meal = meal;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Anonymity getAnonymity() {
+        return anonymity;
+    }
+
+    public void setAnonymity(Anonymity anonymity) {
+        this.anonymity = anonymity;
     }
 }

@@ -19,7 +19,7 @@ public class ustDescription extends AppCompatActivity {
     private String date;
     private String description;
     private int rating;
-    private String userid;
+    private String userName;
 
     /*Views*/
     private TextView mMeal;
@@ -42,7 +42,7 @@ public class ustDescription extends AppCompatActivity {
         meal = Objects.requireNonNull(getIntent().getExtras()).getString("Meal");
         date = getIntent().getExtras().getString("date");
         rating=getIntent().getExtras().getInt("rating");
-        userid = getIntent().getExtras().getString("userdetails");
+        userName = getIntent().getExtras().getString("userName");
         description = getIntent().getExtras().getString("description");
         mButtonDone = findViewById(R.id.button_event_description_done);
 
@@ -53,11 +53,11 @@ public class ustDescription extends AppCompatActivity {
     private void initViews() {
 
 
-        mRating = (RatingBar) findViewById(R.id.feedback_star);
-        mDescription = (TextView) findViewById(R.id.feedback_details);
-        mMeal=(TextView)findViewById(R.id.meal_type);
-        mDate=(TextView) findViewById(R.id.feedback_date);
-        mUserid=(TextView) findViewById(R.id.feedback_user_details);
+        mRating = findViewById(R.id.feedback_star);
+        mDescription = findViewById(R.id.feedback_details);
+        mMeal = findViewById(R.id.meal_type);
+        mDate = findViewById(R.id.feedback_date);
+        mUserid = findViewById(R.id.feedback_user_details);
     }
 
     private void setViews() {
@@ -65,7 +65,7 @@ public class ustDescription extends AppCompatActivity {
         mMeal.setText(meal);
         mDate.setText(date);
         mDescription.setText(description);
-        mUserid.setText(userid);
+        mUserid.setText(userName);
         mRating.setNumStars(3);
         mRating.setStepSize(1);
         mRating.setRating(rating);

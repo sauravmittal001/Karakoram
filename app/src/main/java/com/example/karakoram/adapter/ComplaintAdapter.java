@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
 import com.example.karakoram.activity.ComplaintActivity;
+import com.example.karakoram.activity.ComplaintFormActivity;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
 import com.example.karakoram.resource.Event;
@@ -38,10 +39,10 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
 
     Context mcontext;
     ArrayList<Complaint> complaints;
-    ArrayList<String> key;
+    ArrayList<String> keys;
     String[] maintAreaList, maintAreaEnumList, messAreaList, messAreaEnumList;
 
-    public ComplaintAdapter(Context mcontext, ArrayList<Complaint> complaints, ArrayList<String> key) {
+    public ComplaintAdapter(Context mcontext, ArrayList<Complaint> complaints, ArrayList<String> keys) {
         /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
          * the second argument is used when the ArrayAdapter is populating a single TextView.
          * Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
@@ -49,7 +50,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
          */
         this.mcontext=mcontext;
         this.complaints = complaints;
-        this.key=key;
+        this.keys=keys;
         this.maintAreaList = mcontext.getResources().getStringArray(R.array.maintenance_area);
         this.maintAreaEnumList = mcontext.getResources().getStringArray(R.array.maintenance_area_enums);
         this.messAreaList = mcontext.getResources().getStringArray(R.array.mess_area);
@@ -63,22 +64,30 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
         v=LayoutInflater.from(mcontext).inflate(R.layout.complaint_listview,parent,false);
         final myViewHolder vHolder=new myViewHolder(v);
 
-//        vHolder.event_list_view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int i=vHolder.getAdapterPosition();
-//                Date dateTime = event1.get(i).getDateTime();
-//                String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-//                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
-//                Intent intent = new Intent(mcontext, EventDescription.class);
-//                intent.putExtra("title", event1.get(i).getTitle());
-//                intent.putExtra("description", event1.get(i).getDescription());
-//                intent.putExtra("time", time);
-//                intent.putExtra("date", date);
-//                intent.putExtra("key", key.get(i));
-//                mcontext.startActivity(intent);
-//            }
-//        });
+        vHolder.complaint_list_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i=vHolder.getAdapterPosition();
+                Complaint complaint = complaints.get(i);
+                String key = keys.get(i);
+                Intent intent = new Intent(mcontext, ComplaintFormActivity.class);
+                intent.putExtra("editMode",true);
+                intent.putExtra("key",key);
+                intent.putExtra("description",complaint.getDescription());
+                intent.putExtra("prevIsImageAttached",complaint.getIsImageAttached());
+                String category = complaint.getCategory().toString();
+                intent.putExtra("category",category);
+                if(category.equals("Mess")){
+                    intent.putExtra("messArea",((MessComplaint)complaint).getComplaintArea().toString());
+                }
+                else if(category.equals("Maintenance")){
+                    intent.putExtra("maintenanceArea",((MaintComplaint)complaint).getComplaintArea().toString());
+                    intent.putExtra("wing",((MaintComplaint)complaint).getWing().toString());
+                    intent.putExtra("room",((MaintComplaint)complaint).getRoom());
+                }
+                mcontext.startActivity(intent);
+            }
+        });
         return vHolder;
     }
 
