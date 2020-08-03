@@ -32,7 +32,7 @@ public class BillImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill_image);
         final ImageView myImageView = (ZoomageView) findViewById(R.id.myZoomageView);
         String key = getIntent().getExtras().getString("key");
-        String dbImageLocation = "eventImages/" + key + ".png";
+        String dbImageLocation = "hostelBillImages/" + key + ".png";
         StorageReference ref = FirebaseStorage.getInstance().getReference();
         ref.child(dbImageLocation).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
