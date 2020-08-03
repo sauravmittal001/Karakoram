@@ -164,13 +164,14 @@ public class messFeedbackFragment extends Fragment {
     private void setMenuOfCurrentMeal(String currentMeal) {
         mMenu = view.findViewById(R.id.tv_feedback_meal_menu);
         mDescription = view.findViewById(R.id.et_feedback_description);
-
-            if (currentMeal.equals("breakfast")) {
-                mMenu.setText(allMealsOfToday.get(0));
-            } else if (currentMeal.equals("lunch")) {
-                mMenu.setText(allMealsOfToday.get(1));
-            } else if (currentMeal.equals("dinner")) {
-                mMenu.setText(allMealsOfToday.get(2));
+            if (currentMeal != null && eligibleMeals.contains(currentMeal)) {
+                if (currentMeal.equals("breakfast")) {
+                    mMenu.setText(allMealsOfToday.get(0));
+                } else if (currentMeal.equals("lunch")) {
+                    mMenu.setText(allMealsOfToday.get(1));
+                } else if (currentMeal.equals("dinner")) {
+                    mMenu.setText(allMealsOfToday.get(2));
+                }
             }
     }
 
