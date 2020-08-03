@@ -3,6 +3,7 @@ package com.example.karakoram.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
-import com.example.karakoram.activity.ComplaintActivity;
+import com.example.karakoram.activity.ComplaintDescriptionActivity;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
-import com.example.karakoram.resource.Event;
-import com.example.karakoram.activity.EventDescription;
 import com.example.karakoram.resource.MaintComplaint;
 import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.Status;
@@ -30,8 +29,6 @@ import java.util.Date;
 import static com.example.karakoram.R.drawable.green_status;
 import static com.example.karakoram.R.drawable.orange_status;
 import static com.example.karakoram.R.drawable.red_status;
-import static com.example.karakoram.R.drawable.red_status_1;
-import static com.example.karakoram.R.drawable.user_info_save_button;
 
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myViewHolder> {
@@ -63,23 +60,59 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
         v=LayoutInflater.from(mcontext).inflate(R.layout.complaint_listview,parent,false);
         final myViewHolder vHolder=new myViewHolder(v);
 
-//        vHolder.event_list_view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int i=vHolder.getAdapterPosition();
-//                Date dateTime = event1.get(i).getDateTime();
-//                String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-//                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
-//                Intent intent = new Intent(mcontext, EventDescription.class);
-//                intent.putExtra("title", event1.get(i).getTitle());
-//                intent.putExtra("description", event1.get(i).getDescription());
-//                intent.putExtra("time", time);
-//                intent.putExtra("date", date);
-//                intent.putExtra("key", key.get(i));
-//                mcontext.startActivity(intent);
-//            }
-//        });
+        vHolder.complaint_list_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i=vHolder.getAdapterPosition();
+                Date dateTime = complaints.get(i).getTimestamp();
+                String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
+                Intent intent = new Intent(mcontext, ComplaintDescriptionActivity.class);
+                intent.putExtra("entryNumber", complaints.get(i).getEntryNumber());
+                intent.putExtra("name", complaints.get(i).getUserName());
+                intent.putExtra("status", String.valueOf(complaints.get(i).getStatus()));
+                intent.putExtra("description", complaints.get(i).getDescription());
+                intent.putExtra("isImageAttached", String.valueOf(complaints.get(i).getIsImageAttached()));
+                intent.putExtra("time", time);
+                intent.putExtra("date", date);
+                intent.putExtra("key", String.valueOf(key));
+                Category category = complaints.get(i).getCategory();
+                intent.putExtra("category", category.name());
+                if (category.equals(Category.Maintenance)) {
+                    String complaintArea = ((MaintComplaint) complaints.get(i)).getComplaintArea().toString();
+                    String room = ((MaintComplaint) complaints.get(i)).getRoom();
+                    String wing = ((MaintComplaint) complaints.get(i)).getWing().toString();
+                    intent.putExtra("complaintArea", complaintArea);
+                    intent.putExtra("room", room);
+                    intent.putExtra("wing", wing);
+                } else if (category.equals(Category.Mess)) {
+                    intent.putExtra("complaintArea", ((MessComplaint) complaints.get(i)).getComplaintArea());
+                }
+                mcontext.startActivity(intent);
+            }
+        });
         return vHolder;
+    }
+
+    public String showTime(int hour, int min) {
+        String format;
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        return hour + " : " + min + " " + format;
+    }
+
+    public String monthName (int monthNumber) {
+        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        return monthOfYear[monthNumber-1];
     }
 
     @Override

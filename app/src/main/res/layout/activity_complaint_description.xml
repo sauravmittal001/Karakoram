@@ -1,0 +1,190 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lv_top"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_top_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Top banner icon"
+            android:src="@drawable/m2" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:contentDescription="Back Button"
+        android:onClick="back"
+        android:padding="12dp"
+        android:src="@drawable/ic_frame3" />
+
+    <ScrollView
+        android:id="@+id/sv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="18dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_complaint_description_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/senbold"
+                android:gravity="center_horizontal"
+                android:text="Maintenance Complaint"
+                android:textColor="@color/text700"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_complaint_time_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="8sp"
+                android:paddingBottom="8sp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/quicksandregular"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:text="asdfasdfasdfas"
+                android:textSize="10sp"
+                tools:ignore="RtlSymmetry,SmallSp"
+                tools:targetApi="o" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_complaint_description_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:fontFamily="@font/senbold"
+                    android:textColor="@color/text700"
+                    android:text="status "
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_complaint_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_rounded_section_task">
+
+                    <com.example.karakoram.views.CustomSpinner
+                        android:id="@+id/spinner_complaint_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_background"
+                        android:dropDownWidth="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_complaint_description_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/senbold"
+                android:textColor="@color/text700"
+                android:text="Subject: Drinking_Water_Geyser"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_complaint_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/senbold"
+                android:text="Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code."
+                android:textSize="20sp" />
+
+            <!-- entry number -->
+            <TextView
+                android:id="@+id/tv_complaint_description_entry_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/senbold"
+                android:text="2018XX100000"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+            <!-- name -->
+            <TextView
+                android:id="@+id/tv_complaint_description_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/senbold"
+                android:text="First Last"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+            <!-- room -->
+            <TextView
+                android:id="@+id/tv_complaint_description_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/senbold"
+                android:text="A01"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+            <!-- save and exit button -->
+            <Button
+                android:id="@+id/button_complaint_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/form_submit_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:font="@font/senregular"
+                android:onClick="onSubmitComplaint"
+                android:text="Save and exit"
+                android:textColor="@color/text700"
+                tools:targetApi="o" />
+
+            <!-- complaint image -->
+            <com.example.karakoram.DynamicImageView
+                android:id="@+id/div_complaint_description_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="18dp"
+                android:scaleType="centerInside" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
