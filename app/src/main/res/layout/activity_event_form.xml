@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/ll_event_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_background_create_account"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="42dp"
+            android:paddingBottom="24dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:onClick="backPressed"
+                    android:contentDescription="Back Button"
+                    android:src="@drawable/ic_frame3" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add_photo"
+                    android:backgroundTint="@color/colorAccent"
+                    android:onClick="onClickChooseImage"
+                    tools:targetApi="lollipop" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/senbold"
+                android:lineSpacingMultiplier="1.25"
+                android:text="Create New Event"
+                android:textColor="@color/text700"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_bill_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="top"
+                android:lineSpacingMultiplier="1.5"
+                android:text="Any upcoming hostel event concerning the residents."
+                android:textColor="@color/text700"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lineSpacingExtra="2sp"
+            android:text="Bill image not selected"
+            android:textColor="@color/red"
+            android:textSize="12sp"
+            android:visibility="invisible"/>
+
+        <!-- title input -->
+        <LinearLayout
+            android:id="@+id/rl_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/senregular"
+                android:gravity="top"
+                android:lineSpacingMultiplier="1.14"
+                android:text="Title"
+                android:textColor="@color/text700"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_rounded_section_task"
+                android:fontFamily="@font/senbold"
+                android:hint="Enter event title"
+                android:importantForAutofill="no"
+                android:lineSpacingMultiplier="1.5"
+                android:padding="12dp"
+                android:textColor="@color/text700"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- Description input -->
+        <LinearLayout
+            android:id="@+id/rl_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/senregular"
+                android:gravity="top"
+                android:lineSpacingMultiplier="1.14"
+                android:text="Description"
+                android:textColor="@color/text700"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_rounded_section_task"
+                android:fontFamily="@font/senbold"
+                android:hint="Enter event details"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:lineSpacingMultiplier="1.5"
+                android:padding="12dp"
+                android:textColor="@color/text700"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- date input -->
+        <LinearLayout
+            android:id="@+id/ll_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="90dp"
+                android:fontFamily="@font/senregular"
+                android:lineSpacingMultiplier="1.14"
+                android:text="Date"
+                android:textColor="@color/text700"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_rounded_section_task"
+                android:gravity="center_vertical"
+                android:minHeight="28dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/et_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rect_section_task"
+                    android:fontFamily="@font/senbold"
+                    android:gravity="center_horizontal"
+                    android:hint="dd-mm-yyyy"
+                    android:onClick="setDate"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <com.example.karakoram.DynamicImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:onClick="setDate"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_date" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- time input -->
+        <LinearLayout
+            android:id="@+id/ll_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="90dp"
+                android:fontFamily="@font/senregular"
+                android:lineSpacingMultiplier="1.14"
+                android:text="Time"
+                android:textColor="@color/text700"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_rounded_section_task"
+                android:gravity="center_vertical"
+                android:minHeight="28dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/et_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rect_section_task"
+                    android:fontFamily="@font/senbold"
+                    android:gravity="center_horizontal"
+                    android:hint="hh:mm"
+                    android:onClick="openClock"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <com.example.karakoram.DynamicImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:onClick="openClock"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_time" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- Submit button -->
+        <Button
+            android:id="@+id/button_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/form_submit_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:font="@font/senregular"
+            android:onClick="onClickCreateEvent"
+            android:text="Submit"
+            android:textColor="@color/text700"
+            tools:targetApi="o" />
+
+        <!-- Event image -->
+
+        <TextView
+            android:id="@+id/tv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/senbold"
+            android:gravity="top"
+            android:lineSpacingMultiplier="1.14"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="Selected image:"
+            android:textColor="@color/text700"
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
+        <com.example.karakoram.DynamicImageView
+            android:id="@+id/div_event_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+</ScrollView>
+

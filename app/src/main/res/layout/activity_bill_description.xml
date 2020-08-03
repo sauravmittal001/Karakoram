@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lv_top"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_top_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Top banner icon"
+            android:src="@drawable/m2" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:contentDescription="Back Button"
+        android:onClick="back"
+        android:padding="12dp"
+        android:src="@drawable/ic_frame3" />
+
+    <ScrollView
+        android:id="@+id/sv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="18dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_bill_description_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/senbold"
+                android:gravity="center_horizontal"
+                android:text="Maintenance Bill"
+                android:textColor="@color/text700"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_bill_time_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="8sp"
+                android:paddingBottom="8sp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/quicksandregular"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:text="asdfasdfasdfas"
+                android:textSize="10sp"
+                tools:ignore="RtlSymmetry,SmallSp"
+                tools:targetApi="o" />
+
+
+            <!-- user ID -->
+            <TextView
+                android:id="@+id/tv_bill_description_user_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/senbold"
+                android:text="Mess secy"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+            <!-- Amount -->
+            <TextView
+                android:id="@+id/tv_bill_description_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/senbold"
+                android:text="Rs. 5000"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+
+
+            <TextView
+                android:id="@+id/tv_bill_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/senbold"
+                android:text="Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code."
+                android:textSize="20sp" />
+
+            <!-- bill image show -->
+            <Button
+                android:id="@+id/button_bill_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/form_submit_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:font="@font/senregular"
+                android:onClick="onSubmitComplaint"
+                android:text="Open Bill Image"
+                android:textColor="@color/text700"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

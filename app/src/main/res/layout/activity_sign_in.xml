@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_sign_in"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="false"
+    android:orientation="vertical"
+    android:padding="25dp"
     tools:context=".activity.SignInActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.example.karakoram.views.CustomViewPager
+            android:id="@+id/vp_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.example.karakoram.views.CustomViewPager>
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tb_counter_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/dot_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabPaddingEnd="10dp"
+        app:tabPaddingStart="10dp" />
+
+
+</LinearLayout>

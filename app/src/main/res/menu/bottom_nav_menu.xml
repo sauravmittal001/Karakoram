@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@android:drawable/ic_input_get"
+        android:title="@string/title_events" />
+
+    <item
+        android:id="@+id/navigation_mess"
+        android:icon="@drawable/ic_mess"
+        android:title="Mess" />
+
+    <item
+        android:id="@+id/navigation_bill"
+        android:icon="@drawable/ic_bill"
+        android:title="Bill" />
+
+    <item
+        android:id="@+id/navigation_my_stuff"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="My Stuff" />
+
+</menu>
