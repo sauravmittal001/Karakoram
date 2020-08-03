@@ -92,6 +92,7 @@ public class billChildFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext().getApplicationContext(), BillFormActivity.class);
+                intent.putExtra("category", category.name());
                 startActivity(intent);
 
             }

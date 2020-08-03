@@ -1,63 +1,45 @@
 package com.example.karakoram.childFragment.mess;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.ComplaintFormActivity;
 import com.example.karakoram.cache.MessMenuCache;
-import com.example.karakoram.childFragment.signin.LoginFragment;
-import com.example.karakoram.childFragment.signin.SigninFragment;
+import com.example.karakoram.resource.Anonymity;
 import com.example.karakoram.resource.Meal;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
-import com.example.karakoram.views.ViewPagerAdapter;
-import com.google.android.material.tabs.TabLayout;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.os.Build.ID;
 
 
 public class messFeedbackFragment extends Fragment {
@@ -73,11 +55,10 @@ public class messFeedbackFragment extends Fragment {
     //textview to set menu
     //button to submit, file complain
 
-    String anonymity = "I want it to be completely anonymous";
-    String userId, userName;    //done
-    String currentMeal, currentMenu, selectedMeal;
+    String currentMeal, selectedMeal;
     ArrayList<String> allMealsOfToday;
     ArrayList<String> eligibleMeals;
+    Anonymity anonymity;
     int rating;
 
 
@@ -99,21 +80,18 @@ public class messFeedbackFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getUserNameAndId();
+        refreshForm();
+//        Log.i("QQQQ", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+//        setVariables();
+//        setViews();
+    }
+
+    public void refreshForm(){
         allMealsOfToday = getTodayMenu();
         eligibleMeals = getMealsEligibleForRating();
         currentMeal = getTheCurrentMeal();
         setMenuOfCurrentMeal(currentMeal);
         initAndSetAllTheViews();
-        Log.i("QQQQ", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-//        setVariables();
-//        setViews();
-    }
-
-    private void getUserNameAndId() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-        userId = sharedPreferences.getString("entryNumber", "DEFAULT");
-        userName = sharedPreferences.getString("userName", "DEFAULT");
     }
 
     private ArrayList<String> getTodayMenu() {
@@ -132,7 +110,7 @@ public class messFeedbackFragment extends Fragment {
 
     private ArrayList<String> getMealsEligibleForRating() {
         ArrayList<String> eligibleMeals = new ArrayList<>();
-        String[] array = {"breakfast", "lunch", "dinner"};
+        String[] array = {"Breakfast", "Lunch", "Dinner"};
         for (String meal: array) {
             if (isTimeValidFor(meal) && !(isFeedbackAlreadyGivenFor(meal))) {
                 eligibleMeals.add(meal);
@@ -151,11 +129,11 @@ public class messFeedbackFragment extends Fragment {
             // not between 07:00 and 07:15
             if (!(hour == 7 && minute < 15)) {
                 if (hour < 12)
-                    return "breakfast";
+                    return "Breakfast";
                 if (hour < 19)
-                    return "lunch";
+                    return "Lunch";
                 else
-                    return "dinner";
+                    return "Dinner";
             }
         }
         return null;
@@ -164,13 +142,14 @@ public class messFeedbackFragment extends Fragment {
     private void setMenuOfCurrentMeal(String currentMeal) {
         mMenu = view.findViewById(R.id.tv_feedback_meal_menu);
         mDescription = view.findViewById(R.id.et_feedback_description);
-
-            if (currentMeal.equals("breakfast")) {
-                mMenu.setText(allMealsOfToday.get(0));
-            } else if (currentMeal.equals("lunch")) {
-                mMenu.setText(allMealsOfToday.get(1));
-            } else if (currentMeal.equals("dinner")) {
-                mMenu.setText(allMealsOfToday.get(2));
+            if (currentMeal != null && eligibleMeals.contains(currentMeal)) {
+                if (currentMeal.equals("Breakfast")) {
+                    mMenu.setText(allMealsOfToday.get(0));
+                } else if (currentMeal.equals("Lunch")) {
+                    mMenu.setText(allMealsOfToday.get(1));
+                } else if (currentMeal.equals("Dinner")) {
+                    mMenu.setText(allMealsOfToday.get(2));
+                }
             }
     }
 
@@ -182,13 +161,13 @@ public class messFeedbackFragment extends Fragment {
         if (!(hour <= 6)) {
             // not between 07:00 and 07:15
             if (!(hour == 7 && minute < 15)) {
-                if (meal.equals("breakfast")) {
+                if (meal.equals("Breakfast")) {
                     return true;
                 }
-                if (meal.equals("lunch") && hour >= 12) {
+                if (meal.equals("Lunch") && hour >= 12) {
                     return true;
                 }
-                if (meal.equals("dinner") && hour >= 19)
+                if (meal.equals("Dinner") && hour >= 19)
                     return true;
             }
         }
@@ -210,6 +189,7 @@ public class messFeedbackFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void initAndSetAllTheViews() {
         simpleRatingBar = view.findViewById(R.id.srb_mess_feedback);
+        simpleRatingBar.setRating(0);
         final TextView mStarText = view.findViewById(R.id.tv_star_text);
         simpleRatingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -231,20 +211,33 @@ public class messFeedbackFragment extends Fragment {
             }
         });
 
+        mDescription = view.findViewById(R.id.et_feedback_description);
+        mDescription.setText("");
         setSpinners();
         setButtons();
     }
 
     private void setSpinners() {
         String[] anonymityArray = getResources().getStringArray(R.array.feedback_anonymity);
-        CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, anonymityArray);
+        final String[] anonymityArrayEnum = getResources().getStringArray(R.array.feedback_anonymity_enum);
+        final CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, anonymityArray);
         anonymityAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         anonymitySpinner = view.findViewById(R.id.spinner_feedback_anonymity);
-        anonymitySpinner.setAdapter(anonymityAdapter);
-        if (anonymity != null) {
-            int spinnerPosition = anonymityAdapter.getPosition(anonymity);
-            anonymitySpinner.setSelection(spinnerPosition);
-        }
+        anonymitySpinner.setSelection(0); //setting to public
+        anonymity = Anonymity.Public;
+        anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.d("123hello",anonymityArrayEnum[position]);
+                anonymity = Anonymity.valueOf(anonymityArrayEnum[position]);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                anonymity = Anonymity.Public;
+            }
+        });
 
         final String[] mealArray = new String[eligibleMeals.size()+1];
         mealArray[0] = "";
@@ -269,11 +262,11 @@ public class messFeedbackFragment extends Fragment {
                     String meal = mealArray[mealSpinner.getSelectedItemPosition()];
                     selectedMeal = meal;
                     if (eligibleMeals.size() != 0) {
-                        if (meal.equals("breakfast")) {
+                        if (meal.equals("Breakfast")) {
                             mMenu.setText(allMealsOfToday.get(0));
-                        } else if (meal.equals("lunch")) {
+                        } else if (meal.equals("Lunch")) {
                             mMenu.setText(allMealsOfToday.get(1));
-                        } else if (meal.equals("dinner")) {
+                        } else if (meal.equals("Dinner")) {
                             mMenu.setText(allMealsOfToday.get(2));
                         }
 
@@ -293,6 +286,8 @@ public class messFeedbackFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId","loggedOut");
                 if(userId.equals("loggedOut"))
                     Toast.makeText(getActivity().getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
                 else {
@@ -307,32 +302,28 @@ public class messFeedbackFragment extends Fragment {
                             return;
                         }
                     }
+
                     MessFeedback messFeedback = new MessFeedback();
-
                     String description = mDescription.getText().toString();
-                    boolean hasFilledDescription = description.equals("");
+                    messFeedback.setUserId(userId);
+                    messFeedback.setDescription(description);
+                    messFeedback.setRating(rating);
+                    messFeedback.setMeal(Meal.valueOf(selectedMeal));
+                    messFeedback.setTimestamp(new Date());
+                    messFeedback.setUserName(sharedPreferences.getString("userName","NA"));
+                    messFeedback.setAnonymity(anonymity);
 
-//                    messFeedback.setUserId(userId);
-//                    messFeedback.setDescription(description);
-//                    messFeedback.setRating(rating);
-//                    messFeedback.setMeal(Meal.valueOf(meal));
-//                    messFeedback.setTimestamp(??);
-//                    messFeedback.setName(userName);
-//                    messFeedback.setAnonymity(anonymity);
-
-                    //firebase call
                     Calendar calendar = Calendar.getInstance();
                     int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
                     String currentDate = date + "-" + month + "-" + year;
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(selectedMeal, currentDate);
-                    editor.apply();
+
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString(selectedMeal, currentDate);
+//                    editor.apply();
+
+                    FirebaseQuery.addMessFeedBack(messFeedback);
+                    refreshForm();
                     Toast.makeText(getActivity().getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
-                    mDescription.setText("");
-                    mealSpinner.setSelection(0);
-                    simpleRatingBar.setRating(0);
-                    anonymitySpinner.setSelection(0);
                 }
 
             }

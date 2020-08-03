@@ -14,15 +14,15 @@
         android:layout_weight="0.5"
         android:gravity="center_vertical"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/day_stamp"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:textSize="20sp"
-            android:id="@+id/date_stamp"
-            android:fontFamily="@font/senbold"
             android:layout_gravity="center"
-            android:text="date"
-            />
+            android:fontFamily="@font/senbold"
+            android:text="day"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/feedback_details"

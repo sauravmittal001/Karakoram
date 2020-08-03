@@ -28,7 +28,9 @@ import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.Wing;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
+import com.google.android.gms.common.util.ArrayUtils;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
@@ -40,7 +42,9 @@ public class ComplaintFormActivity extends AppCompatActivity {
     private EditText mDescription;
     private String userRoomNumber, userFloor;
     private SharedPreferences sharedPreferences;
-    boolean isImageAttached = false;
+    private boolean isImageAttached = false;
+    private boolean editMode;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +65,28 @@ public class ComplaintFormActivity extends AppCompatActivity {
         userFloor = room.substring(0,1);
         maintenanceAreaArrayEnums = getResources().getStringArray(R.array.maintenance_area_enums);
         messAreaArrayEnums = getResources().getStringArray(R.array.mess_area_enums);
+        intent = getIntent();
+        editMode = intent.getBooleanExtra("editMode",false);
     }
 
     private void setViews() {
         mDescription = findViewById(R.id.et_complaint_description);
+        if(editMode){
+            String description = intent.getStringExtra("description");
+            mDescription.setText(description);
+        }
         setSpinners();
     }
 
     private void setSpinners() {
-        categoryArray = getResources().getStringArray(R.array.complaint_category);
+
+        if(editMode){
+            String category = intent.getStringExtra("category");
+            categoryArray = new String[] {category};
+        }
+        else
+            categoryArray = getResources().getStringArray(R.array.complaint_category);
+
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, categoryArray);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         categorySpinner = findViewById(R.id.spinner_complaint_category);
@@ -132,7 +149,7 @@ public class ComplaintFormActivity extends AppCompatActivity {
                     findViewById(R.id.ll_complaint_room_number).setVisibility(View.GONE);
                     findViewById(R.id.ll_complaint_maintenance_area).setVisibility(View.GONE);
                     findViewById(R.id.ll_complaint_mess_area).setVisibility(View.VISIBLE);
-                } else if (category.equals("Other")) {
+                } else if (category.equals("Others")) {
                     findViewById(R.id.ll_complaint_wing).setVisibility(View.GONE);
                     findViewById(R.id.ll_complaint_room_number).setVisibility(View.GONE);
                     findViewById(R.id.ll_complaint_maintenance_area).setVisibility(View.GONE);
@@ -145,6 +162,36 @@ public class ComplaintFormActivity extends AppCompatActivity {
             }
 
         });
+
+        if(editMode){
+            String category = intent.getStringExtra("category");
+            if(category.equals("Mess")){
+                String messArea = intent.getStringExtra("messArea");
+                int position = ArrayUtils.toArrayList(messAreaArrayEnums).indexOf(messArea);
+                messAreaSpinner.setSelection(position);
+            }
+            else if(category.equals("Maintenance")){
+                String wing = intent.getStringExtra("wing");
+                int position = ArrayUtils.toArrayList(wingArray).indexOf(wing);
+                wingSpinner.setSelection(position);
+
+                String room = intent.getStringExtra("room");
+
+                Log.d("123hello",room);
+
+                String roomNumber = room.substring(1);
+                position = ArrayUtils.toArrayList(roomNumberArray).indexOf(roomNumber);
+                roomNumberSpinner.setSelection(position);
+
+                String floor = room.substring(0,1);
+                position = ArrayUtils.toArrayList(floorArray).indexOf(floor);
+                floorSpinner.setSelection(position);
+
+                String maintenanceArea = intent.getStringExtra("maintenanceArea");
+                position = ArrayUtils.toArrayList(maintenanceAreaArrayEnums).indexOf(maintenanceArea);
+                maintenanceAreaSpinner.setSelection(position);
+            }
+        }
     }
 
     public void onClickChooseImage(View view) {
@@ -189,16 +236,17 @@ public class ComplaintFormActivity extends AppCompatActivity {
             ComplaintArea complaintArea;
             String description = String.valueOf(mDescription.getText());
             Wing wing;
-            String room = floorArray[floorSpinner.getSelectedItemPosition()] + "-" + roomNumberArray[roomNumberSpinner.getSelectedItemPosition()];
+            String room = floorArray[floorSpinner.getSelectedItemPosition()] + roomNumberArray[roomNumberSpinner.getSelectedItemPosition()];
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 
-                if(categorySpinner.getSelectedItemPosition() == 0) {
-                    findViewById(R.id.ll_category_input).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
-                    return;
+                if(!editMode) {
+                    if (categorySpinner.getSelectedItemPosition() == 0) {
+                        findViewById(R.id.ll_category_input).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                        return;
+                    } else
+                        findViewById(R.id.ll_category_input).setBackground(getDrawable(R.drawable.background_rounded_section_task));
                 }
-                else
-                    findViewById(R.id.ll_category_input).setBackground(getDrawable(R.drawable.background_rounded_section_task));
 
                 if (category.equals("Maintenance")) {
 
@@ -259,16 +307,36 @@ public class ComplaintFormActivity extends AppCompatActivity {
             final Complaint finalComplaint = complaint;
             new AlertDialog.Builder(this, R.style.MyDialogTheme)
                     .setTitle("Please confirm")
-                    .setMessage("Are you sure you want to submit")
+                    .setMessage(editMode ? "Are you sure you want to make the changes" : "Are you sure you want to submit")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //TODO image may or may not be sent
                             //TODO which category complaint to sent
-                            if (imageUri == null || String.valueOf(imageUri).equals(""))
-                                FirebaseQuery.addCompliant(finalComplaint);
+                            if (!isImageAttached || imageUri == null || String.valueOf(imageUri).equals("")) {
+                                if(editMode){
+                                    boolean prevIsImageAttached = intent.getBooleanExtra("prevIsImageAttached",false);
+                                    String key = intent.getStringExtra("key");
+                                    FirebaseQuery.updateComplaint(key,finalComplaint);
+                                    if(prevIsImageAttached)
+                                        FirebaseQuery.removeComplaintImage(key);
+                                }
+                                else
+                                    FirebaseQuery.addCompliant(finalComplaint);
+                            }
+                            else {
+                                if(editMode){
+                                    String key = intent.getStringExtra("key");
+                                    FirebaseQuery.updateComplaint(key,finalComplaint,imageUri);
+                                }
+                                else
+                                    FirebaseQuery.addCompliant(finalComplaint, imageUri);
+                            }
+
+                            if(editMode)
+                                Toast.makeText(getApplicationContext(),"complain updated", Toast.LENGTH_SHORT).show();
                             else
-                                FirebaseQuery.addCompliant(finalComplaint,imageUri);
-                            Toast.makeText(getApplicationContext(),"complain registered", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"changes registered", Toast.LENGTH_SHORT).show();
+
                             ComplaintFormActivity.super.onBackPressed();
                         }
                     })
