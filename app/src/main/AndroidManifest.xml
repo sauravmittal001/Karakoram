@@ -21,12 +21,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-
-        <activity android:name=".activity.WingMapActivity"/>
+        <activity android:name=".activity.BillImageActivity"></activity>
+        <activity android:name=".activity.BillDescriptionActivity" />
+        <activity android:name=".activity.ComplaintDescriptionActivity" />
+        <activity android:name=".activity.WingMapActivity" />
         <activity android:name=".activity.ComplaintFormActivity" />
         <activity android:name=".activity.EventDescription" />
         <activity android:name=".activity.ComplaintActivity" />
-        <activity android:name=".activity.ustDescription"></activity>
+        <activity android:name=".activity.UstDescription" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.EventActivity" />

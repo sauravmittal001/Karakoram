@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
 import com.example.karakoram.activity.BillActivity;
+import com.example.karakoram.activity.BillDescriptionActivity;
+import com.example.karakoram.activity.ComplaintDescriptionActivity;
 import com.example.karakoram.resource.HostelBill;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.myViewHolder> {
 
@@ -49,13 +52,44 @@ public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.my
             @Override
             public void onClick(View view) {
                 int i=vHolder.getAdapterPosition();
-                Intent intent = new Intent(mcontext, BillActivity.class);
+                Date dateTime = bill.get(i).getTimeStamp();
+                Log.i("CRASHHH", String.valueOf(dateTime));
+                String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
+                Intent intent = new Intent(mcontext, BillDescriptionActivity.class);
+                intent.putExtra("category", String.valueOf(bill.get(i).getCategory()));
+                intent.putExtra("description", bill.get(i).getDescription());
+                intent.putExtra("amount", String.valueOf(bill.get(i).getAmount()));
+                intent.putExtra("userId", bill.get(i).getUserId());
+                intent.putExtra("time", time);
+                intent.putExtra("date", date);
                 intent.putExtra("key", key.get(i));
                 mcontext.startActivity(intent);
             }
         });
 
         return vHolder;
+    }
+
+    public String showTime(int hour, int min) {
+        String format;
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        return hour + " : " + min + " " + format;
+    }
+
+    public String monthName (int monthNumber) {
+        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        return monthOfYear[monthNumber-1];
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.karakoram.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.ComplaintActivity;
 import com.example.karakoram.activity.ComplaintFormActivity;
+import com.example.karakoram.activity.ComplaintDescriptionActivity;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
-import com.example.karakoram.resource.Event;
-import com.example.karakoram.activity.EventDescription;
 import com.example.karakoram.resource.MaintComplaint;
 import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.Status;
@@ -31,8 +31,6 @@ import java.util.Date;
 import static com.example.karakoram.R.drawable.green_status;
 import static com.example.karakoram.R.drawable.orange_status;
 import static com.example.karakoram.R.drawable.red_status;
-import static com.example.karakoram.R.drawable.red_status_1;
-import static com.example.karakoram.R.drawable.user_info_save_button;
 
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myViewHolder> {
@@ -68,27 +66,64 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
             @Override
             public void onClick(View view) {
                 int i=vHolder.getAdapterPosition();
-                Complaint complaint = complaints.get(i);
+                Date dateTime = complaints.get(i).getTimestamp();
                 String key = keys.get(i);
-                Intent intent = new Intent(mcontext, ComplaintFormActivity.class);
-                intent.putExtra("editMode",true);
-                intent.putExtra("key",key);
-                intent.putExtra("description",complaint.getDescription());
-                intent.putExtra("prevIsImageAttached",complaint.getIsImageAttached());
-                String category = complaint.getCategory().toString();
-                intent.putExtra("category",category);
-                if(category.equals("Mess")){
-                    intent.putExtra("messArea",((MessComplaint)complaint).getComplaintArea().toString());
-                }
-                else if(category.equals("Maintenance")){
-                    intent.putExtra("maintenanceArea",((MaintComplaint)complaint).getComplaintArea().toString());
-                    intent.putExtra("wing",((MaintComplaint)complaint).getWing().toString());
-                    intent.putExtra("room",((MaintComplaint)complaint).getRoom());
+                String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
+                Intent intent = new Intent(mcontext, ComplaintDescriptionActivity.class);
+                intent.putExtra("entryNumber", complaints.get(i).getEntryNumber());
+                intent.putExtra("name", complaints.get(i).getUserName());
+                intent.putExtra("status", String.valueOf(complaints.get(i).getStatus()));
+                intent.putExtra("description", complaints.get(i).getDescription());
+                intent.putExtra("isImageAttached", complaints.get(i).getIsImageAttached());
+                intent.putExtra("time", time);
+                intent.putExtra("date", date);
+                intent.putExtra("key", key);
+                Category category = complaints.get(i).getCategory();
+                intent.putExtra("category", category.name());
+                if (category.equals(Category.Maintenance)) {
+                    String complaintArea = ((MaintComplaint) complaints.get(i)).getComplaintArea().toString();
+                    int pos = ArrayUtils.toArrayList(maintAreaEnumList).indexOf(complaintArea);
+                    String area = maintAreaList[pos];
+                    String room = ((MaintComplaint) complaints.get(i)).getRoom();
+                    String wing = ((MaintComplaint) complaints.get(i)).getWing().toString();
+                    intent.putExtra("area", area);
+                    intent.putExtra("complaintArea",complaintArea);
+                    intent.putExtra("room", room);
+                    intent.putExtra("wing", wing);
+                } else if (category.equals(Category.Mess)) {
+                    String complaintArea = ((MessComplaint) complaints.get(i)).getComplaintArea().toString();
+                    int pos = ArrayUtils.toArrayList(messAreaEnumList).indexOf(complaintArea);
+                    String area = messAreaList[pos];
+                    intent.putExtra("complaintArea",complaintArea );
+//                    Log.d("123hello",area);
+                    intent.putExtra("area", area);
                 }
                 mcontext.startActivity(intent);
             }
         });
         return vHolder;
+    }
+
+    public String showTime(int hour, int min) {
+        String format;
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        return hour + " : " + min + " " + format;
+    }
+
+    public String monthName (int monthNumber) {
+        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        return monthOfYear[monthNumber-1];
     }
 
     @Override

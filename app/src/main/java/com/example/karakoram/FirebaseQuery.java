@@ -9,6 +9,7 @@ import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessFeedback;
+import com.example.karakoram.resource.Status;
 import com.example.karakoram.resource.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -139,5 +140,10 @@ public class FirebaseQuery {
 
     public static void removeComplaintImage(String key){
         storage.getReference("/complaintImages/"+key+".png").delete();
+    }
+
+    public static void changeComplaintStatus(String key, Status status) {
+//        Log.d()
+        ref.child("complaints").child(key).child("status").setValue(status);
     }
 }

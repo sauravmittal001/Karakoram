@@ -2,9 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lv_top"
@@ -40,50 +39,24 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="18dp">
 
+
         <LinearLayout
-            android:id="@+id/lv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_mess_feedback_day_meal"
+                android:id="@+id/tv_bill_description_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/senbold"
                 android:gravity="center_horizontal"
-                android:text="Friday Dinner"
+                android:text="Maintenance Bill"
                 android:textColor="@color/text700"
                 android:textSize="25sp" />
 
-            <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                android:id="@+id/srb_mess_feedback_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srb_starSize="50dp"
-                app:srb_starCornerRadius="0"
-                app:srb_numberOfStars="3"
-                app:srb_stepSize="1"
-                app:srb_isIndicator="false"
-                app:srb_borderColor="@color/white"
-                app:srb_starBackgroundColor="@color/grey"
-                app:srb_fillColor="@color/darker_yellow" />
-
             <TextView
-                android:id="@+id/tv_star_text_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/senregular"
-                android:lineSpacingExtra="2sp"
-                android:text="Star text"
-                android:textColor="@color/text700"
-                android:textSize="12sp"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_mess_feedback_time_date"
+                android:id="@+id/tv_bill_time_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -98,8 +71,33 @@
                 tools:ignore="RtlSymmetry,SmallSp"
                 tools:targetApi="o" />
 
+
+            <!-- user ID -->
             <TextView
-                android:id="@+id/tv_mess_feedback_description"
+                android:id="@+id/tv_bill_description_user_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/senbold"
+                android:text="Mess secy"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+            <!-- Amount -->
+            <TextView
+                android:id="@+id/tv_bill_description_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/senbold"
+                android:text="Rs. 5000"
+                android:textColor="@color/text700"
+                android:textSize="18sp" />
+
+
+
+            <TextView
+                android:id="@+id/tv_bill_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -107,15 +105,23 @@
                 android:text="Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code."
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_mess_feedback_user_id"
+            <!-- bill image show -->
+            <Button
+                android:id="@+id/button_bill_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/senbold"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/form_submit_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:font="@font/senregular"
+                android:onClick="onSubmitComplaint"
+                android:text="Open Bill Image"
                 android:textColor="@color/text700"
-                android:text="Feedback  by: "
-                android:textSize="18sp" />
+                tools:targetApi="o" />
 
         </LinearLayout>
     </ScrollView>

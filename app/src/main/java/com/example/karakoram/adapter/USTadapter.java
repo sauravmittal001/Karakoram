@@ -1,6 +1,5 @@
 package com.example.karakoram.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -15,8 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
-import com.example.karakoram.activity.ustDescription;
-import com.example.karakoram.resource.Anonymity;
+import com.example.karakoram.activity.UstDescription;
 import com.example.karakoram.resource.MessFeedback;
 
 import java.text.SimpleDateFormat;
@@ -53,25 +51,47 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
             @Override
             public void onClick(View view) {
                 int i=vHolder.getAdapterPosition();
-                Intent intent = new Intent(mcontext, ustDescription.class);
-                intent.putExtra("key", key.get(i));
-
-                intent.putExtra("description", feedbacks.get(i).getDescription());
-                intent.putExtra("rating", feedbacks.get(i).getRating());
-                if(feedbacks.get(i).getAnonymity().equals(Anonymity.Anonymous))
-                    intent.putExtra("userName","Anonymous");
-                else
-                    intent.putExtra("userName",feedbacks.get(i).getUserName());
                 Date dateTime = feedbacks.get(i).getTimestamp();
-                String day= new SimpleDateFormat("EE").format(dateTime);
-                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
+                String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
+                String day= new SimpleDateFormat("EEEE").format(dateTime);
+                Intent intent = new Intent(mcontext, UstDescription.class);
+                intent.putExtra("key", key.get(i));
+                intent.putExtra("userId",feedbacks.get(i).getUserId());
+                intent.putExtra("userName",feedbacks.get(i).getUserName());
+                intent.putExtra("description", feedbacks.get(i).getDescription());
+                intent.putExtra("rating", String.valueOf(feedbacks.get(i).getRating()));
+                intent.putExtra("meal", feedbacks.get(i).getMeal().name());
+                intent.putExtra("time", time);
                 intent.putExtra("date", date);
-                intent.putExtra("Meal", day+" "+feedbacks.get(i).getMeal().name());
+                intent.putExtra("day", day);
+                intent.putExtra("anonymity",feedbacks.get(i).getAnonymity());
                 mcontext.startActivity(intent);
             }
         });
 
         return vHolder;
+    }
+
+    public String showTime(int hour, int min) {
+        String format;
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        return hour + " : " + min + " " + format;
+    }
+
+    public String monthName (int monthNumber) {
+        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        return monthOfYear[monthNumber-1];
     }
 
     @Override
