@@ -21,10 +21,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
         <activity android:name=".activity.WingMapActivity"/>
-        <activity android:name=".activity.ComplainFormActivity" />
-        <activity android:name=".childFragment.events.EventDescription" />
-        <activity android:name=".activity.ComplainActivity" />
+        <activity android:name=".activity.ComplaintFormActivity" />
+        <activity android:name=".activity.EventDescription" />
+        <activity android:name=".activity.ComplaintActivity" />
+        <activity android:name=".activity.ustDescription"></activity>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.EventActivity" />
@@ -33,7 +35,6 @@
         <activity android:name=".activity.HostelBillDescription" />
         <activity android:name=".activity.EventFormActivity" />
         <activity android:name=".activity.BillFormActivity" />
-        <activity android:name=".childFragment.bill.fullscreenimage.fullimageActivity" />
         <activity
             android:name=".activity.SplashScreenActivity"
             android:label="@string/app_name">

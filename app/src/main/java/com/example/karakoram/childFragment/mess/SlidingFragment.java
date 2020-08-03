@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.cache.MessMenuCache;
+import com.example.karakoram.otherFragment.FoodFragment;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.views.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -34,7 +35,7 @@ public class SlidingFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ArrayList<String> days = new ArrayList<>();
-    private ArrayList<String[]> allDayMenu = new ArrayList<>();
+    private ArrayList<Menu> allDayMenu = new ArrayList<>();
     private MessMenuCache cache;
 
     public SlidingFragment() {
@@ -75,20 +76,17 @@ public class SlidingFragment extends Fragment {
         }
     }
 
-    private void initVariables() {
+    public void initVariables() {
         FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("123hello","hi");
                 allDayMenu.clear();
                 days.clear();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                     Menu menuObject = snapshotItem.getValue(Menu.class);
-                    String[] menu = new String[3];
-                    menu[0] = menuObject.getBreakFast();
-                    menu[1] = menuObject.getLunch();
-                    menu[2] = menuObject.getDinner();
-                    allDayMenu.add(menu);
-                    days.add(snapshotItem.getKey());
+                    allDayMenu.add(menuObject);
+                    days.add(menuObject.getDay());
                 }
                 try {
                     cache.setDayArray(days);
@@ -107,35 +105,27 @@ public class SlidingFragment extends Fragment {
     }
 
     private void setupViews() {
+        viewPager = view.findViewById(R.id.vp_menu);
         tabLayout.setupWithViewPager(viewPager, true);
-        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
-        this.setupViewPager(viewPager);
+        viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
+        setupViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         for (int i = 0; i < days.size(); i++) {
             String day = days.get(i);
-            String[] menu = allDayMenu.get(i);
-            adapter.addFragment(new FoodFragment(day, menu), "FOOD");
+            Menu menu = allDayMenu.get(i);
+            adapter.addFragment(new FoodFragment(menu, this,i), "FOOD");
         }
         viewPager.setAdapter(adapter);
         updatePagerView();
-//        final Handler handler = new Handler();
-//        final Runnable changeView = new Runnable() {
-//            public void run() {
-//                updatePagerView();
-//                handler.postDelayed(this, 4000);
-//            }
-//        };
-//        handler.postDelayed(changeView, 3000);
     }
 
     private void updatePagerView() {
         Calendar sCalendar = Calendar.getInstance();
         String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
         int nextPosition = days.indexOf(dayLongName);
-//        int nextPosition = (viewPager.getCurrentItem() < viewPager.getAdapter().getCount() - 1) ? viewPager.getCurrentItem() + 1 : 0;
-        viewPager.setCurrentItem(nextPosition, true);
+        viewPager.setCurrentItem(nextPosition, false);
     }
 }

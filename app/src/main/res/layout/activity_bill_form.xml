@@ -208,8 +208,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:background="@drawable/spinner_background"
-                    android:dropDownWidth="match_parent"
-                    android:entries="@array/bill_catergory" />
+                    android:dropDownWidth="match_parent" />
             </LinearLayout>
 
         </LinearLayout>

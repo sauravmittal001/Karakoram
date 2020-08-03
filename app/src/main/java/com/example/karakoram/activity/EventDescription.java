@@ -1,4 +1,4 @@
-package com.example.karakoram.childFragment.events;
+package com.example.karakoram.activity;
 
 import android.net.Uri;
 import android.os.Bundle;

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.karakoram.resource.Event;
+import com.example.karakoram.resource.Menu;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ public class MessMenuCache {
     String BREAKFAST = "breakFast";
     String LUNCH = "lunch";
     String DINNER = "dinner";
+    String DAY = "day";
 
     private MessMenuCache() {
     }
@@ -101,8 +103,8 @@ public class MessMenuCache {
 
     }
 
-    public ArrayList<String[]> getMenuArray() {
-        ArrayList<String[]> allDayMenu = new ArrayList<>();
+    public ArrayList<Menu> getMenuArray() {
+        ArrayList<Menu> allDayMenu = new ArrayList<>();
 
         FileInputStream fis = null;
         try {
@@ -121,16 +123,20 @@ public class MessMenuCache {
                 while (keyIterator.hasNext()) {
                     String key = (String) keyIterator.next();
                     JSONObject Obj = (JSONObject) ValueJSON.get(key);
-                    String[] menu = new String[3];
-                    menu[0] = (String) Obj.get(BREAKFAST);
-                    menu[1] = (String) Obj.get(LUNCH);
-                    menu[2] = (String) Obj.get(DINNER);
+                    Menu menu = new Menu();
+                    menu.setBreakFast((String) Obj.get(BREAKFAST));
+                    menu.setLunch((String) Obj.get(LUNCH));
+                    menu.setDinner((String) Obj.get(DINNER));
+                    menu.setDay((String) Obj.get(DAY));
                     allDayMenu.add(menu);
                 }
             }
-        } catch (IOException | JSONException e) {
+        }
+        catch (IOException | JSONException e) {
+            Log.i("DEBUG", String.valueOf(e));
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             if (fis != null) {
                 try {
                     fis.close();
@@ -142,17 +148,18 @@ public class MessMenuCache {
         return allDayMenu;
     }
 
-    public void setMenuArray(ArrayList<String[]> allDayMenu) throws IOException, JSONException {
+    public void setMenuArray(ArrayList<Menu> allDayMenu) throws IOException, JSONException {
         clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + MENU_FILE_NAME);
 //        printFileContent(EVENT_FILE_NAME);
 
         int i = 0;
         JSONObject JSON = new JSONObject();
-        for (String[] menu : allDayMenu) {
+        for (Menu menu : allDayMenu) {
             JSONObject menuJSON = new JSONObject();
-            menuJSON.put(BREAKFAST, menu[0]);
-            menuJSON.put(LUNCH, menu[1]);
-            menuJSON.put(DINNER, menu[2]);
+            menuJSON.put(BREAKFAST, menu.getBreakFast());
+            menuJSON.put(LUNCH, menu.getLunch());
+            menuJSON.put(DINNER, menu.getDinner());
+            menuJSON.put(DAY, menu.getDay());
             JSON.put(String.valueOf(i++), menuJSON);
         }
 

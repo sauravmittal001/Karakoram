@@ -51,7 +51,7 @@ public class BillActivity extends AppCompatActivity {
         });
 
         final ImageView billImage = findViewById(R.id.bill_image);
-        StorageReference ref = FirebaseStorage.getInstance().getReference("hostelBillImages/"+key+".png");
+        StorageReference ref = FirebaseQuery.getBillImageRef(key);
         long MAXBYTES = 1024*1024;
         ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

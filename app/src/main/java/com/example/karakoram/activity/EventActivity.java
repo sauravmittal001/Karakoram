@@ -52,7 +52,7 @@ public class EventActivity extends AppCompatActivity {
             }
         });
         final ImageView eventImage = findViewById(R.id.event_image);
-        StorageReference ref = FirebaseStorage.getInstance().getReference("eventImages/"+key+".png");
+        StorageReference ref = FirebaseQuery.getEventImageRef(key);
         long MAXBYTES = 1024*1024;
         ref.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

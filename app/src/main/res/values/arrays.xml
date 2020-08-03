@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="admin_position">
+    <!-- user info -->
+
+    <string-array name="user_type">
         <item></item>
+        <item>Student</item>
         <item>Developer</item>
         <item>Mess Secy</item>
         <item>Mess Supervisor</item>
@@ -12,17 +15,14 @@
         <item>Warden</item>
     </string-array>
 
-    <string-array name="user_type">
-        <item></item>
-        <item>Student</item>
-<!--        <item>Admin</item>-->
-        <item>Developer</item>
-        <item>Mess Secy</item>
-        <item>Mess Supervisor</item>
-        <item>Maint Secy</item>
-        <item>Sports Secy</item>
-        <item>Cult secy</item>
-        <item>Warden</item>
+    <string-array name="days">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
     </string-array>
 
     <string-array name="complaint_category">
@@ -32,27 +32,63 @@
         <item>Other</item>
     </string-array>
 
-    <string-array name="complaint_anonymity">
-        <item></item>
-        <item>Public</item>
-        <item>Only admin</item>
-        <item>No one</item>
-    </string-array>
 
-    <string-array name="bill_catergory">
-        <item>Maintenance</item>
-        <item>Mess</item>
-        <item>Sports</item>
-        <item>Cult</item>
+    <string-array name="maintenance_area">
+        <item></item>
+        <item>Washbasin</item>
+        <item>Washroom</item>
+        <item>Bathroom</item>
+        <item>Washing Machines</item>
+        <item>Geysers (Bathrooms)</item>
+        <item>Geysers (Drinking Water)</item>
+        <item> Water Problem (Washroom)</item>
+        <item>Water Problem (Drinking Water)</item>
+        <item>Gym Room</item>
+        <item>ISC Room</item>
+        <item>Common Room</item>
+        <item>Reading Room</item>
+        <item>TV Room</item>
+        <item>Music Room</item>
+        <item>RCA Room</item>
+        <item>Common Areas</item>
         <item>Others</item>
     </string-array>
 
-    <string-array name="wing">
+    <string-array name="mess_area">
         <item></item>
-        <item>Junior</item>
-        <item>Senior</item>
-        <item>Ultra</item>
-        <item>End</item>
+        <item>Cleanliness</item>
+        <item>Infrastructure</item>
+        <item>Food</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="maintenance_area_enums">
+        <item></item>
+        <item>Washbasin</item>
+        <item>Washroom</item>
+        <item>Bathroom</item>
+        <item>Washing_Machines</item>
+        <item>Bathroom_Geyser</item>
+        <item>Drinking_Water_Geyser</item>
+        <item>Bathroom_Water_Issue</item>
+        <item>Drinking_Water_Issue</item>
+        <item>Gym</item>
+        <item>ISC</item>
+        <item>Common_Room</item>
+        <item>Reading_Room</item>
+        <item>TV_Room</item>
+        <item>Music_Room</item>
+        <item>RCA_Room</item>
+        <item>Common_Areas</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="mess_area_enums">
+        <item></item>
+        <item>Mess_Maintenance</item>
+        <item>Mess_Infra</item>
+        <item>Mess_Food</item>
+        <item>Others</item>
     </string-array>
 
     <string-array name="floor">
@@ -139,6 +175,13 @@
         <item>74</item>
         <item>75</item>
         <item>76</item>
+    </string-array>
+
+    <string-array name="feedback_anonymity">
+        <item></item>
+        <item>I Don\'t Want My Feedback To be Anonymous</item>
+        <item>I want it to be anonymous but not from the developers</item>
+        <item>I want it to be completely anonymous</item>
     </string-array>
 
 </resources>

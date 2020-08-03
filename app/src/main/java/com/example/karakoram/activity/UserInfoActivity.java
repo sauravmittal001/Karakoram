@@ -17,6 +17,7 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
+import com.example.karakoram.resource.Wing;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,7 +56,11 @@ public class UserInfoActivity extends AppCompatActivity {
     private void initVariables() {
         floor = getResources().getStringArray(R.array.floor);
         roomNumber = getResources().getStringArray(R.array.room_number);
-        wing = getResources().getStringArray(R.array.wing);
+        Wing[] wings = Wing.values();
+        wing = new String[wings.length+1];
+        wing[0] = "";
+        for(int i=0;i<wings.length;i++)
+            wing[i+1] = String.valueOf(wings[i]);
 
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         userEntryNumber = sharedPreferences.getString("entryNumber", "DEFAULT");

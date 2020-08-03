@@ -3,24 +3,20 @@ package com.example.karakoram.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.karakoram.R;
-import com.example.karakoram.childFragment.mess.messFeedbackFragment;
-import com.example.karakoram.resource.User;
-import com.example.karakoram.upload_complain_Fragment;
-import com.example.karakoram.upload_event_Fragment;
-import com.example.karakoram.upload_feedback_Fragment;
+import com.example.karakoram.otherFragment.complaintChildFragment;
+import com.example.karakoram.resource.Category;
 import com.google.android.material.tabs.TabLayout;
 import com.example.karakoram.adapter.pageadapter;
 
-public class ComplainActivity extends AppCompatActivity {
+public class ComplaintActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complain);
+        setContentView(R.layout.activity_complaint);
 
         //find the view that shows the number category
 
@@ -29,9 +25,9 @@ public class ComplainActivity extends AppCompatActivity {
 
         // Create an adapter that knows which fragment should be shown on each page
         pageadapter adapter = new pageadapter(getSupportFragmentManager());
-        adapter.addFragment(new upload_event_Fragment(), "Mess");
-        adapter.addFragment(new upload_feedback_Fragment(), "Maint");
-        adapter.addFragment(new upload_complain_Fragment(), "Others");
+        adapter.addFragment(new complaintChildFragment(Category.Mess,false), "Mess");
+        adapter.addFragment(new complaintChildFragment(Category.Maintenance,false), "Maint");
+        adapter.addFragment(new complaintChildFragment(Category.Others,false), "Others");
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
