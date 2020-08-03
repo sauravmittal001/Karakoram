@@ -152,8 +152,8 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
     private void setViews() {
         mCategory.setText(category + " complaint");
         mDateTime.setText(time + ", " + date);
-//        mDescription.setText(description);
-        mDescription.setText("Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code.");
+        mDescription.setText(description);
+//        mDescription.setText("Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code.");
         mEntryNumber.setText(entryNumber);
         mName.setText(name);
         if (category.equals(Category.Maintenance.name()) || category.equals(Category.Mess.name())) {
