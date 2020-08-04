@@ -87,7 +87,7 @@ public class FirebaseQuery {
     }
 
     public static Query getAllMessFeedback(){
-        return ref.child("messFeedback");
+        return ref.child("messFeedback").orderByChild("timeStamp/time");
     }
 
     public static Query getUserMessFeedback(String userId){
@@ -96,10 +96,6 @@ public class FirebaseQuery {
 
     public static Query getAllMenu(){
         return ref.child("messMenu").orderByKey();
-    }
-
-    public static Query getDayMenu(String day) {
-        return ref.child("messMenu").orderByChild("day").equalTo(day);
     }
 
     public static  void updateMenu(Menu menu, int day){

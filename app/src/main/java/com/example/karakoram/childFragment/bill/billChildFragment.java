@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class billChildFragment extends Fragment {
@@ -38,8 +41,7 @@ public class billChildFragment extends Fragment {
 //   ArrayList<Integer> bill= new ArrayList<>();
 
     /* Variables */
-    private ArrayList<String> key = new ArrayList<>();
-    private ArrayList<HostelBill> hostelBill;
+    private ArrayList<Pair<String,HostelBill>> hostelBillsKv = new ArrayList<>();
     private Category category;
     private Context context;
     private HostelBillCache cache;
@@ -79,10 +81,11 @@ public class billChildFragment extends Fragment {
         setViews();
 
         try {
-            hostelBill = cache.getHostelBillArray();
-            key = cache.getKeyArray();
-            Log.i("111111 " + category.name(), "hostelBills: " + hostelBill);
-            Log.i("111111 " + category.name(), "keys: " + key);
+            ArrayList<HostelBill> hostelBill = cache.getHostelBillArray();
+            ArrayList<String> key = cache.getKeyArray();
+            hostelBillsKv.clear();
+            for(int i = 0; i<hostelBill.size();i++)
+                hostelBillsKv.add(Pair.create(key.get(i),hostelBill.get(i)));
 
             if (hostelBill.isEmpty() || key.isEmpty()) {
                 Log.i("111111 " + category.name(), "lists were empty");
@@ -124,18 +127,20 @@ public class billChildFragment extends Fragment {
     }
 
     private void refreshListView() {
-        key.clear();
-        hostelBill.clear();
-
         FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                hostelBill = new ArrayList<>();
+                hostelBillsKv.clear();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    hostelBill.add(snapshotItem.getValue(HostelBill.class));
-                    key.add(snapshotItem.getKey());
+                    hostelBillsKv.add(Pair.create(snapshotItem.getKey(),snapshotItem.getValue(HostelBill.class)));
                 }
                 try {
+                    ArrayList<HostelBill> hostelBill = new ArrayList<>();
+                    ArrayList<String> key = new ArrayList<>();
+                    for(int i=0; i<hostelBillsKv.size();i++){
+                        key.add(hostelBillsKv.get(i).first);
+                        hostelBill.add(hostelBillsKv.get(i).second);
+                    }
                     cache.setKeyArray(key);
                     cache.setHostelBillArray(hostelBill);
                     Log.i("111111 " + category.name(), "hostelBills: after refresh" + hostelBill);
@@ -156,7 +161,19 @@ public class billChildFragment extends Fragment {
 
 
     private void start() {
-        Log.i("ASDF", String.valueOf(hostelBill));
+        Collections.sort(hostelBillsKv, new Comparator<Pair<String, HostelBill>>() {
+            @Override
+            public int compare(Pair<String, HostelBill> stringHostelBillPair, Pair<String, HostelBill> t1) {
+                return t1.second.getTimeStamp().compareTo(stringHostelBillPair.second.getTimeStamp());
+            }
+        });
+
+        ArrayList<HostelBill> hostelBill = new ArrayList<>();
+        ArrayList<String> key = new ArrayList<>();
+        for(int i=0; i<hostelBillsKv.size();i++){
+            key.add(hostelBillsKv.get(i).first);
+            hostelBill.add(hostelBillsKv.get(i).second);
+        }
         adapter = new HostelBillAdapter(getActivity(), hostelBill,key);
         listView = view.findViewById(R.id.billlistView);
         listView.setHasFixedSize(true);
@@ -168,13 +185,5 @@ public class billChildFragment extends Fragment {
         itemdecor.setDrawable(mdivider);
         listView.addItemDecoration(itemdecor);
         listView.setAdapter(adapter);
-       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), HostelBillDescription.class);
-                intent.putExtra("key", key.get(i));
-                startActivity(intent);
-            }
-        }); */
     }
 }
