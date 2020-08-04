@@ -194,7 +194,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
+        final UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
         if(userType.equals(UserType.Admin)){
             mEdit.setVisibility(View.GONE);
         }
@@ -204,19 +204,20 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (statusSpinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(ComplaintDescriptionActivity.this, "Select status", Toast.LENGTH_SHORT).show();
-                    return;
+                if(userType.equals(UserType.Admin)) {
+                    if (statusSpinner.getSelectedItemPosition() == 0) {
+                        Toast.makeText(ComplaintDescriptionActivity.this, "Select status", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (initialStatus.equals(status)) {
+                        finish();
+                    } else {
+                        FirebaseQuery.changeComplaintStatus(key, Status.valueOf(status));
+                        Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
-                else if (initialStatus.equals(status)) {
+                else
                     finish();
-                }
-                else {
-                    //TODO make firebase call
-                    FirebaseQuery.changeComplaintStatus(key,Status.valueOf(status));
-                    Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
             }
         });
 
@@ -278,7 +279,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         intent.putExtra("editMode",true);
         intent.putExtra("key",key);
         intent.putExtra("description",description);
-        intent.putExtra("prevIsImageAttached",isImageAttached);
+        intent.putExtra("isImageAttached",isImageAttached);
         intent.putExtra("category",category);
         if(category.equals("Mess")){
             intent.putExtra("messArea",complaintArea);

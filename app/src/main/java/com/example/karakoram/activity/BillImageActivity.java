@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.karakoram.DynamicImageView;
+import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,9 +33,7 @@ public class BillImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill_image);
         final ImageView myImageView = (ZoomageView) findViewById(R.id.myZoomageView);
         String key = getIntent().getExtras().getString("key");
-        String dbImageLocation = "hostelBillImages/" + key + ".png";
-        StorageReference ref = FirebaseStorage.getInstance().getReference();
-        ref.child(dbImageLocation).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        FirebaseQuery.getBillImageRef(key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(BillImageActivity.this)

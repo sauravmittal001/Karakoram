@@ -1,6 +1,7 @@
 package com.example.karakoram.childFragment.mess;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,11 @@ import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
+import com.google.android.gms.common.util.ArrayUtils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.ArrayList;
@@ -55,11 +61,13 @@ public class messFeedbackFragment extends Fragment {
     //textview to set menu
     //button to submit, file complain
 
-    String currentMeal, selectedMeal;
-    ArrayList<String> allMealsOfToday;
-    ArrayList<String> eligibleMeals;
-    Anonymity anonymity;
-    int rating;
+    private String currentMeal, selectedMeal;
+    private ArrayList<String> allMealsOfToday;
+    private ArrayList<String> eligibleMeals;
+    private Anonymity anonymity;
+    private int rating;
+    private boolean editMode;
+    private Intent intent;
 
 
     public messFeedbackFragment() {
@@ -81,15 +89,14 @@ public class messFeedbackFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         refreshForm();
-//        Log.i("QQQQ", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-//        setVariables();
-//        setViews();
     }
 
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
         eligibleMeals = getMealsEligibleForRating();
         currentMeal = getTheCurrentMeal();
+        intent = getActivity().getIntent();
+        editMode = intent.getBooleanExtra("editMode",false);
         setMenuOfCurrentMeal(currentMeal);
         initAndSetAllTheViews();
     }
@@ -189,7 +196,13 @@ public class messFeedbackFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void initAndSetAllTheViews() {
         simpleRatingBar = view.findViewById(R.id.srb_mess_feedback);
-        simpleRatingBar.setRating(0);
+        if(editMode) {
+            rating = intent.getIntExtra("rating", 0);
+            simpleRatingBar.setRating(rating);
+        }
+        else
+            simpleRatingBar.setRating(0);
+
         final TextView mStarText = view.findViewById(R.id.tv_star_text);
         simpleRatingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -212,7 +225,12 @@ public class messFeedbackFragment extends Fragment {
         });
 
         mDescription = view.findViewById(R.id.et_feedback_description);
-        mDescription.setText("");
+        if(editMode) {
+            mDescription.setText(intent.getStringExtra("description"));
+            view.findViewById(R.id.tv_feedback_complaint).setVisibility(View.GONE);
+        }
+        else
+            mDescription.setText("");
         setSpinners();
         setButtons();
     }
@@ -223,8 +241,15 @@ public class messFeedbackFragment extends Fragment {
         final CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, anonymityArray);
         anonymityAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         anonymitySpinner = view.findViewById(R.id.spinner_feedback_anonymity);
-        anonymitySpinner.setSelection(0); //setting to public
-        anonymity = Anonymity.Public;
+
+        if(editMode){
+            String anonymity = intent.getExtras().getString("anonymity");
+            int position = ArrayUtils.toArrayList(anonymityArrayEnum).indexOf(anonymity);
+            anonymitySpinner.setSelection(position);
+        }
+        else
+            anonymitySpinner.setSelection(0);
+
         anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -239,46 +264,69 @@ public class messFeedbackFragment extends Fragment {
             }
         });
 
-        final String[] mealArray = new String[eligibleMeals.size()+1];
-        mealArray[0] = "";
-        for(int i = 0; i < eligibleMeals.size(); i++)
-            mealArray[i+1] = eligibleMeals.get(i);
-        CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, mealArray);
-        mealAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        mealSpinner = view.findViewById(R.id.spinner_feedback_meal);
-        mealSpinner.setAdapter(mealAdapter);
-        if (currentMeal != null && eligibleMeals.contains(currentMeal)) {
-            int spinnerPosition = mealAdapter.getPosition(currentMeal);
-            mealSpinner.setSelection(spinnerPosition);
-            selectedMeal = currentMeal;
-        }
-        mealSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Log.i("MEAL", String.valueOf(mealArray.length));
-                for (String m : mealArray)
-                    Log.i("MEAL", m);
-                if (mealSpinner.getSelectedItemPosition() > 0) {
-                    String meal = mealArray[mealSpinner.getSelectedItemPosition()];
-                    selectedMeal = meal;
-                    if (eligibleMeals.size() != 0) {
-                        if (meal.equals("Breakfast")) {
-                            mMenu.setText(allMealsOfToday.get(0));
-                        } else if (meal.equals("Lunch")) {
-                            mMenu.setText(allMealsOfToday.get(1));
-                        } else if (meal.equals("Dinner")) {
-                            mMenu.setText(allMealsOfToday.get(2));
-                        }
+        if(editMode){
+            final String meal = intent.getStringExtra("meal");
+            String[] mealArray = new String[] {meal};
+            selectedMeal = meal;
+            CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, mealArray);
+            mealAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+            mealSpinner = view.findViewById(R.id.spinner_feedback_meal);
+            mealSpinner.setAdapter(mealAdapter);
 
+            if (meal.equals("Breakfast")) {
+                mMenu.setText(allMealsOfToday.get(0));
+            }
+            else if (meal.equals("Lunch")) {
+                mMenu.setText(allMealsOfToday.get(1));
+            }
+            else{
+                mMenu.setText(allMealsOfToday.get(2));
+            }
+        }
+        else {
+            final String[] mealArray = new String[eligibleMeals.size() + 1];
+            mealArray[0] = "";
+            for (int i = 0; i < eligibleMeals.size(); i++)
+                mealArray[i + 1] = eligibleMeals.get(i);
+            CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, mealArray);
+            mealAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+            mealSpinner = view.findViewById(R.id.spinner_feedback_meal);
+            mealSpinner.setAdapter(mealAdapter);
+            if (currentMeal != null && eligibleMeals.contains(currentMeal)) {
+                int spinnerPosition = mealAdapter.getPosition(currentMeal);
+                mealSpinner.setSelection(spinnerPosition);
+                selectedMeal = currentMeal;
+            }
+            mealSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    Log.i("MEAL", String.valueOf(mealArray.length));
+                    for (String m : mealArray)
+                        Log.i("MEAL", m);
+                    if (mealSpinner.getSelectedItemPosition() > 0) {
+                        String meal = mealArray[mealSpinner.getSelectedItemPosition()];
+                        selectedMeal = meal;
+                        if (eligibleMeals.size() != 0) {
+                            if (meal.equals("Breakfast")) {
+                                mMenu.setText(allMealsOfToday.get(0));
+                            }
+                            else if (meal.equals("Lunch")) {
+                                mMenu.setText(allMealsOfToday.get(1));
+                            }
+                            else{
+                                mMenu.setText(allMealsOfToday.get(2));
+                            }
+                        }
                     }
                 }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
 
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+
+            });
+        }
     }
 
     private void setButtons() {
@@ -293,7 +341,7 @@ public class messFeedbackFragment extends Fragment {
                 else {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         View spinner = view.findViewById(R.id.ll_feedback_meal);
-                        if (mealSpinner.getSelectedItemPosition() == 0) {
+                        if (mealSpinner.getSelectedItemPosition() == 0 && !editMode) {
                             Toast.makeText(getActivity().getApplicationContext(), "Select meal", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -307,25 +355,32 @@ public class messFeedbackFragment extends Fragment {
                     String description = mDescription.getText().toString();
                     messFeedback.setUserId(userId);
                     messFeedback.setDescription(description);
-                    messFeedback.setRating(rating);
                     messFeedback.setMeal(Meal.valueOf(selectedMeal));
+                    messFeedback.setRating(rating);
                     messFeedback.setTimestamp(new Date());
                     messFeedback.setUserName(sharedPreferences.getString("userName","NA"));
                     messFeedback.setAnonymity(anonymity);
 
-                    Calendar calendar = Calendar.getInstance();
-                    int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
-                    String currentDate = date + "-" + month + "-" + year;
+                    if(editMode){
+                        String key = intent.getStringExtra("key");
+                        FirebaseQuery.updateMessFeedback(key,messFeedback);
+                        Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                    }
+                    else {
+                        Calendar calendar = Calendar.getInstance();
+                        int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
+                        String currentDate = date + "-" + month + "-" + year;
 
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putString(selectedMeal, currentDate);
-//                    editor.apply();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(selectedMeal, currentDate);
+                        editor.apply();
 
-                    FirebaseQuery.addMessFeedBack(messFeedback);
-                    refreshForm();
-                    Toast.makeText(getActivity().getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
+                        FirebaseQuery.addMessFeedback(messFeedback);
+                        refreshForm();
+                        Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                    }
                 }
-
             }
         });
 

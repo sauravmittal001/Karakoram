@@ -1,6 +1,7 @@
 package com.example.karakoram.otherFragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.CallSuper;
@@ -23,6 +24,7 @@ import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
 import com.example.karakoram.resource.MaintComplaint;
 import com.example.karakoram.resource.MessComplaint;
+import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -91,15 +93,19 @@ public class complaintChildFragment extends Fragment {
     private void refreshListView() {
         complaints.clear();
         key.clear();
-
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS,Context.MODE_PRIVATE);
+        final String userId = sharedPreferences.getString("userId","loggedOut");
         if(getAllCategory || category.equals(Category.Mess)) {
             FirebaseQuery.getMessComplaints().addListenerForSingleValueEvent(new ValueEventListener() {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                        complaints.add(snapshotItem.getValue(MessComplaint.class));
-                        key.add(snapshotItem.getKey());
+                        Complaint complaint = snapshotItem.getValue(MessComplaint.class);
+                        if(!getAllCategory || complaint.getUserId().equals(userId)) {
+                            complaints.add(complaint);
+                            key.add(snapshotItem.getKey());
+                        }
                     }
                     start();
                 }
@@ -116,8 +122,11 @@ public class complaintChildFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                        complaints.add(snapshotItem.getValue(MaintComplaint.class));
-                        key.add(snapshotItem.getKey());
+                        Complaint complaint = snapshotItem.getValue(MaintComplaint.class);
+                        if(!getAllCategory || complaint.getUserId().equals(userId)) {
+                            complaints.add(complaint);
+                            key.add(snapshotItem.getKey());
+                        }
                     }
                     start();
                 }
@@ -134,8 +143,11 @@ public class complaintChildFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                        complaints.add(snapshotItem.getValue(Complaint.class));
-                        key.add(snapshotItem.getKey());
+                        Complaint complaint = snapshotItem.getValue(Complaint.class);
+                        if(!getAllCategory || complaint.getUserId().equals(userId)) {
+                            complaints.add(complaint);
+                            key.add(snapshotItem.getKey());
+                        }
                     }
                     start();
                 }
