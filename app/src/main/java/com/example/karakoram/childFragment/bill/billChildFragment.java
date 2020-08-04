@@ -107,6 +107,9 @@ public class billChildFragment extends Fragment {
     }
 
     private void refreshListView() {
+        key.clear();
+        hostelBill.clear();
+
         FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
