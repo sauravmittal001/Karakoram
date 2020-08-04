@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity  {
     private BottomNavigationView navView;
     private NavigationView side_navview;
     private View header;
+    private boolean editMode;
 
 
     @Override
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity  {
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         side_navview=findViewById(R.id.side_navview);
         header=side_navview.getHeaderView(0);
+        editMode = getIntent().getBooleanExtra("editMode",false);
         side_navview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -114,6 +116,11 @@ public class MainActivity extends AppCompatActivity  {
         TextView entryNumberView = header.findViewById(R.id.user_entry_number);
         nameView.setText(sharedPreferences.getString("userName",""));
         entryNumberView.setText(sharedPreferences.getString("entryNumber",""));
+
+        if(editMode) {
+            navView.setVisibility(View.GONE);
+            openfragment(new messFragment());
+        }
     }
 
     @Override

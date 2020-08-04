@@ -1,5 +1,6 @@
 package com.example.karakoram.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Complaint;
@@ -29,6 +35,10 @@ import com.example.karakoram.resource.Wing;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
 import com.google.android.gms.common.util.ArrayUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -45,6 +55,8 @@ public class ComplaintFormActivity extends AppCompatActivity {
     private boolean isImageAttached = false;
     private boolean editMode;
     private Intent intent;
+    private ImageView mImage;
+    private ImageView mDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +79,8 @@ public class ComplaintFormActivity extends AppCompatActivity {
         messAreaArrayEnums = getResources().getStringArray(R.array.mess_area_enums);
         intent = getIntent();
         editMode = intent.getBooleanExtra("editMode",false);
+        mImage = findViewById(R.id.div_complaint_image);
+        mDelete = findViewById(R.id.iv_delete);
     }
 
     private void setViews() {
@@ -76,6 +90,37 @@ public class ComplaintFormActivity extends AppCompatActivity {
             mDescription.setText(description);
         }
         setSpinners();
+        isImageAttached = intent.getBooleanExtra("isImageAttached",false);
+        String key = intent.getStringExtra("key");
+        String dbImageLocation = "complaintImages/" + key + ".png";
+        if(isImageAttached && editMode) {
+            StorageReference ref = FirebaseStorage.getInstance().getReference();
+            ref.child(dbImageLocation).getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            imageUri = uri;
+                            loadGlideImage(uri.toString());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // image not loading
+                }
+            });
+            ((TextView)findViewById(R.id.tv_image)).setText("Selected Image:");
+            mDelete.setVisibility(View.VISIBLE);
+        }
+
+        mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((TextView)findViewById(R.id.tv_image)).setText("No Image Selected");
+                mDelete.setVisibility(View.GONE);
+                mImage.setVisibility(View.GONE);
+                isImageAttached = false;
+            }
+        });
     }
 
     private void setSpinners() {
@@ -91,6 +136,10 @@ public class ComplaintFormActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         categorySpinner = findViewById(R.id.spinner_complaint_category);
         categorySpinner.setAdapter(adapter);
+        if (intent.getBooleanExtra("messFlag",false)) {
+            int spinnerPosition = adapter.getPosition("Mess");
+            categorySpinner.setSelection(spinnerPosition);
+        }
 
         Wing[] wings = Wing.values();
         wingArray = new String[wings.length+1];
@@ -206,13 +255,17 @@ public class ComplaintFormActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             //TODO: unchecked code
-            findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.tv_image)).setText("Selected Image:");
+            mDelete.setVisibility(View.VISIBLE);
             imageUri = data.getData();
-            ImageView complainImage = findViewById(R.id.div_complaint_image);
-            complainImage.setImageURI(imageUri);
+            mImage.setImageURI(imageUri);
             isImageAttached = true;
-        } else {
-            findViewById(R.id.tv_image).setVisibility(View.GONE);
+        }
+        else {
+            ((TextView)findViewById(R.id.tv_image)).setText("No Image Selected");
+            mDelete.setVisibility(View.GONE);
+            mImage.setVisibility(View.GONE);
+            isImageAttached = false;
             Log.d("123hello", "upload failure");
         }
     }
@@ -224,6 +277,18 @@ public class ComplaintFormActivity extends AppCompatActivity {
 
     public void openWingMap(View view) {
         startActivity(new Intent(ComplaintFormActivity.this, WingMapActivity.class));
+    }
+
+    private void loadGlideImage(String url) {
+        Log.i("CRASHHH", url); // not getting here
+        RequestOptions requestOption = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter();
+        Glide.with(ComplaintFormActivity.this)
+                .load(url)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(requestOption)
+                .into(mImage);
     }
 
     public void onSubmitComplaint(View view) {
@@ -307,14 +372,14 @@ public class ComplaintFormActivity extends AppCompatActivity {
             final Complaint finalComplaint = complaint;
             new AlertDialog.Builder(this, R.style.MyDialogTheme)
                     .setTitle("Please confirm")
-                    .setMessage(editMode ? "Are you sure you want to make the changes" : "Are you sure you want to submit")
+                    .setMessage(editMode ? "Are you sure you want to make the changes ?" : isImageAttached ? "Are you sure you want to submit ?" : "Are you sure you want to submit without an image ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //TODO image may or may not be sent
                             //TODO which category complaint to sent
                             if (!isImageAttached || imageUri == null || String.valueOf(imageUri).equals("")) {
                                 if(editMode){
-                                    boolean prevIsImageAttached = intent.getBooleanExtra("prevIsImageAttached",false);
+                                    boolean prevIsImageAttached = intent.getBooleanExtra("isImageAttached",false);
                                     String key = intent.getStringExtra("key");
                                     FirebaseQuery.updateComplaint(key,finalComplaint);
                                     if(prevIsImageAttached)

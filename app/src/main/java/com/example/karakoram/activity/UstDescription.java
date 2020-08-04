@@ -1,6 +1,8 @@
 package com.example.karakoram.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -12,8 +14,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.karakoram.R;
+import com.example.karakoram.resource.Anonymity;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class UstDescription extends AppCompatActivity {
@@ -27,6 +31,7 @@ public class UstDescription extends AppCompatActivity {
     private String date;
     private String day;
     private int rating;
+    private Anonymity anonymity;
 
     private TextView mUserId;
     private TextView mDescription;
@@ -36,6 +41,7 @@ public class UstDescription extends AppCompatActivity {
     private SimpleRatingBar simpleRatingBar;
 
     private ImageView mBack;
+    private ImageView mEdit;
 
 
     @Override
@@ -47,6 +53,11 @@ public class UstDescription extends AppCompatActivity {
         setViews();
     }
 
+    public String monthName (int monthNumber) {
+        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        return monthOfYear[monthNumber-1];
+    }
+
     private void initVariables() {
         key = getIntent().getExtras().getString("key");
         userName = getIntent().getExtras().getString("userName");
@@ -56,6 +67,7 @@ public class UstDescription extends AppCompatActivity {
         date = getIntent().getExtras().getString("date");
         day = getIntent().getExtras().getString("day");
         rating = Integer.parseInt(getIntent().getExtras().getString("rating"));
+        anonymity = Anonymity.valueOf(getIntent().getExtras().getString("anonymity"));
     }
 
     private void initViews() {
@@ -67,7 +79,7 @@ public class UstDescription extends AppCompatActivity {
 
         simpleRatingBar = findViewById(R.id.srb_mess_feedback_description);
         mBack = findViewById(R.id.iv_back_button);
-
+        mEdit = findViewById(R.id.iv_edit_button);
     }
 
     private void setViews() {
@@ -92,5 +104,25 @@ public class UstDescription extends AppCompatActivity {
                 finish();
             }
         });
+        mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UstDescription.this,MainActivity.class);
+                intent.putExtra("editMode",true);
+                intent.putExtra("rating",rating);
+                intent.putExtra("description",description);
+                intent.putExtra("anonymity",anonymity.toString());
+                intent.putExtra("meal",meal);
+                intent.putExtra("day",day);
+                intent.putExtra("key",key);
+                startActivity(intent);
+            }
+        });
+        Date dateTime = new Date();
+        String dateNow = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1) + " " + String.format("%02d",dateTime.getDate());
+        if(dateNow.equals(date))
+            mEdit.setVisibility(View.VISIBLE);
+        else
+            mEdit.setVisibility(View.GONE);
     }
 }

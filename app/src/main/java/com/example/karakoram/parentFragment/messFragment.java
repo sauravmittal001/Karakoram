@@ -56,6 +56,10 @@ public class messFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setUpViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        if(getActivity().getIntent().getBooleanExtra("editMode",false)) {
+            tabLayout.selectTab(tabLayout.getTabAt(1));
+            tabLayout.setVisibility(View.GONE);
+        }
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

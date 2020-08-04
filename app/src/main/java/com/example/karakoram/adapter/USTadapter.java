@@ -61,11 +61,11 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
                 intent.putExtra("userName",feedbacks.get(i).getUserName());
                 intent.putExtra("description", feedbacks.get(i).getDescription());
                 intent.putExtra("rating", String.valueOf(feedbacks.get(i).getRating()));
-                intent.putExtra("meal", feedbacks.get(i).getMeal().name());
+                intent.putExtra("meal", feedbacks.get(i).getMeal().toString());
                 intent.putExtra("time", time);
                 intent.putExtra("date", date);
                 intent.putExtra("day", day);
-                intent.putExtra("anonymity",feedbacks.get(i).getAnonymity());
+                intent.putExtra("anonymity",feedbacks.get(i).getAnonymity().toString());
                 mcontext.startActivity(intent);
             }
         });

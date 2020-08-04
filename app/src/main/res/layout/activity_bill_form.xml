@@ -233,18 +233,6 @@
             android:textColor="@color/text700"
             tools:targetApi="o" />
 
-        <!-- disclaimer footer -->
-        <TextView
-            android:id="@+id/tv_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:lineSpacingExtra="2sp"
-            android:text="Your account details are attached to this form"
-            android:textColor="@color/text700"
-            android:textSize="12sp" />
-
         <!-- Bill image -->
 
         <TextView
