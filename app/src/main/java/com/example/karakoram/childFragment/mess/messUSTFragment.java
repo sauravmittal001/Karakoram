@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class messUSTFragment extends Fragment {
@@ -124,7 +125,9 @@ public class messUSTFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 feedbacks=new ArrayList<>();
                 for(DataSnapshot snapshotItem:snapshot.getChildren()){
-                    feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                    if (!Objects.requireNonNull(snapshotItem.getValue(MessFeedback.class)).getDescription().equals("")) {
+                        feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                    }
                     key.add(snapshotItem.getKey());
                 }
                 try {
