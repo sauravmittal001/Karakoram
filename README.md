@@ -2,7 +2,7 @@
 
 <!-- [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) -->
 
-# Karakoram App
+# Karakoram Ap
 
 > Digital Complaint and other systems in Karakoram House, IIT Delhi
 
