@@ -129,7 +129,7 @@ public class HostelBillCache {
                     HostelBill bill = new HostelBill();
                     bill.setCategory(Category.valueOf((String) Obj.get(CATEGORY)));
                     bill.setDescription((String) Obj.get(DESCRIPTION));
-                    bill.setAmount(Integer.parseInt((String) Obj.get(AMOUNT)));
+                    bill.setAmount(Double.parseDouble((String) Obj.get(AMOUNT)));
                     bill.setUserId((String) Obj.get(USER_ID));
                     bill.setTimeStamp(new Date(Date.parse((String) Obj.get(TIMESTAMP))));
                     hostelBills.add(bill);
