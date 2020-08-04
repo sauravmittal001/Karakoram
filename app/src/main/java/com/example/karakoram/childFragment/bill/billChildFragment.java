@@ -1,5 +1,6 @@
 package com.example.karakoram.childFragment.bill;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.BillFormActivity;
 import com.example.karakoram.adapter.HostelBillAdapter;
+import com.example.karakoram.cache.HomeCache;
+import com.example.karakoram.cache.HostelBillCache;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +41,8 @@ public class billChildFragment extends Fragment {
     private ArrayList<String> key = new ArrayList<>();
     private ArrayList<HostelBill> hostelBill;
     private Category category;
+    private Context context;
+    private HostelBillCache cache;
 
     /* Views */
     private View view;
@@ -62,6 +67,8 @@ public class billChildFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_bill_child, container, false);
+        context = container.getContext();
+        cache = new HostelBillCache(context, category);
         return view;
     }
 
@@ -70,22 +77,22 @@ public class billChildFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                hostelBill = new ArrayList<>();
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    hostelBill.add(snapshotItem.getValue(HostelBill.class));
-                    key.add(snapshotItem.getKey());
-                }
-                start();
-            }
+        try {
+            hostelBill = cache.getHostelBillArray();
+            key = cache.getKeyArray();
+            Log.i("111111 " + category.name(), "hostelBills: " + hostelBill);
+            Log.i("111111 " + category.name(), "keys: " + key);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
+            if (hostelBill.isEmpty() || key.isEmpty()) {
+                Log.i("111111 " + category.name(), "lists were empty");
+                refreshListView();
             }
-        });
+            start();
+            Log.i("111111 " + category.name(), "try block");
+        } catch (Exception e) {
+            Log.i("111111 " + category.name(), "some problem in getting cached content");
+            refreshListView();
+        }
 
         fab=view.findViewById(R.id.FABchild_bill);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +102,33 @@ public class billChildFragment extends Fragment {
                 intent.putExtra("category", category.name());
                 startActivity(intent);
 
+            }
+        });
+    }
+
+    private void refreshListView() {
+        FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                hostelBill = new ArrayList<>();
+                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                    hostelBill.add(snapshotItem.getValue(HostelBill.class));
+                    key.add(snapshotItem.getKey());
+                }
+                try {
+                    cache.setKeyArray(key);
+                    cache.setHostelBillArray(hostelBill);
+                    Log.i("111111 " + category.name(), "hostelBills: after refresh" + hostelBill);
+                    Log.i("111111 " + category.name(), "keys: after refresh" + key);
+                } catch (Exception ignored) {
+                    Log.i("111111 " + category.name(), "cache files are not getting updated");
+                }
+                start();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebase error", "Something went wrong");
             }
         });
     }
