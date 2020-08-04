@@ -93,7 +93,8 @@ public class messFeedbackFragment extends Fragment {
 
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
-        eligibleMeals = getMealsEligibleForRating();
+//        eligibleMeals = getMealsEligibleForRating();
+        eligibleMeals = ArrayUtils.toArrayList(new String[] {"Breakfast", "Lunch", "Dinner"});
         currentMeal = getTheCurrentMeal();
         intent = getActivity().getIntent();
         editMode = intent.getBooleanExtra("editMode",false);
@@ -388,7 +389,9 @@ public class messFeedbackFragment extends Fragment {
         complain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity().getApplicationContext(), ComplaintFormActivity.class));
+                Intent intent = new Intent(getActivity().getApplicationContext(), ComplaintFormActivity.class);
+                intent.putExtra("messFlag",true);
+                startActivity(intent);
             }
         });
     }

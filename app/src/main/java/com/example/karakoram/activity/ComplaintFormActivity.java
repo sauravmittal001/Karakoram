@@ -136,6 +136,10 @@ public class ComplaintFormActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         categorySpinner = findViewById(R.id.spinner_complaint_category);
         categorySpinner.setAdapter(adapter);
+        if (intent.getBooleanExtra("messFlag",false)) {
+            int spinnerPosition = adapter.getPosition("Mess");
+            categorySpinner.setSelection(spinnerPosition);
+        }
 
         Wing[] wings = Wing.values();
         wingArray = new String[wings.length+1];
@@ -368,7 +372,7 @@ public class ComplaintFormActivity extends AppCompatActivity {
             final Complaint finalComplaint = complaint;
             new AlertDialog.Builder(this, R.style.MyDialogTheme)
                     .setTitle("Please confirm")
-                    .setMessage(editMode ? "Are you sure you want to make the changes ?" : isImageAttached ? "Are you sure you want to submit ?" : "Are you sure you want to submit without an image 3?")
+                    .setMessage(editMode ? "Are you sure you want to make the changes ?" : isImageAttached ? "Are you sure you want to submit ?" : "Are you sure you want to submit without an image ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //TODO image may or may not be sent
