@@ -1,11 +1,11 @@
-package com.example.karakoram.cache;
+package com.example.karakoram.cache.bill;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.karakoram.resource.Event;
-import com.example.karakoram.resource.Menu;
+import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.HostelBill;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,30 +25,33 @@ import java.util.Iterator;
 import static android.content.Context.MODE_PRIVATE;
 
 //Singleton class
-public class MessMenuCache {
+public class HostelBillCache {
 
     Context CONTEXT;
-    String MENU_FILE_NAME = "Menu.txt";
-    String DAY_FILE_NAME = "Day.txt";
+    String HOSTEL_BILL_FILE_NAME;
+    String KEY_FILE_NAME;
 
-    String BREAKFAST = "breakFast";
-    String LUNCH = "lunch";
-    String DINNER = "dinner";
-    String DAY = "day";
+    String CATEGORY = "category";
+    String DESCRIPTION = "description";
+    String AMOUNT = "amount";
+    String USER_ID = "userId";
+    String TIMESTAMP = "timeStamp";
 
-    private MessMenuCache() {
+    private HostelBillCache() {
     }
 
-    public MessMenuCache(Context context) {
+    public HostelBillCache(Context context, Category category) {
         this.CONTEXT = context;
+        HOSTEL_BILL_FILE_NAME = category.name() + "HostelBill.txt";
+        KEY_FILE_NAME = category.name() + "Key.txt";
     }
 
-    public ArrayList<String> getDayArray() {
-        ArrayList<String> days = new ArrayList<>();
+    public ArrayList<String> getKeyArray() {
+        ArrayList<String> keys = new ArrayList<>();
 
         FileInputStream fis = null;
         try {
-            fis = CONTEXT.getApplicationContext().openFileInput(DAY_FILE_NAME);
+            fis = CONTEXT.getApplicationContext().openFileInput(KEY_FILE_NAME);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             StringBuilder sb = new StringBuilder();
             String json_string;
@@ -59,7 +62,7 @@ public class MessMenuCache {
                 JSONObject EventJSON = new JSONObject(json_string);
                 Iterator<?> keyIterator = EventJSON.keys();
                 while (keyIterator.hasNext())
-                    days.add((String) keyIterator.next());
+                    keys.add((String) keyIterator.next());
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -72,23 +75,23 @@ public class MessMenuCache {
                 }
             }
         }
-        return days;
+        return keys;
     }
 
-    public void setDayArray(ArrayList<String> days) throws IOException, JSONException {
-        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + DAY_FILE_NAME);
+    public void setKeyArray(ArrayList<String> keys) throws IOException, JSONException {
+        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + KEY_FILE_NAME);
 //        printFileContent(KEY_FILE_NAME);
 
         JSONObject JSON = new JSONObject();
-        for (String day : days)
-            JSON.put(day, day);
+        for (String key : keys)
+            JSON.put(key, key);
 
         FileOutputStream fos = null;
         try {
-            fos = CONTEXT.openFileOutput(DAY_FILE_NAME, MODE_PRIVATE);
+            fos = CONTEXT.openFileOutput(KEY_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + DAY_FILE_NAME, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CONTEXT, "Saved to " + file + "/" + KEY_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -103,12 +106,12 @@ public class MessMenuCache {
 
     }
 
-    public ArrayList<Menu> getMenuArray() {
-        ArrayList<Menu> allDayMenu = new ArrayList<>();
+    public ArrayList<HostelBill> getHostelBillArray() {
+        ArrayList<HostelBill> hostelBills = new ArrayList<>();
 
         FileInputStream fis = null;
         try {
-            fis = CONTEXT.getApplicationContext().openFileInput(MENU_FILE_NAME);
+            fis = CONTEXT.getApplicationContext().openFileInput(HOSTEL_BILL_FILE_NAME);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             StringBuilder sb = new StringBuilder();
             String json_string;
@@ -123,12 +126,13 @@ public class MessMenuCache {
                 while (keyIterator.hasNext()) {
                     String key = (String) keyIterator.next();
                     JSONObject Obj = (JSONObject) ValueJSON.get(key);
-                    Menu menu = new Menu();
-                    menu.setBreakFast((String) Obj.get(BREAKFAST));
-                    menu.setLunch((String) Obj.get(LUNCH));
-                    menu.setDinner((String) Obj.get(DINNER));
-                    menu.setDay((String) Obj.get(DAY));
-                    allDayMenu.add(menu);
+                    HostelBill bill = new HostelBill();
+                    bill.setCategory(Category.valueOf((String) Obj.get(CATEGORY)));
+                    bill.setDescription((String) Obj.get(DESCRIPTION));
+                    bill.setAmount(Integer.parseInt((String) Obj.get(AMOUNT)));
+                    bill.setUserId((String) Obj.get(USER_ID));
+                    bill.setTimeStamp(new Date(Date.parse((String) Obj.get(TIMESTAMP))));
+                    hostelBills.add(bill);
                 }
             }
         }
@@ -145,30 +149,31 @@ public class MessMenuCache {
                 }
             }
         }
-        return allDayMenu;
+        return hostelBills;
     }
 
-    public void setMenuArray(ArrayList<Menu> allDayMenu) throws IOException, JSONException {
-        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + MENU_FILE_NAME);
+    public void setHostelBillArray(ArrayList<HostelBill> hostelBills) throws IOException, JSONException {
+        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + HOSTEL_BILL_FILE_NAME);
 //        printFileContent(EVENT_FILE_NAME);
 
         int i = 0;
         JSONObject JSON = new JSONObject();
-        for (Menu menu : allDayMenu) {
-            JSONObject menuJSON = new JSONObject();
-            menuJSON.put(BREAKFAST, menu.getBreakFast());
-            menuJSON.put(LUNCH, menu.getLunch());
-            menuJSON.put(DINNER, menu.getDinner());
-            menuJSON.put(DAY, menu.getDay());
-            JSON.put(String.valueOf(i++), menuJSON);
+        for (HostelBill billObj : hostelBills) {
+            JSONObject billJSON = new JSONObject();
+            billJSON.put(CATEGORY, (String) billObj.getCategory().name());
+            billJSON.put(DESCRIPTION, billObj.getDescription());
+            billJSON.put(AMOUNT, String.valueOf(billObj.getAmount()));
+            billJSON.put(USER_ID, billObj.getUserId());
+            billJSON.put(TIMESTAMP, billObj.getTimeStamp());
+            JSON.put(String.valueOf(i++), billJSON);
         }
 
         FileOutputStream fos = null;
         try {
-            fos = CONTEXT.openFileOutput(MENU_FILE_NAME, MODE_PRIVATE);
+            fos = CONTEXT.openFileOutput(HOSTEL_BILL_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + MENU_FILE_NAME, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CONTEXT, "Saved to " + file + "/" + HOSTEL_BILL_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

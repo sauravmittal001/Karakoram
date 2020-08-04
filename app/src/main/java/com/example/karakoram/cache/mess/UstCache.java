@@ -1,13 +1,13 @@
-package com.example.karakoram.cache;
+package com.example.karakoram.cache.mess;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.Anonymity;
 import com.example.karakoram.resource.Event;
-import com.example.karakoram.resource.HostelBill;
-import com.example.karakoram.resource.Menu;
+import com.example.karakoram.resource.Meal;
+import com.example.karakoram.resource.MessFeedback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,26 +26,27 @@ import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
-//Singleton class
-public class HostelBillCache {
+
+public class UstCache {
 
     Context CONTEXT;
-    String HOSTEL_BILL_FILE_NAME;
-    String KEY_FILE_NAME;
+    String FEEDBACK_FILE_NAME = "UstFeedback.txt";
+    String KEY_FILE_NAME = "UstKey.txt";
 
-    String CATEGORY = "category";
-    String DESCRIPTION = "description";
-    String AMOUNT = "amount";
+    String TIMESTAMP = "timestamp";
     String USER_ID = "userId";
-    String TIMESTAMP = "timeStamp";
+    String USER_NAME = "userName";
+    String DESCRIPTION = "description";
+    String RATING = "rating";
+    String MEAL = "meal";
+    String ANONYMITY = "anonymity";
 
-    private HostelBillCache() {
+
+    private UstCache() {
     }
 
-    public HostelBillCache(Context context, Category category) {
+    public UstCache(Context context) {
         this.CONTEXT = context;
-        HOSTEL_BILL_FILE_NAME = category.name() + "HostelBill.txt";
-        KEY_FILE_NAME = category.name() + "Key.txt";
     }
 
     public ArrayList<String> getKeyArray() {
@@ -108,12 +109,12 @@ public class HostelBillCache {
 
     }
 
-    public ArrayList<HostelBill> getHostelBillArray() {
-        ArrayList<HostelBill> hostelBills = new ArrayList<>();
+    public ArrayList<MessFeedback> getFeedbackArray() {
+        ArrayList<MessFeedback> feedbacks = new ArrayList<>();
 
         FileInputStream fis = null;
         try {
-            fis = CONTEXT.getApplicationContext().openFileInput(HOSTEL_BILL_FILE_NAME);
+            fis = CONTEXT.getApplicationContext().openFileInput(FEEDBACK_FILE_NAME);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             StringBuilder sb = new StringBuilder();
             String json_string;
@@ -127,22 +128,21 @@ public class HostelBillCache {
 
                 while (keyIterator.hasNext()) {
                     String key = (String) keyIterator.next();
-                    JSONObject Obj = (JSONObject) ValueJSON.get(key);
-                    HostelBill bill = new HostelBill();
-                    bill.setCategory(Category.valueOf((String) Obj.get(CATEGORY)));
-                    bill.setDescription((String) Obj.get(DESCRIPTION));
-                    bill.setAmount(Integer.parseInt((String) Obj.get(AMOUNT)));
-                    bill.setUserId((String) Obj.get(USER_ID));
-                    bill.setTimeStamp(new Date(Date.parse((String) Obj.get(TIMESTAMP))));
-                    hostelBills.add(bill);
+                    JSONObject value = (JSONObject) ValueJSON.get(key);
+                    MessFeedback feedbackObject = new MessFeedback();
+                    feedbackObject.setTimestamp(new Date(Date.parse((String) value.get(TIMESTAMP))));
+                    feedbackObject.setUserId((String) value.get(USER_ID));
+                    feedbackObject.setUserName((String) value.get(USER_NAME));
+                    feedbackObject.setDescription((String) value.get(DESCRIPTION));
+                    feedbackObject.setRating(Integer.parseInt((String) value.get(RATING)));
+                    feedbackObject.setMeal(Meal.valueOf((String) value.get(MEAL)));
+                    feedbackObject.setAnonymity(Anonymity.valueOf((String) value.get(ANONYMITY)));
+                    feedbacks.add(feedbackObject);
                 }
             }
-        }
-        catch (IOException | JSONException e) {
-            Log.i("DEBUG", String.valueOf(e));
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (fis != null) {
                 try {
                     fis.close();
@@ -151,31 +151,33 @@ public class HostelBillCache {
                 }
             }
         }
-        return hostelBills;
+        return feedbacks;
     }
 
-    public void setHostelBillArray(ArrayList<HostelBill> hostelBills) throws IOException, JSONException {
-        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + HOSTEL_BILL_FILE_NAME);
+    public void setFeedbackArray(ArrayList<MessFeedback> feedbacks) throws IOException, JSONException {
+        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + FEEDBACK_FILE_NAME);
 //        printFileContent(EVENT_FILE_NAME);
 
         int i = 0;
         JSONObject JSON = new JSONObject();
-        for (HostelBill billObj : hostelBills) {
-            JSONObject billJSON = new JSONObject();
-            billJSON.put(CATEGORY, (String) billObj.getCategory().name());
-            billJSON.put(DESCRIPTION, billObj.getDescription());
-            billJSON.put(AMOUNT, String.valueOf(billObj.getAmount()));
-            billJSON.put(USER_ID, billObj.getUserId());
-            billJSON.put(TIMESTAMP, billObj.getTimeStamp());
-            JSON.put(String.valueOf(i++), billJSON);
+        for (MessFeedback feedbackObject : feedbacks) {
+            JSONObject valueJSON = new JSONObject();
+            valueJSON.put(TIMESTAMP, feedbackObject.getTimestamp());
+            valueJSON.put(USER_ID, (String) feedbackObject.getUserId());
+            valueJSON.put(USER_NAME, (String) feedbackObject.getUserName());
+            valueJSON.put(DESCRIPTION, (String) feedbackObject.getDescription());
+            valueJSON.put(RATING, String.valueOf(feedbackObject.getRating()));
+            valueJSON.put(MEAL, feedbackObject.getMeal().name());
+            valueJSON.put(ANONYMITY, feedbackObject.getAnonymity().name());
+            JSON.put(String.valueOf(i++), valueJSON);
         }
 
         FileOutputStream fos = null;
         try {
-            fos = CONTEXT.openFileOutput(HOSTEL_BILL_FILE_NAME, MODE_PRIVATE);
+            fos = CONTEXT.openFileOutput(FEEDBACK_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + HOSTEL_BILL_FILE_NAME, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CONTEXT, "Saved to " + file + "/" + FEEDBACK_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

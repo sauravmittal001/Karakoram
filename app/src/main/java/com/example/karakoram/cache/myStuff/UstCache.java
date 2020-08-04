@@ -1,4 +1,4 @@
-package com.example.karakoram.cache;
+package com.example.karakoram.cache.myStuff;
 
 import android.content.Context;
 import android.util.Log;
@@ -30,8 +30,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class UstCache {
 
     Context CONTEXT;
-    String FEEDBACK_FILE_NAME = "UstFeedback.txt";
-    String KEY_FILE_NAME = "UstKey.txt";
+    String FEEDBACK_FILE_NAME = "MyStuffUstFeedback.txt";
+    String KEY_FILE_NAME = "MyStuffUstKey.txt";
 
     String TIMESTAMP = "timestamp";
     String USER_ID = "userId";
