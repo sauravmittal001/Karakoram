@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.cache.MessMenuCache;
+import com.example.karakoram.cache.mess.MessMenuCache;
 import com.example.karakoram.otherFragment.FoodFragment;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.views.ViewPagerAdapter;

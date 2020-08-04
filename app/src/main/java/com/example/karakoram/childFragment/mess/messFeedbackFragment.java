@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.ComplaintFormActivity;
-import com.example.karakoram.cache.MessMenuCache;
+import com.example.karakoram.cache.mess.MessMenuCache;
 import com.example.karakoram.resource.Anonymity;
 import com.example.karakoram.resource.Meal;
 import com.example.karakoram.resource.Menu;

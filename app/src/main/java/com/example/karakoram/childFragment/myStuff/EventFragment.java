@@ -1,5 +1,6 @@
 package com.example.karakoram.childFragment.myStuff;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,9 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.adapter.EventAdapter;
+import com.example.karakoram.cache.HomeCache;
+import com.example.karakoram.cache.myStuff.EventCache;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +42,7 @@ public class EventFragment extends Fragment {
 
     private ArrayList<String> key = new ArrayList<>();
     private ArrayList<Event> event;
+    Context context;
 
     /* Views */
     private View view;
@@ -44,6 +50,9 @@ public class EventFragment extends Fragment {
 
     /* Adapters */
     private EventAdapter adapter;
+
+    EventCache cache;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -55,14 +64,58 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_home, container, false);
+        context = container.getContext();
+        cache = new EventCache(context);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setViews();
+
+        try {
+            event = cache.getValueArray();
+            key = cache.getKeyArray();
+            Log.i("MyStuffEvent", "events: " + event);
+            Log.i("MyStuffEvent", "keys: " + key);
+
+            if (event.isEmpty() || key.isEmpty()) {
+                Log.i("MyStuffEvent", "lists were empty");
+                refreshListView();
+            }
+            start();
+            Log.i("MyStuffEvent", "try block");
+        } catch (Exception e) {
+            Log.i("MyStuffEvent", "some problem in getting cached content");
+            refreshListView();
+        }
+
+    }
+
+    private void setViews() {
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshListView();
+                setViews();
+                adapter.notifyDataSetChanged();
+
+            }
+        });
 
         view.findViewById(R.id.fab_event).setVisibility(View.GONE);
+    }
+
+    private void refreshListView() {
+        if (event != null) {
+            event.clear();
+        }
+        if (key != null) {
+            key.clear();
+        }
 
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         Query query;
@@ -76,7 +129,14 @@ public class EventFragment extends Fragment {
                     event.add(snapshotItem.getValue(Event.class));
                     key.add(snapshotItem.getKey());
                 }
+                try {
+                    cache.setKeyArray(key);
+                    cache.setValueArray(event);
+                } catch (Exception ignored) {
+                    Log.i("HomeCacheLog", "cache files are not getting updated");
+                }
                 start();
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -85,7 +145,6 @@ public class EventFragment extends Fragment {
             }
         });
     }
-
 
     private void start() {
         Log.i("ASDF", String.valueOf(event));
