@@ -44,16 +44,16 @@
                     android:textSize="36sp" />
 
                 <TextView
+                    android:id="@+id/tv_create_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
                     android:gravity="top"
                     android:lineSpacingMultiplier="1.5"
-                    android:text="Only for Karakoram residents"
+                    android:text="Create account"
                     android:textColor="@color/red"
-                    android:textSize="16sp"
-                    android:visibility="invisible" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 

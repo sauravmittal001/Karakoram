@@ -12,6 +12,9 @@ import com.example.karakoram.childFragment.signin.SigninFragment;
 import com.example.karakoram.views.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class SignInActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
@@ -37,6 +40,11 @@ public class SignInActivity extends AppCompatActivity {
         adapter.addFragment(new LoginFragment(), "Login");
         adapter.addFragment(new SigninFragment(), "Signup");
         viewPager.setAdapter(adapter);
+    }
+
+    public void updatePagerView() {
+        int nextPosition = 1;
+        viewPager.setCurrentItem(nextPosition, false);
     }
 
 }
