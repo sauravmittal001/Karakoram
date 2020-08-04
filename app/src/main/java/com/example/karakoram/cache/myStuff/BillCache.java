@@ -24,6 +24,8 @@ import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
+//remaining
 public class BillCache {
 
     Context CONTEXT;
@@ -39,10 +41,10 @@ public class BillCache {
     private BillCache() {
     }
 
-    public BillCache(Context context, Category category) {
+    public BillCache(Context context) {
         this.CONTEXT = context;
-        HOSTEL_BILL_FILE_NAME = category.name() + "HostelBill.txt";
-        KEY_FILE_NAME = category.name() + "Key.txt";
+        HOSTEL_BILL_FILE_NAME = "MyStuffHostelBill.txt";
+        KEY_FILE_NAME = "MyStuffBillKey.txt";
     }
 
     public ArrayList<String> getKeyArray() {
