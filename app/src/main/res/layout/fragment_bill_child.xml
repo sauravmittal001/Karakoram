@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".childFragment.bill.billChildFragment"
-
-    >
+    tools:context=".childFragment.bill.billChildFragment">
 
    <com.google.android.material.floatingactionbutton.FloatingActionButton
        android:layout_width="wrap_content"
@@ -16,11 +14,17 @@
        android:layout_marginBottom="70dp"
        android:src="@drawable/add_photo" />
 
-   <androidx.recyclerview.widget.RecyclerView
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+       android:id="@+id/swipe_refresh"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:id="@+id/billlistView" >
+       android:layout_height="match_parent">
 
-   </androidx.recyclerview.widget.RecyclerView>
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/billlistView" >
+
+      </androidx.recyclerview.widget.RecyclerView>
+   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

@@ -60,6 +60,7 @@ public class HomeFragment extends Fragment {
     EventAdapter adapter;
 
     HomeCache cache;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     public HomeFragment() {
@@ -107,7 +108,7 @@ public class HomeFragment extends Fragment {
 
     private void setViews() {
 
-        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -115,7 +116,7 @@ public class HomeFragment extends Fragment {
                 refreshListView();
                 setViews();
                 adapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
+
             }
         });
 
@@ -160,6 +161,7 @@ public class HomeFragment extends Fragment {
                         Log.i("HomeCacheLog", "cache files are not getting updated");
                     }
                     start();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override

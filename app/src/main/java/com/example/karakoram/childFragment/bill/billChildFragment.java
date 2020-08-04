@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
@@ -52,6 +53,7 @@ public class billChildFragment extends Fragment {
 
     /* Adapters */
     private HostelBillAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public billChildFragment(Category category) {
         this.category = category;
@@ -75,7 +77,7 @@ public class billChildFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        setViews();
 
         try {
             hostelBill = cache.getHostelBillArray();
@@ -93,6 +95,22 @@ public class billChildFragment extends Fragment {
             Log.i("111111 " + category.name(), "some problem in getting cached content");
             refreshListView();
         }
+
+
+    }
+
+    private void setViews() {
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshListView();
+                setViews();
+                adapter.notifyDataSetChanged();
+
+            }
+        });
 
         fab=view.findViewById(R.id.FABchild_bill);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +145,7 @@ public class billChildFragment extends Fragment {
                     Log.i("111111 " + category.name(), "cache files are not getting updated");
                 }
                 start();
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
