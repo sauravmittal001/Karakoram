@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle toggle;
-//    private BottomNavigationView navView;
+    private AHBottomNavigation navView;
     private NavigationView side_navview;
     private View header;
     private boolean editMode;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         entryNumberView.setText(sharedPreferences.getString("entryNumber", ""));
 
         if (editMode) {
-//            navView.setVisibility(View.GONE);
+            navView.setVisibility(View.GONE);
             openFragment(new messFragment());
         }
     }
@@ -106,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-//        navView = findViewById(R.id.nav_view);
-//        navView.setVisibility(View.GONE);
+        navView = findViewById(R.id.bottom_navigation);
     }
 
     private void setViews() {
@@ -129,28 +128,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setNewBottomNav() {
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.title_events, R.drawable.ic_input_get,R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.title_mess, R.drawable.ic_mess,R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.title_bill, R.drawable.ic_bill,R.color.colorPrimary);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.title_my_stuff, R.drawable.ic_dashboard_black_24dp,R.color.colorPrimary);
 
-        bottomNavigation.addItem(item1);
-        bottomNavigation.addItem(item2);
-        bottomNavigation.addItem(item3);
-        bottomNavigation.addItem(item4);
+        navView.addItem(item1);
+        navView.addItem(item2);
+        navView.addItem(item3);
+        navView.addItem(item4);
 
-        bottomNavigation.setBehaviorTranslationEnabled(true);
-        bottomNavigation.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        bottomNavigation.setAccentColor(ContextCompat.getColor(this, R.color.colorAccent));
-        bottomNavigation.setInactiveColor(ContextCompat.getColor(this, R.color.black));
-        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-        bottomNavigation.setColored(false);
-        bottomNavigation.setCurrentItem(0);
-        bottomNavigation.setTitleTextSize(36,36);
+        navView.setBehaviorTranslationEnabled(true);
+        navView.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        navView.setAccentColor(ContextCompat.getColor(this, R.color.colorAccent));
+        navView.setInactiveColor(ContextCompat.getColor(this, R.color.black));
+        navView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        navView.setColored(false);
+        navView.setCurrentItem(0);
+        navView.setTitleTextSize(40,40);
 
 
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+        navView.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 switch (position) {
@@ -169,38 +167,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
+        navView.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
             @Override
             public void onPositionChange(int y) {
 
             }
         });
-    }
-
-    private void setBottomNavigation() {
-        BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_home:
-                        return openFragment(new HomeFragment());
-
-                    case R.id.navigation_mess:
-                        return openFragment(new messFragment());
-
-                    case R.id.navigation_bill:
-                        return openFragment(new billFragment());
-
-                    case R.id.navigation_my_stuff:
-                        return openFragment(new MyStuffFragment());
-                }
-
-                return false;
-            }
-
-        };
-//        navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 
     private boolean openFragment(Fragment fragment) {

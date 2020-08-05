@@ -1,4 +1,4 @@
-package com.example.karakoram.cache.complaint;
+package com.example.karakoram.cache.complaint.allComplaintsCache;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
-import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.Status;
 
 import org.json.JSONException;
@@ -26,11 +25,11 @@ import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class OtherComplaintCache {
+public class AllOtherComplaintCache {
 
     Context CONTEXT;
-    String COMPLAINT_FILE_NAME = "OtherComplaintCache.txt";
-    String KEY_FILE_NAME = "OtherComplaintKey.txt";
+    String COMPLAINT_FILE_NAME = "AllOtherComplaintCache.txt";
+    String KEY_FILE_NAME = "AllOtherComplaintKey.txt";
 
 
     String USER_ID = "userId";
@@ -43,10 +42,10 @@ public class OtherComplaintCache {
     String IS_IMAGE_ATTACHED = "isImageAttached";
 
 
-    private OtherComplaintCache() {
+    private AllOtherComplaintCache() {
     }
 
-    public OtherComplaintCache(Context context) {
+    public AllOtherComplaintCache(Context context) {
         this.CONTEXT = context;
     }
 

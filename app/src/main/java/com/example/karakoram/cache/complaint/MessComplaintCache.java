@@ -32,7 +32,7 @@ public class MessComplaintCache {
 
     Context CONTEXT;
     String COMPLAINT_FILE_NAME = "MessComplaintCache.txt";
-    String KEY_FILE_NAME = "AllComplaintKey.txt";
+    String KEY_FILE_NAME = "MessComplaintKey.txt";
 
 
     String USER_ID = "userId";
@@ -140,7 +140,7 @@ public class MessComplaintCache {
                     complaint.setStatus(Status.valueOf((String) value.get(STATUS)));
                     complaint.setCategory(Category.valueOf((String) value.get(CATEGORY)));
                     complaint.setDescription((String) value.get(DESCRIPTION));
-                    complaint.setImageAttached((Boolean) value.get(IS_IMAGE_ATTACHED));
+                    complaint.setImageAttached(Boolean.parseBoolean((String)value.get(IS_IMAGE_ATTACHED)));
                     complaint.setComplaintArea(ComplaintArea.valueOf((String) value.get(COMPLAINT_AREA)));
                     complaints.add(complaint);
                 }
