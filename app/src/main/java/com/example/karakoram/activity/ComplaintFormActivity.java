@@ -110,6 +110,7 @@ public class ComplaintFormActivity extends AppCompatActivity {
             });
             ((TextView)findViewById(R.id.tv_image)).setText("Selected Image:");
             mDelete.setVisibility(View.VISIBLE);
+            mImage.setVisibility(View.VISIBLE);
         }
 
         mDelete.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +258,7 @@ public class ComplaintFormActivity extends AppCompatActivity {
             //TODO: unchecked code
             ((TextView)findViewById(R.id.tv_image)).setText("Selected Image:");
             mDelete.setVisibility(View.VISIBLE);
+            mImage.setVisibility(View.VISIBLE);
             imageUri = data.getData();
             mImage.setImageURI(imageUri);
             isImageAttached = true;
@@ -366,7 +368,7 @@ public class ComplaintFormActivity extends AppCompatActivity {
             assert complaint != null;
             complaint.setDescription(description);
             complaint.setTimestamp(new Date());
-            complaint.setIsImageAttached(isImageAttached);
+            complaint.setImageAttached(isImageAttached);
 
 
             final Complaint finalComplaint = complaint;
@@ -398,9 +400,9 @@ public class ComplaintFormActivity extends AppCompatActivity {
                             }
 
                             if(editMode)
-                                Toast.makeText(getApplicationContext(),"complain updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"complaint updated", Toast.LENGTH_SHORT).show();
                             else
-                                Toast.makeText(getApplicationContext(),"changes registered", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"new complaint submitted", Toast.LENGTH_SHORT).show();
 
                             ComplaintFormActivity.super.onBackPressed();
                         }

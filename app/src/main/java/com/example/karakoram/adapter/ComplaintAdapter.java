@@ -75,7 +75,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
                 intent.putExtra("name", complaints.get(i).getUserName());
                 intent.putExtra("status", String.valueOf(complaints.get(i).getStatus()));
                 intent.putExtra("description", complaints.get(i).getDescription());
-                intent.putExtra("isImageAttached", complaints.get(i).getIsImageAttached());
+                intent.putExtra("isImageAttached", complaints.get(i).isImageAttached());
                 intent.putExtra("time", time);
                 intent.putExtra("date", date);
                 intent.putExtra("key", key);

@@ -2,6 +2,7 @@ package com.example.karakoram.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +51,11 @@ import java.util.Date;
                 int i=vHolder.getAdapterPosition();
                 Date dateTime = event1.get(i).getDateTime();
                 String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)+ " " + String.format("%02d",dateTime.getDate());
                 Intent intent = new Intent(mcontext, EventDescription.class);
                 intent.putExtra("title", event1.get(i).getTitle());
                 intent.putExtra("description", event1.get(i).getDescription());
+                intent.putExtra("isImageAttached",event1.get(i).isImageAttached());
                 intent.putExtra("time", time);
                 intent.putExtra("date", date);
                 intent.putExtra("key", key.get(i));
@@ -110,5 +112,10 @@ import java.util.Date;
      public Event getItem(int position)
      {
          return event1.get(position);
+     }
+
+     public String monthName (int monthNumber) {
+         String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+         return monthOfYear[monthNumber-1];
      }
  }

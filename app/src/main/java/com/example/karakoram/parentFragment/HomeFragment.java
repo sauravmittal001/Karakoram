@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
             start();
             Log.i("HomeCacheLog", "try block");
         } catch (Exception e) {
-            Log.i("HomeCacheLog", "some problem in getting cached content");
+            Log.i("HomeCacheLog", "some problem in getting cached content " + e);
             refreshListView();
         }
     }
@@ -154,6 +154,8 @@ public class HomeFragment extends Fragment {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Event event = snapshotItem.getValue(Event.class);
                         eventsKv.add(Pair.create(snapshotItem.getKey(),event));
+                        if(event.getTitle().equals("eyru"))
+                            Log.d("123hello", String.valueOf(event.isImageAttached()));
                     }
                     try {
                         ArrayList<Event> events = new ArrayList<>();

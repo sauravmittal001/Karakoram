@@ -50,6 +50,24 @@ public class FirebaseQuery {
         storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
     }
 
+    public static void addEvent(Event event){
+        String key = ref.child("events").push().getKey();
+        ref.child("events").child(key).setValue(event);
+    }
+
+    public static void updateEvent(String key, Event event, Uri imageUri){
+        ref.child("events").child(key).setValue(event);
+        storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
+    }
+
+    public static void updateEvent(String key, Event event){
+        ref.child("events").child(key).setValue(event);
+    }
+
+    public static void removeEventImage(String key){
+        storage.getReference("/eventImages/"+key+".png").delete();
+    }
+
     public static Query getCategoryBills(Category category){
         return ref.child("hostelBills").orderByChild("category").equalTo(String.valueOf(category));
     }

@@ -33,6 +33,9 @@ public class HomeCache {
     String DATE_TIME = "dateTime";
     String DESCRIPTION = "description";
     String TITLE = "title";
+    String IMAGE_ATTACHED = "isImageAttached";
+    String TIME_STAMP = "timeStamp";
+    String USER_ID = "userId";
 
     private HomeCache() {
     }
@@ -125,6 +128,9 @@ public class HomeCache {
                     event.setDateTime(new Date(Date.parse((String) value.get(DATE_TIME))));
                     event.setDescription((String) value.get(DESCRIPTION));
                     event.setTitle((String) value.get(TITLE));
+                    event.setImageAttached(Boolean.parseBoolean((String)value.get(IMAGE_ATTACHED)));
+                    event.setTimeStamp(new Date(Date.parse((String)value.get(DATE_TIME))));
+                    event.setUserId((String)value.get(USER_ID));
                     values.add(event);
                 }
             }
@@ -153,7 +159,9 @@ public class HomeCache {
             valueJSON.put(DESCRIPTION, event.getDescription());
             valueJSON.put(DATE_TIME, (event.getDateTime()));
             valueJSON.put(TITLE, event.getTitle());
-
+            valueJSON.put(IMAGE_ATTACHED,String.valueOf(event.isImageAttached()));
+            valueJSON.put(TIME_STAMP,event.getTimeStamp());
+            valueJSON.put(USER_ID,event.getUserId());
             JSON.put(String.valueOf(i++), valueJSON);
         }
 

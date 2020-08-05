@@ -55,7 +55,7 @@ public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.my
                 Date dateTime = bill.get(i).getTimeStamp();
                 Log.i("CRASHHH", String.valueOf(dateTime));
                 String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)+ " " + String.format("%02d",dateTime.getDate());
                 Intent intent = new Intent(mcontext, BillDescriptionActivity.class);
                 intent.putExtra("category", String.valueOf(bill.get(i).getCategory()));
                 intent.putExtra("description", bill.get(i).getDescription());
