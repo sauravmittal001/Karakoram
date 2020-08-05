@@ -68,14 +68,14 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
                 int i=vHolder.getAdapterPosition();
                 Date dateTime = complaints.get(i).getTimestamp();
                 String key = keys.get(i);
-                String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
+                String time = showTime(dateTime.getHours(), dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1) + " " + String.format("%02d",dateTime.getDate());
                 Intent intent = new Intent(mcontext, ComplaintDescriptionActivity.class);
                 intent.putExtra("entryNumber", complaints.get(i).getEntryNumber());
                 intent.putExtra("name", complaints.get(i).getUserName());
                 intent.putExtra("status", String.valueOf(complaints.get(i).getStatus()));
                 intent.putExtra("description", complaints.get(i).getDescription());
-                intent.putExtra("isImageAttached", complaints.get(i).getIsImageAttached());
+                intent.putExtra("isImageAttached", complaints.get(i).isImageAttached());
                 intent.putExtra("time", time);
                 intent.putExtra("date", date);
                 intent.putExtra("key", key);
@@ -158,9 +158,14 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
             String str="AM";
             if(num>12){num=num-12; str="PM";}
             @SuppressLint("DefaultLocale") String time = String.format("%02d", num) + " : " + String.format("%02d", lastUpdate.getMinutes()) + " " + str;
-            @SuppressLint("DefaultLocale") String date = (lastUpdate.getYear() + 1900) + "-" + String.format("%02d",lastUpdate.getMonth() + 1) + "-" + String.format("%02d",lastUpdate.getDate());
+            @SuppressLint("DefaultLocale") String date = (lastUpdate.getYear() + 1900) + " " + monthName(lastUpdate.getMonth() + 1) + " " + String.format("%02d",lastUpdate.getDate());
+            Date now = new Date();
+            @SuppressLint("DefaultLocale") String dateNow = (now.getYear() + 1900) + " " + monthName(now.getMonth() + 1) + " " + String.format("%02d",now.getDate());
 
-            holder.mTime.setText(time);
+            if(date.equals(dateNow))
+                holder.mTime.setText(time);
+            else
+                holder.mTime.setText(date);
         }
     }
 

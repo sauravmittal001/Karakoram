@@ -1,10 +1,15 @@
-package com.example.karakoram.cache;
+package com.example.karakoram.cache.complaint;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.karakoram.resource.Event;
+import com.example.karakoram.resource.Category;
+import com.example.karakoram.resource.Complaint;
+import com.example.karakoram.resource.ComplaintArea;
+import com.example.karakoram.resource.MaintComplaint;
+import com.example.karakoram.resource.Status;
+import com.example.karakoram.resource.Wing;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,24 +28,29 @@ import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
-//Singleton class
-public class HomeCache {
+public class MaintenanceComplaintCache {
 
     Context CONTEXT;
-    String EVENT_FILE_NAME = "Event.txt";
-    String KEY_FILE_NAME = "Key.txt";
+    String COMPLAINT_FILE_NAME = "MaintenanceComplaintCache.txt";
+    String KEY_FILE_NAME = "AllComplaintKey.txt";
 
-    String DATE_TIME = "dateTime";
-    String DESCRIPTION = "description";
-    String TITLE = "title";
-    String IMAGE_ATTACHED = "isImageAttached";
-    String TIME_STAMP = "timeStamp";
+
     String USER_ID = "userId";
+    String ENTRY_NUMBER = "entryNumber";
+    String USER_NAME = "userName";
+    String TIMESTAMP = "timestamp";
+    String STATUS = "status";
+    String CATEGORY = "category";
+    String DESCRIPTION = "description";
+    String IS_IMAGE_ATTACHED = "isImageAttached";
+    String COMPLAINT_AREA = "complaintArea";
+    String ROOM = "room";
+    String WING = "wing";
 
-    private HomeCache() {
+    private MaintenanceComplaintCache() {
     }
 
-    public HomeCache(Context context) {
+    public MaintenanceComplaintCache(Context context) {
         this.CONTEXT = context;
     }
 
@@ -104,12 +114,12 @@ public class HomeCache {
 
     }
 
-    public ArrayList<Event> getValueArray() {
-        ArrayList<Event> values = new ArrayList<>();
+    public ArrayList<MaintComplaint> getComplaintArray() {
+        ArrayList<MaintComplaint> complaints = new ArrayList<>();
 
         FileInputStream fis = null;
         try {
-            fis = CONTEXT.getApplicationContext().openFileInput(EVENT_FILE_NAME);
+            fis = CONTEXT.getApplicationContext().openFileInput(COMPLAINT_FILE_NAME);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             StringBuilder sb = new StringBuilder();
             String json_string;
@@ -124,14 +134,19 @@ public class HomeCache {
                 while (keyIterator.hasNext()) {
                     String key = (String) keyIterator.next();
                     JSONObject value = (JSONObject) ValueJSON.get(key);
-                    Event event = new Event();
-                    event.setDateTime(new Date(Date.parse((String) value.get(DATE_TIME))));
-                    event.setDescription((String) value.get(DESCRIPTION));
-                    event.setTitle((String) value.get(TITLE));
-                    event.setImageAttached(Boolean.parseBoolean((String)value.get(IMAGE_ATTACHED)));
-                    event.setTimeStamp(new Date(Date.parse((String)value.get(DATE_TIME))));
-                    event.setUserId((String)value.get(USER_ID));
-                    values.add(event);
+                    MaintComplaint complaint = new MaintComplaint();
+                    complaint.setUserId((String) value.get(USER_ID));
+                    complaint.setEntryNumber((String) value.get(ENTRY_NUMBER));
+                    complaint.setUserName((String) value.get(USER_NAME));
+                    complaint.setTimestamp(new Date(Date.parse((String) value.get(TIMESTAMP))));
+                    complaint.setStatus(Status.valueOf((String) value.get(STATUS)));
+                    complaint.setCategory(Category.valueOf((String) value.get(CATEGORY)));
+                    complaint.setDescription((String) value.get(DESCRIPTION));
+                    complaint.setImageAttached((Boolean) value.get(IS_IMAGE_ATTACHED));
+                    complaint.setComplaintArea(ComplaintArea.valueOf((String) value.get(COMPLAINT_AREA)));
+                    complaint.setRoom((String) value.get(ROOM));
+                    complaint.setWing((Wing.valueOf((String) value.get(WING))));
+                    complaints.add(complaint);
                 }
             }
         } catch (IOException | JSONException e) {
@@ -145,32 +160,38 @@ public class HomeCache {
                 }
             }
         }
-        return values;
+        return complaints;
     }
 
-    public void setValueArray(ArrayList<Event> values) throws IOException, JSONException {
-        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + EVENT_FILE_NAME);
+    public void setValueArray(ArrayList<MaintComplaint> complaints) throws IOException, JSONException {
+        clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + COMPLAINT_FILE_NAME);
 //        printFileContent(EVENT_FILE_NAME);
 
         int i = 0;
         JSONObject JSON = new JSONObject();
-        for (Event event : values) {
+        for (MaintComplaint complaint : complaints) {
             JSONObject valueJSON = new JSONObject();
-            valueJSON.put(DESCRIPTION, event.getDescription());
-            valueJSON.put(DATE_TIME, (event.getDateTime()));
-            valueJSON.put(TITLE, event.getTitle());
-            valueJSON.put(IMAGE_ATTACHED,String.valueOf(event.isImageAttached()));
-            valueJSON.put(TIME_STAMP,event.getTimeStamp());
-            valueJSON.put(USER_ID,event.getUserId());
+            valueJSON.put(USER_ID, (String) complaint.getDescription());
+            valueJSON.put(ENTRY_NUMBER, (String) complaint.getEntryNumber());
+            valueJSON.put(USER_NAME, (String) complaint.getUserName());
+            valueJSON.put(TIMESTAMP, String.valueOf(complaint.getTimestamp()));
+            valueJSON.put(STATUS, String.valueOf(complaint.getStatus()));
+            valueJSON.put(CATEGORY, String.valueOf(complaint.getCategory()));
+            valueJSON.put(DESCRIPTION, (String) complaint.getDescription());
+            valueJSON.put(IS_IMAGE_ATTACHED, String.valueOf(complaint.isImageAttached()));
+            valueJSON.put(COMPLAINT_AREA, String.valueOf(complaint.getComplaintArea()));
+            valueJSON.put(ROOM, String.valueOf(complaint.getRoom()));
+            valueJSON.put(WING, String.valueOf(complaint.getWing()));
+
             JSON.put(String.valueOf(i++), valueJSON);
         }
 
         FileOutputStream fos = null;
         try {
-            fos = CONTEXT.openFileOutput(EVENT_FILE_NAME, MODE_PRIVATE);
+            fos = CONTEXT.openFileOutput(COMPLAINT_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + EVENT_FILE_NAME, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CONTEXT, "Saved to " + file + "/" + COMPLAINT_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

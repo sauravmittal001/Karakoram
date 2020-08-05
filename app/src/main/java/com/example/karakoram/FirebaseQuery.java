@@ -24,8 +24,14 @@ public class FirebaseQuery {
     private static DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     private static FirebaseStorage storage = FirebaseStorage.getInstance();
 
+    public static void setUserPassWord(String userId, String password, boolean isNew){
+        ref.child("users").child(userId).child("password").setValue(password);
+        if(isNew)
+            ref.child("users").child(userId).child("signedIn").setValue(true);
+    }
+
     public static Query getUserByEntryNumber(String entryNumber){
-        return ref.child("users").orderByChild("entryNumber").equalTo(entryNumber);
+        return ref.child("users").child(entryNumber);
     }
 
     public static Query getEvent(String key){
@@ -48,6 +54,24 @@ public class FirebaseQuery {
         String key = ref.child("events").push().getKey();
         ref.child("events").child(key).setValue(event);
         storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
+    }
+
+    public static void addEvent(Event event){
+        String key = ref.child("events").push().getKey();
+        ref.child("events").child(key).setValue(event);
+    }
+
+    public static void updateEvent(String key, Event event, Uri imageUri){
+        ref.child("events").child(key).setValue(event);
+        storage.getReference("/eventImages/"+key+".png").putFile(imageUri);
+    }
+
+    public static void updateEvent(String key, Event event){
+        ref.child("events").child(key).setValue(event);
+    }
+
+    public static void removeEventImage(String key){
+        storage.getReference("/eventImages/"+key+".png").delete();
     }
 
     public static Query getCategoryBills(Category category){
@@ -87,7 +111,7 @@ public class FirebaseQuery {
     }
 
     public static Query getAllMessFeedback(){
-        return ref.child("messFeedback");
+        return ref.child("messFeedback").orderByChild("timeStamp/time");
     }
 
     public static Query getUserMessFeedback(String userId){
@@ -96,10 +120,6 @@ public class FirebaseQuery {
 
     public static Query getAllMenu(){
         return ref.child("messMenu").orderByKey();
-    }
-
-    public static Query getDayMenu(String day) {
-        return ref.child("messMenu").orderByChild("day").equalTo(day);
     }
 
     public static  void updateMenu(Menu menu, int day){

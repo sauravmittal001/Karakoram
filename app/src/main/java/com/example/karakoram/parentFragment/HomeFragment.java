@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.example.karakoram.activity.EventFormActivity;
 import com.example.karakoram.adapter.EventAdapter;
 import com.example.karakoram.cache.HomeCache;
 import com.example.karakoram.resource.Event;
+import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.Meal;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
@@ -38,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import lombok.SneakyThrows;
@@ -48,8 +51,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class HomeFragment extends Fragment {
 
     /* Variables */
-    ArrayList<String> key = new ArrayList<>();
-    ArrayList<Event> events = new ArrayList<>();
+    ArrayList<Pair<String, Event>> eventsKv = new ArrayList<>();
     Context context;
 
     /* Views */
@@ -88,10 +90,12 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setViews();
-
         try {
-            events = cache.getValueArray();
-            key = cache.getKeyArray();
+            ArrayList<Event> events = cache.getValueArray();
+            ArrayList<String> key = cache.getKeyArray();
+            eventsKv.clear();
+            for(int i = 0; i<events.size();i++)
+                eventsKv.add(Pair.create(key.get(i),events.get(i)));
             Log.i("HomeCacheLog", "events: " + events);
             Log.i("HomeCacheLog", "keys: " + key);
 
@@ -102,7 +106,7 @@ public class HomeFragment extends Fragment {
             start();
             Log.i("HomeCacheLog", "try block");
         } catch (Exception e) {
-            Log.i("HomeCacheLog", "some problem in getting cached content");
+            Log.i("HomeCacheLog", "some problem in getting cached content " + e);
             refreshListView();
         }
     }
@@ -142,19 +146,24 @@ public class HomeFragment extends Fragment {
     }
 
     private void refreshListView() {
-        events.clear();
-        key.clear();
-
             FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    eventsKv.clear();
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Event event = snapshotItem.getValue(Event.class);
-                        events.add(event);
-                        key.add(snapshotItem.getKey());
+                        eventsKv.add(Pair.create(snapshotItem.getKey(),event));
+                        if(event.getTitle().equals("eyru"))
+                            Log.d("123hello", String.valueOf(event.isImageAttached()));
                     }
                     try {
+                        ArrayList<Event> events = new ArrayList<>();
+                        ArrayList<String> key = new ArrayList<>();
+                        for(int i=0; i<eventsKv.size();i++){
+                            key.add(eventsKv.get(i).first);
+                            events.add(eventsKv.get(i).second);
+                        }
                         cache.setKeyArray(key);
                         cache.setValueArray(events);
                     } catch (Exception ignored) {
@@ -176,7 +185,18 @@ public class HomeFragment extends Fragment {
 
 
     private void start() {
-        Collections.reverse(events);
+        Collections.sort(eventsKv, new Comparator<Pair<String, Event>>() {
+            @Override
+            public int compare(Pair<String, Event> stringEventPair, Pair<String, Event> t1) {
+                return t1.second.getDateTime().compareTo(stringEventPair.second.getDateTime());
+            }
+        });
+        ArrayList<Event> events = new ArrayList<>();
+        ArrayList<String> key = new ArrayList<>();
+        for(int i=0; i<eventsKv.size();i++){
+            key.add(eventsKv.get(i).first);
+            events.add(eventsKv.get(i).second);
+        }
         adapter = new EventAdapter(getActivity(), events,key);
         listView = view.findViewById(R.id.list_event);
         //listView.setHasFixedSize(true);

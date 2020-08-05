@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.example.karakoram.R;
 import com.example.karakoram.adapter.ComplaintAdapter;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
+import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.MaintComplaint;
 import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.User;
@@ -30,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import lombok.SneakyThrows;
 
@@ -40,8 +44,7 @@ public class complaintChildFragment extends Fragment {
     Context context;
     View view;
     ComplaintAdapter adapter;
-    ArrayList<String> key = new ArrayList<>();
-    ArrayList<Complaint> complaints = new ArrayList<>();
+    ArrayList<Pair<String, Complaint>> complaintsKv = new ArrayList<>();
     Category category;
     boolean getAllCategory;
 
@@ -84,6 +87,22 @@ public class complaintChildFragment extends Fragment {
     }
 
     private void start() {
+        Collections.sort(complaintsKv, new Comparator<Pair<String, Complaint>>() {
+            @Override
+            public int compare(Pair<String, Complaint> stringComplaintPair, Pair<String, Complaint> t1) {
+                return t1.second.getTimestamp().compareTo(stringComplaintPair.second.getTimestamp());
+            }
+        });
+        ArrayList<Complaint> complaints = new ArrayList<>();
+        ArrayList<String> key = new ArrayList<>();
+        for(int i=0; i<complaintsKv.size();i++) {
+            key.add(complaintsKv.get(i).first);
+            complaints.add(complaintsKv.get(i).second);
+        }
+
+        if (getActivity() == null) {
+            return;
+        }
         adapter = new ComplaintAdapter(getActivity(), complaints, key);
         listView = view.findViewById(R.id.list_complaints);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -91,8 +110,7 @@ public class complaintChildFragment extends Fragment {
     }
 
     private void refreshListView() {
-        complaints.clear();
-        key.clear();
+        complaintsKv.clear();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS,Context.MODE_PRIVATE);
         final String userId = sharedPreferences.getString("userId","loggedOut");
         if(getAllCategory || category.equals(Category.Mess)) {
@@ -103,8 +121,7 @@ public class complaintChildFragment extends Fragment {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Complaint complaint = snapshotItem.getValue(MessComplaint.class);
                         if(!getAllCategory || complaint.getUserId().equals(userId)) {
-                            complaints.add(complaint);
-                            key.add(snapshotItem.getKey());
+                            complaintsKv.add(Pair.create(snapshotItem.getKey(),complaint));
                         }
                     }
                     start();
@@ -124,8 +141,7 @@ public class complaintChildFragment extends Fragment {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Complaint complaint = snapshotItem.getValue(MaintComplaint.class);
                         if(!getAllCategory || complaint.getUserId().equals(userId)) {
-                            complaints.add(complaint);
-                            key.add(snapshotItem.getKey());
+                            complaintsKv.add(Pair.create(snapshotItem.getKey(),complaint));
                         }
                     }
                     start();
@@ -145,8 +161,7 @@ public class complaintChildFragment extends Fragment {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Complaint complaint = snapshotItem.getValue(Complaint.class);
                         if(!getAllCategory || complaint.getUserId().equals(userId)) {
-                            complaints.add(complaint);
-                            key.add(snapshotItem.getKey());
+                            complaintsKv.add(Pair.create(snapshotItem.getKey(),complaint));
                         }
                     }
                     start();
@@ -157,6 +172,7 @@ public class complaintChildFragment extends Fragment {
                     Log.d("firebase error", "Something went wrong");
                 }
             });
+            start();
         }
     }
 }

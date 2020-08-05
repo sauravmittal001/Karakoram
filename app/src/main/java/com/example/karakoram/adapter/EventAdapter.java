@@ -2,6 +2,7 @@ package com.example.karakoram.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,14 +50,16 @@ import java.util.Date;
             public void onClick(View view) {
                 int i=vHolder.getAdapterPosition();
                 Date dateTime = event1.get(i).getDateTime();
-                String time = String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
-                String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
+                String time = showTime(dateTime.getHours(),dateTime.getMinutes());
+                String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)+ " " + String.format("%02d",dateTime.getDate());
                 Intent intent = new Intent(mcontext, EventDescription.class);
                 intent.putExtra("title", event1.get(i).getTitle());
                 intent.putExtra("description", event1.get(i).getDescription());
+                intent.putExtra("isImageAttached",event1.get(i).isImageAttached());
                 intent.putExtra("time", time);
                 intent.putExtra("date", date);
                 intent.putExtra("key", key.get(i));
+                intent.putExtra("dateTime",event1.get(i).getDateTime().toString());
                 mcontext.startActivity(intent);
             }
         });
@@ -68,10 +71,7 @@ import java.util.Date;
          Event event = getItem(position);
          if (event != null) {
              Date dateTime = event.getDateTime();
-             int num=dateTime.getHours();
-             String str="AM";
-             if(num>12){num=num-12; str="PM";}
-             String time = String.format("%02d", num) + " : " + String.format("%02d", dateTime.getMinutes())+" "+str;
+             String time = showTime(dateTime.getHours(),dateTime.getMinutes());
              String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
 
              holder.mTitle.setText(event.getTitle());
@@ -110,5 +110,26 @@ import java.util.Date;
      public Event getItem(int position)
      {
          return event1.get(position);
+     }
+
+     public String monthName (int monthNumber) {
+         String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+         return monthOfYear[monthNumber-1];
+     }
+
+     public String showTime(int hour, int min) {
+         String format;
+         if (hour == 0) {
+             hour += 12;
+             format = "AM";
+         } else if (hour == 12) {
+             format = "PM";
+         } else if (hour > 12) {
+             hour -= 12;
+             format = "PM";
+         } else {
+             format = "AM";
+         }
+         return hour + " : " + min + " " + format;
      }
  }

@@ -74,10 +74,8 @@ public class UserInfoActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                if (iterator.hasNext()) {
-                    DataSnapshot dataSnapshot = iterator.next();
-                    User user = dataSnapshot.getValue(User.class);
+                if (snapshot.exists()) {
+                    User user = snapshot.getValue(User.class);
                     userPassword = user.getPassword();
                 }
             }

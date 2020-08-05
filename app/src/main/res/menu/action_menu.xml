@@ -6,6 +6,7 @@
         android:id="@+id/navigation_notification"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="Notifications"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 
 </menu>

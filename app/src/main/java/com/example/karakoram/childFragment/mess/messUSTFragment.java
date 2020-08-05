@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,15 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.adapter.USTadapter;
 import com.example.karakoram.cache.mess.UstCache;
+import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.MessFeedback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 
@@ -34,8 +38,7 @@ public class messUSTFragment extends Fragment {
 
 
     /* Variables */
-    private ArrayList<String> key = new ArrayList<>();
-    private ArrayList<MessFeedback> feedbacks;
+    ArrayList<Pair<String, MessFeedback>> feedbacksKv = new ArrayList<>();
     Context context;
     UstCache cache;
 
@@ -78,6 +81,11 @@ public class messUSTFragment extends Fragment {
         setViews();
 
         try {
+            ArrayList<MessFeedback> feedbacks = cache.getFeedbackArray();
+            ArrayList<String> key = cache.getKeyArray();
+            feedbacksKv.clear();
+            for(int i = 0; i<feedbacks.size();i++)
+                feedbacksKv.add(Pair.create(key.get(i),feedbacks.get(i)));
             feedbacks = cache.getFeedbackArray();
             key = cache.getKeyArray();
             Log.i("UstCache", "hostelBills: " + feedbacks);
@@ -112,25 +120,23 @@ public class messUSTFragment extends Fragment {
     }
 
     private void refreshListView() {
-        if (feedbacks != null) {
-            feedbacks.clear();
-        }
-        if (key != null) {
-            key.clear();
-        }
-
         FirebaseQuery.getAllMessFeedback().addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                feedbacks=new ArrayList<>();
+                feedbacksKv.clear();
                 for(DataSnapshot snapshotItem:snapshot.getChildren()){
                     if (!Objects.requireNonNull(snapshotItem.getValue(MessFeedback.class)).getDescription().equals("")) {
-                        feedbacks.add(snapshotItem.getValue(MessFeedback.class));
+                        feedbacksKv.add(Pair.create(snapshotItem.getKey(),snapshotItem.getValue(MessFeedback.class)));
                     }
-                    key.add(snapshotItem.getKey());
                 }
                 try {
+                    ArrayList<MessFeedback> feedbacks = new ArrayList<>();
+                    ArrayList<String> key = new ArrayList<>();
+                    for(int i=0; i<feedbacksKv.size();i++){
+                        key.add(feedbacksKv.get(i).first);
+                        feedbacks.add(feedbacksKv.get(i).second);
+                    }
                     cache.setKeyArray(key);
                     cache.setFeedbackArray(feedbacks);
                 } catch (Exception ignored) {
@@ -149,7 +155,18 @@ public class messUSTFragment extends Fragment {
     }
 
     private void start() {
-        Log.i("ASDF", String.valueOf(feedbacks));
+        Collections.sort(feedbacksKv, new Comparator<Pair<String, MessFeedback>>() {
+            @Override
+            public int compare(Pair<String, MessFeedback> stringMessFeedbackPair, Pair<String, MessFeedback> t1) {
+                return t1.second.getTimestamp().compareTo(stringMessFeedbackPair.second.getTimestamp());
+            }
+        });
+        ArrayList<MessFeedback> feedbacks = new ArrayList<>();
+        ArrayList<String> key = new ArrayList<>();
+        for(int i=0; i<feedbacksKv.size();i++){
+            key.add(feedbacksKv.get(i).first);
+            feedbacks.add(feedbacksKv.get(i).second);
+        }
         adapter = new USTadapter(getActivity(), feedbacks,key);
         listView = view.findViewById(R.id.bill_listView);
         listView.setHasFixedSize(true);

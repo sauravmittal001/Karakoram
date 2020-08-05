@@ -93,8 +93,7 @@ public class messFeedbackFragment extends Fragment {
 
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
-//        eligibleMeals = getMealsEligibleForRating();
-        eligibleMeals = ArrayUtils.toArrayList(new String[] {"Breakfast", "Lunch", "Dinner"});
+        eligibleMeals = getMealsEligibleForRating();
         currentMeal = getTheCurrentMeal();
         intent = getActivity().getIntent();
         editMode = intent.getBooleanExtra("editMode",false);

@@ -24,7 +24,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="0dp"
         android:paddingLeft="0dp"
-        android:text="Mahesh Patidar"
+        android:text="USER NAME"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/colorAccent"
         android:textSize="18sp" />
@@ -36,7 +36,7 @@
         android:layout_gravity="center|start"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:text="ce1180113@iitd.ac.in"
+        android:text="dd#######@iitd.ac.in"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/colorAccent"
         android:textSize="18sp" />
