@@ -52,6 +52,7 @@ public class BillDescriptionActivity extends AppCompatActivity {
 
     private Button mButtonImage;
     private ImageView mBack;
+    private ImageView mEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class BillDescriptionActivity extends AppCompatActivity {
 
         mButtonImage = findViewById(R.id.button_bill_image);
         mBack = (ImageView) findViewById(R.id.iv_back_button);
+        mEdit = findViewById(R.id.iv_edit_button);
     }
 
     private void setViews() {
@@ -108,7 +110,7 @@ public class BillDescriptionActivity extends AppCompatActivity {
         mAmount.setText("Rs. " + amount);
         mUserId.setText("Uploaded by " + userId);
 //        mDescription.setText(description);
-        mDescription.setText("Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code.");
+        mDescription.setText(description);
 
         mButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +121,18 @@ public class BillDescriptionActivity extends AppCompatActivity {
             }
         });
 
+        mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BillDescriptionActivity.this,BillFormActivity.class);
+                intent.putExtra("amount",amount);
+                intent.putExtra("description",description);
+                intent.putExtra("category",category);
+                intent.putExtra("editMode",true);
+                intent.putExtra("key",key);
+                startActivity(intent);
+            }
+        });
 
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

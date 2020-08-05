@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import lombok.SneakyThrows;
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment {
 
     /* Variables */
     ArrayList<String> key = new ArrayList<>();
-    ArrayList<Event> event = new ArrayList<>();
+    ArrayList<Event> events = new ArrayList<>();
     Context context;
 
     /* Views */
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment {
     EventAdapter adapter;
 
     HomeCache cache;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     public HomeFragment() {
@@ -88,12 +90,12 @@ public class HomeFragment extends Fragment {
         setViews();
 
         try {
-            event = cache.getValueArray();
+            events = cache.getValueArray();
             key = cache.getKeyArray();
-            Log.i("HomeCacheLog", "events: " + event);
+            Log.i("HomeCacheLog", "events: " + events);
             Log.i("HomeCacheLog", "keys: " + key);
 
-            if (event.isEmpty() || key.isEmpty()) {
+            if (events.isEmpty() || key.isEmpty()) {
                 Log.i("HomeCacheLog", "lists were empty");
                 refreshListView();
             }
@@ -107,7 +109,7 @@ public class HomeFragment extends Fragment {
 
     private void setViews() {
 
-        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -115,7 +117,7 @@ public class HomeFragment extends Fragment {
                 refreshListView();
                 setViews();
                 adapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
+
             }
         });
 
@@ -140,26 +142,26 @@ public class HomeFragment extends Fragment {
     }
 
     private void refreshListView() {
-        event.clear();
+        events.clear();
         key.clear();
-
-
 
             FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                        event.add(snapshotItem.getValue(Event.class));
+                        Event event = snapshotItem.getValue(Event.class);
+                        events.add(event);
                         key.add(snapshotItem.getKey());
                     }
                     try {
                         cache.setKeyArray(key);
-                        cache.setValueArray(event);
+                        cache.setValueArray(events);
                     } catch (Exception ignored) {
                         Log.i("HomeCacheLog", "cache files are not getting updated");
                     }
                     start();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
@@ -174,9 +176,8 @@ public class HomeFragment extends Fragment {
 
 
     private void start() {
-
-        Log.i("ASDF", String.valueOf(event));
-        adapter = new EventAdapter(getActivity(), event,key);
+        Collections.reverse(events);
+        adapter = new EventAdapter(getActivity(), events,key);
         listView = view.findViewById(R.id.list_event);
         //listView.setHasFixedSize(true);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));

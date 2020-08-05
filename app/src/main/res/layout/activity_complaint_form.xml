@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -368,6 +369,49 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- disclaimer footer -->
+<!--        <TextView-->
+<!--            android:id="@+id/tv_complaint_details"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:lineSpacingExtra="2sp"-->
+<!--            android:text="Your details attached to this form"-->
+<!--            android:textColor="@color/text700"-->
+<!--            android:textSize="12sp"-->
+<!--            android:visibility="visible" />-->
+
+        <!-- complaint image text -->
+        <TextView
+            android:id="@+id/tv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/senbold"
+            android:gravity="top"
+            android:lineSpacingMultiplier="1.14"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:text="No Image Selected"
+            android:textColor="@color/text700"
+            android:textSize="18sp"/>
+
+        <!-- complaint image -->
+        <com.example.karakoram.DynamicImageView
+            android:id="@+id/div_complaint_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            android:visibility="gone"/>
+
         <!-- Submit button -->
         <Button
             android:id="@+id/button_complaint_submit"
@@ -387,43 +431,7 @@
             android:textColor="@color/text700"
             tools:targetApi="o" />
 
-        <!-- disclaimer footer -->
-        <TextView
-            android:id="@+id/tv_complaint_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:lineSpacingExtra="2sp"
-            android:text="Your details attached to this form"
-            android:textColor="@color/text700"
-            android:visibility="visible"
-            android:textSize="12sp" />
-
-        <!-- complaint image text -->
-        <TextView
-            android:id="@+id/tv_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/senbold"
-            android:gravity="top"
-            android:lineSpacingMultiplier="1.14"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="Selected image:"
-            android:textColor="@color/text700"
-            android:textSize="18sp"
-            android:visibility="gone"/>
-
-        <!-- complaint image -->
-        <com.example.karakoram.DynamicImageView
-            android:id="@+id/div_complaint_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:scaleType="centerInside" />
-
     </LinearLayout>
+
 </ScrollView>
 

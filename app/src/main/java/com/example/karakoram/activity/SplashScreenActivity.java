@@ -9,11 +9,17 @@ import android.widget.ProgressBar;
 
 import com.example.karakoram.R;
 
+import java.util.Objects;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_splash_screen);
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {

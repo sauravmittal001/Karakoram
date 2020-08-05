@@ -58,7 +58,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
     private String room;
     private String wing;
     private String dbImageLocation;
-    private String userType;
+    private UserType userType;
     private String key;
     private String complaintArea;
     private boolean isImageAttached;
@@ -87,21 +87,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         } catch (NullPointerException ignored) {
         }
         setContentView(R.layout.activity_complaint_description);
-//        try {
-//            initVariables();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH1", String.valueOf(e));
-//        }
-//        try {
-//            initViews();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH2", String.valueOf(e));
-//        }
-//        try {
-//            setViews();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH3", String.valueOf(e));
-//        }
         initVariables();
         initViews();
         setViews();
@@ -129,7 +114,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         key = getIntent().getExtras().getString("key");
         dbImageLocation = "complaintImages/" + key + ".png";
         Log.i("CRASHHH", dbImageLocation);
-        userType = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE).getString("type", "Admin");
+        userType = UserType.valueOf(getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE).getString("type", "Student"));
     }
 
     private void initViews() {
@@ -193,8 +178,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
             });
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
         if(userType.equals(UserType.Admin)){
             mEdit.setVisibility(View.GONE);
         }
@@ -204,22 +187,29 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (statusSpinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(ComplaintDescriptionActivity.this, "Select status", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if (initialStatus.equals(status)) {
-                    finish();
-                }
-                else {
-                    //TODO make firebase call
-                    FirebaseQuery.changeComplaintStatus(key,Status.valueOf(status));
-                    Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                onBackPressed();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(userType.equals(UserType.Admin)) {
+            if (statusSpinner.getSelectedItemPosition() == 0) {
+                Toast.makeText(ComplaintDescriptionActivity.this, "Select status", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (initialStatus.equals(status)) {
+                finish();
+            } else {
+                FirebaseQuery.changeComplaintStatus(key, Status.valueOf(status));
+                Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+        else
+            finish();
     }
 
     private void loadGlideImage(String url) {
@@ -235,7 +225,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
     }
 
     private void hideViewsUserType() {
-        if (userType.equals(UserType.Admin.name())) {
+        if (userType.equals(UserType.Admin)) {
             mStatus.setText("Status ");
             // status spinner
             findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
@@ -268,7 +258,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
                 statusSpinner.setSelection(spinnerPosition);
             }
         } else {
-            findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_complaint_status).setVisibility(View.GONE);
             mStatus.setText("Status : " + initialStatus);
         }
     }
@@ -278,7 +268,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         intent.putExtra("editMode",true);
         intent.putExtra("key",key);
         intent.putExtra("description",description);
-        intent.putExtra("prevIsImageAttached",isImageAttached);
+        intent.putExtra("isImageAttached",isImageAttached);
         intent.putExtra("category",category);
         if(category.equals("Mess")){
             intent.putExtra("messArea",complaintArea);

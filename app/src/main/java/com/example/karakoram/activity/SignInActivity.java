@@ -32,7 +32,10 @@ public class SignInActivity extends AppCompatActivity {
 
     private void setViews() {
         tabLayout.setupWithViewPager(viewPager, true);
+
         this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 7) / 10;
+        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
+
         this.setupViewPager(viewPager);
     }
 
