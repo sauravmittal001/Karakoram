@@ -258,7 +258,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
                 statusSpinner.setSelection(spinnerPosition);
             }
         } else {
-            findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_complaint_status).setVisibility(View.GONE);
             mStatus.setText("Status : " + initialStatus);
         }
     }

@@ -39,6 +39,7 @@ public class LoginFragment extends Fragment {
     private CustomSpinner userInputSpinner;
     private String[] userInputArray;
     private EditText mPassword, mEntryNoEdit;
+    private TextView mCreateAccount;
 
     public LoginFragment() {
 
@@ -62,6 +63,13 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mEntryNoEdit = view.findViewById(R.id.et_login_entry_number);
         mPassword = view.findViewById(R.id.et_login_password);
+        mCreateAccount = view.findViewById(R.id.tv_create_account);
+        mCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((SignInActivity)getActivity()).updatePagerView();
+            }
+        });
         setSpinners();
         setButtons();
     }

@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class EventDescription extends AppCompatActivity {
@@ -38,6 +39,7 @@ public class EventDescription extends AppCompatActivity {
     private String dbImageLocation;
     private String key;
     private boolean isImageAttached;
+    private String dateTime;
 
     /*Views*/
     private TextView mTitle;
@@ -71,6 +73,7 @@ public class EventDescription extends AppCompatActivity {
 
         String key = getIntent().getExtras().getString("key");
         dbImageLocation = "eventImages/" + key + ".png";
+        dateTime = getIntent().getExtras().getString("dateTime");
     }
 
     private void initViews() {
@@ -129,6 +132,7 @@ public class EventDescription extends AppCompatActivity {
                 intent.putExtra("description",description);
                 intent.putExtra("title",title);
                 intent.putExtra("isImageAttached",isImageAttached);
+                intent.putExtra("dateTime",dateTime);
                 intent.putExtra("key",key);
                 startActivity(intent);
             }

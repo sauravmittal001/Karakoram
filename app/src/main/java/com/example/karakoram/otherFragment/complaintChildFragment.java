@@ -95,9 +95,13 @@ public class complaintChildFragment extends Fragment {
         });
         ArrayList<Complaint> complaints = new ArrayList<>();
         ArrayList<String> key = new ArrayList<>();
-        for(int i=0; i<complaintsKv.size();i++){
+        for(int i=0; i<complaintsKv.size();i++) {
             key.add(complaintsKv.get(i).first);
             complaints.add(complaintsKv.get(i).second);
+        }
+
+        if (getActivity() == null) {
+            return;
         }
         adapter = new ComplaintAdapter(getActivity(), complaints, key);
         listView = view.findViewById(R.id.list_complaints);

@@ -46,12 +46,16 @@ public class EventFormActivity extends AppCompatActivity {
     private boolean isTimeFilled, isDateFilled, isImageAttached, editMode;
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker arg0, int year, int month, int day) {
-            showDate(year, month + 1, day);
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            showDate(arg1, arg2 + 1, arg3);
+            year = arg1;
+            month = arg2 + 1;
+            day = arg3;
         }
     };
     private Intent intent;
     private ImageView mImage, mDelete;
+    private Date dateTime;
 
 
     @Override
@@ -73,6 +77,7 @@ public class EventFormActivity extends AppCompatActivity {
         intent = getIntent();
         isImageAttached = intent.getBooleanExtra("isImageAttached",false);
         editMode = intent.getBooleanExtra("editMode",false);
+        dateTime = new Date(Date.parse (getIntent().getExtras().getString("dateTime")));
     }
 
     private void initViews() {
@@ -86,14 +91,25 @@ public class EventFormActivity extends AppCompatActivity {
 
     private void setViews() {
         Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, 1, 1);
 
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        min = calendar.get(Calendar.MINUTE);
-        showTime(23, 59);
+
+        if(editMode){
+            year = dateTime.getYear()+1900;
+            month = dateTime.getMonth()+1;
+            day = dateTime.getDate();
+            hour = dateTime.getHours();
+            min = dateTime.getMinutes();
+        }
+        else {
+            year = calendar.get(Calendar.YEAR);
+            month = 1;
+            day = 1;
+            hour = 23;
+            min = 59;
+        }
+
+        showDate(year, month, day);
+        showTime(hour, min);
 
         if(editMode){
             Log.d("123hello","hi");
@@ -174,21 +190,6 @@ public class EventFormActivity extends AppCompatActivity {
                         mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task));
                     }
 
-                    if (!isDateFilled) {
-                        dateView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                        return;
-                    }
-                    else {
-                        dateView.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                    }
-
-                    if (!isTimeFilled) {
-                        timeView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                        return;
-                    }
-                    else {
-                        timeView.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                    }
                 }
 
                 event.setDateTime(new Date(year - 1900, month - 1, day, hour, min));
