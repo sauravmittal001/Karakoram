@@ -84,6 +84,9 @@ public class complaintChildFragment extends Fragment {
     }
 
     private void start() {
+        if (getActivity() == null) {
+            return;
+        }
         adapter = new ComplaintAdapter(getActivity(), complaints, key);
         listView = view.findViewById(R.id.list_complaints);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
