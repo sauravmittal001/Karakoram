@@ -284,8 +284,7 @@ public class EventFormActivity extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String time = hourOfDay + ":" + minute;
                         timeView.setText(time);
                         showTime(hourOfDay, minute);
