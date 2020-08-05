@@ -37,8 +37,11 @@ public class EventFormActivity extends AppCompatActivity {
     private boolean isTimeFilled, isDateFilled;
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker arg0, int year, int month, int day) {
-            showDate(year, month + 1, day);
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            showDate(arg1, arg2 + 1, arg3);
+            year = arg1;
+            month = arg2 + 1;
+            day = arg3;
         }
     };
 
@@ -185,8 +188,7 @@ public class EventFormActivity extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String time = hourOfDay + ":" + minute;
                         timeView.setText(time);
                         showTime(hourOfDay, minute);
