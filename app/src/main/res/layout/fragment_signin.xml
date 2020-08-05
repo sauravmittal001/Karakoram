@@ -113,7 +113,7 @@
                     android:fontFamily="@font/senregular"
                     android:gravity="top"
                     android:lineSpacingMultiplier="1.14"
-                    android:text="Password"
+                    android:text="Set password"
                     android:textColor="@color/text700"
                     android:textSize="14sp" />
 

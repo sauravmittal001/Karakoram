@@ -9,20 +9,19 @@ public class User {
     private String name;
     private String room;
     private String password;
-    private String wing;
     private UserType type;
     private String entryNumber;
+    private boolean isSignedIn;
     public static final String SHARED_PREFS = "sharedPrefs";
 
     public User(){
         this.type = UserType.Admin;
     }
 
-    public User(String name, String entryNumber, String password, String wing, String room){
+    public User(String name, String entryNumber, String password, String room){
         this.name = name;
         this.entryNumber = entryNumber;
         this.room = room;
-        this.wing = wing;
         this.password = password;
         this.type = UserType.Student;
     }
@@ -59,19 +58,19 @@ public class User {
         this.entryNumber = entryNumber;
     }
 
-    public String getWing() {
-        return wing;
-    }
-
-    public void setWing(String wing) {
-        this.wing = wing;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isSignedIn() {
+        return isSignedIn;
+    }
+
+    public void setSignedIn(boolean signedIn) {
+        isSignedIn = signedIn;
     }
 }

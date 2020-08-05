@@ -24,8 +24,14 @@ public class FirebaseQuery {
     private static DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     private static FirebaseStorage storage = FirebaseStorage.getInstance();
 
+    public static void setUserPassWord(String userId, String password, boolean isNew){
+        ref.child("users").child(userId).child("password").setValue(password);
+        if(isNew)
+            ref.child("users").child(userId).child("signedIn").setValue(true);
+    }
+
     public static Query getUserByEntryNumber(String entryNumber){
-        return ref.child("users").orderByChild("entryNumber").equalTo(entryNumber);
+        return ref.child("users").child(entryNumber);
     }
 
     public static Query getEvent(String key){

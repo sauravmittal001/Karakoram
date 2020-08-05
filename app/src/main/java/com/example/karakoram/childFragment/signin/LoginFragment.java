@@ -96,7 +96,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 final String password = mPassword.getText().toString();
                 String userInput = userInputArray[userInputSpinner.getSelectedItemPosition()];
-                String entryNumber;
+                final String entryNumber;
                 if (!userInput.equals("Student")){
                     entryNumber = userInput;
                     Log.d("123hello",entryNumber);
@@ -108,19 +108,20 @@ public class LoginFragment extends Fragment {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Iterator<DataSnapshot> iterator =  snapshot.getChildren().iterator();
-                        if(iterator.hasNext()) {
-                            DataSnapshot dataSnapshot = iterator.next();
-                            User user = dataSnapshot.getValue(User.class);
+                        if(snapshot.exists()) {
+                            User user = snapshot.getValue(User.class);
+                            if(!user.isSignedIn()){
+                                Toast.makeText(getActivity().getApplicationContext(),"please signin",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             if(password.equals(user.getPassword())) {
-                                String key = dataSnapshot.getKey();
+                                String key = entryNumber;
                                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("userId", key);
                                 editor.putString("userName", user.getName());
                                 editor.putString("entryNumber", user.getEntryNumber());
                                 editor.putString("room", user.getRoom());
-                                editor.putString("wing", user.getWing());
                                 editor.putString("type",user.getType().toString());
                                 editor.apply();
                                 Toast.makeText(getActivity().getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();

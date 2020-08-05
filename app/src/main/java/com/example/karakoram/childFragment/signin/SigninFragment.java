@@ -30,6 +30,7 @@ public class SigninFragment extends Fragment {
 
     View view;
     private EditText mPassword, mEntryNoEdit;
+    private User user;
 
     public SigninFragment() {
 
@@ -62,32 +63,27 @@ public class SigninFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final String password = mPassword.getText().toString();
-                String entryNumber = mEntryNoEdit.getText().toString();
+                final String entryNumber = mEntryNoEdit.getText().toString();
                 Query query = FirebaseQuery.getUserByEntryNumber(entryNumber);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                        if (iterator.hasNext()) {
-                            DataSnapshot dataSnapshot = iterator.next();
-                            User user = dataSnapshot.getValue(User.class);
-                            if (password.equals(user.getPassword())) {
-                                String key = dataSnapshot.getKey();
-                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("userId", key);
-                                editor.putString("userName", user.getName());
-                                editor.putString("entryNumber", user.getEntryNumber());
-                                editor.putString("room", user.getRoom());
-                                editor.putString("wing", user.getWing());
-                                editor.putString("type", user.getType().toString());
-                                editor.apply();
-                                Toast.makeText(getActivity().getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
-                                getActivity().finish();
-                            } else
-                                Toast.makeText(getActivity().getApplicationContext(), "incorrect password", Toast.LENGTH_SHORT).show();
+                        if (snapshot.exists()) {
+                            user = snapshot.getValue(User.class);
+                            String key = entryNumber;
+                            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userId", key);
+                            editor.putString("userName", user.getName());
+                            editor.putString("entryNumber", user.getEntryNumber());
+                            editor.putString("room", user.getRoom());
+                            editor.putString("type", user.getType().toString());
+                            editor.apply();
+                            Toast.makeText(getActivity().getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
+                            FirebaseQuery.setUserPassWord(entryNumber,password,true);
+                            getActivity().finish();
                         } else
-                            Toast.makeText(getActivity().getApplicationContext(), "user does not exist", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "entry number does not exist", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
