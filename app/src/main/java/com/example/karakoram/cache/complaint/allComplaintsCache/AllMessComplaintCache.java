@@ -1,12 +1,12 @@
-package com.example.karakoram.cache.complaint;
+package com.example.karakoram.cache.complaint.allComplaintsCache;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.karakoram.resource.Category;
-import com.example.karakoram.resource.Complaint;
-import com.example.karakoram.resource.Event;
+import com.example.karakoram.resource.ComplaintArea;
+import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.Status;
 
 import org.json.JSONException;
@@ -26,11 +26,11 @@ import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class AllComplaintCache {
+public class AllMessComplaintCache {
 
     Context CONTEXT;
-    String COMPLAINT_FILE_NAME = "AllComplaintCache.txt";
-    String KEY_FILE_NAME = "AllComplaintKey.txt";
+    String COMPLAINT_FILE_NAME = "AllMessComplaintCache.txt";
+    String KEY_FILE_NAME = "AllMessComplaintKey.txt";
 
 
     String USER_ID = "userId";
@@ -41,12 +41,12 @@ public class AllComplaintCache {
     String CATEGORY = "category";
     String DESCRIPTION = "description";
     String IS_IMAGE_ATTACHED = "isImageAttached";
+    String COMPLAINT_AREA = "complaintArea";
 
-
-    private AllComplaintCache() {
+    private AllMessComplaintCache() {
     }
 
-    public AllComplaintCache(Context context) {
+    public AllMessComplaintCache(Context context) {
         this.CONTEXT = context;
     }
 
@@ -110,8 +110,8 @@ public class AllComplaintCache {
 
     }
 
-    public ArrayList<Complaint> getComplaintArray() {
-        ArrayList<Complaint> complaints = new ArrayList<>();
+    public ArrayList<MessComplaint> getComplaintArray() {
+        ArrayList<MessComplaint> complaints = new ArrayList<>();
 
         FileInputStream fis = null;
         try {
@@ -130,7 +130,7 @@ public class AllComplaintCache {
                 while (keyIterator.hasNext()) {
                     String key = (String) keyIterator.next();
                     JSONObject value = (JSONObject) ValueJSON.get(key);
-                    Complaint complaint = new Complaint();
+                    MessComplaint complaint = new MessComplaint();
                     complaint.setUserId((String) value.get(USER_ID));
                     complaint.setEntryNumber((String) value.get(ENTRY_NUMBER));
                     complaint.setUserName((String) value.get(USER_NAME));
@@ -138,7 +138,8 @@ public class AllComplaintCache {
                     complaint.setStatus(Status.valueOf((String) value.get(STATUS)));
                     complaint.setCategory(Category.valueOf((String) value.get(CATEGORY)));
                     complaint.setDescription((String) value.get(DESCRIPTION));
-                    complaint.setImageAttached((Boolean) value.get(IS_IMAGE_ATTACHED));
+                    complaint.setImageAttached(Boolean.parseBoolean((String)value.get(IS_IMAGE_ATTACHED)));
+                    complaint.setComplaintArea(ComplaintArea.valueOf((String) value.get(COMPLAINT_AREA)));
                     complaints.add(complaint);
                 }
             }
@@ -156,13 +157,13 @@ public class AllComplaintCache {
         return complaints;
     }
 
-    public void setValueArray(ArrayList<Complaint> complaints) throws IOException, JSONException {
+    public void setValueArray(ArrayList<MessComplaint> complaints) throws IOException, JSONException {
         clearCacheFile(CONTEXT.getApplicationContext().getFilesDir() + COMPLAINT_FILE_NAME);
 //        printFileContent(EVENT_FILE_NAME);
 
         int i = 0;
         JSONObject JSON = new JSONObject();
-        for (Complaint complaint : complaints) {
+        for (MessComplaint complaint : complaints) {
             JSONObject valueJSON = new JSONObject();
             valueJSON.put(USER_ID, (String) complaint.getDescription());
             valueJSON.put(ENTRY_NUMBER, (String) complaint.getEntryNumber());
@@ -172,6 +173,7 @@ public class AllComplaintCache {
             valueJSON.put(CATEGORY, String.valueOf(complaint.getCategory()));
             valueJSON.put(DESCRIPTION, (String) complaint.getDescription());
             valueJSON.put(IS_IMAGE_ATTACHED, String.valueOf(complaint.isImageAttached()));
+            valueJSON.put(COMPLAINT_AREA, String.valueOf(complaint.getComplaintArea()));
 
             JSON.put(String.valueOf(i++), valueJSON);
         }

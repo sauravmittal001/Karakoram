@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.BillImageActivity"></activity>
+        <activity android:name=".activity.BillImageActivity"/>
+        <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.BillDescriptionActivity" />
         <activity android:name=".activity.ComplaintDescriptionActivity" />
         <activity android:name=".activity.WingMapActivity" />

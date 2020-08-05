@@ -1,8 +1,10 @@
 package com.example.karakoram.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -150,7 +152,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         mCategory.setText(category + " complaint");
         mDateTime.setText(time + ", " + date);
         mDescription.setText(description);
-//        mDescription.setText("Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code.");
         mEntryNumber.setText(entryNumber);
         mName.setText(name);
         if (category.equals(Category.Maintenance.name()) || category.equals(Category.Mess.name())) {
@@ -203,9 +204,19 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
             } else if (initialStatus.equals(status)) {
                 finish();
             } else {
-                FirebaseQuery.changeComplaintStatus(key, Status.valueOf(status));
-                Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
-                finish();
+                new AlertDialog.Builder(ComplaintDescriptionActivity.this, R.style.MyDialogTheme)
+                        .setTitle("Please confirm")
+                        .setMessage("Are you sure you want to change the status of this complaint to " + status + " ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseQuery.changeComplaintStatus(key, Status.valueOf(status));
+                                Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }
         else
