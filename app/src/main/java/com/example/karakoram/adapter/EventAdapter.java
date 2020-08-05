@@ -60,6 +60,7 @@ import java.util.Date;
                 intent.putExtra("date", date);
                 intent.putExtra("key", key.get(i));
                 intent.putExtra("dateTime",event1.get(i).getDateTime().toString());
+                intent.putExtra("userId",event1.get(i).getUserId());
                 mcontext.startActivity(intent);
             }
         });

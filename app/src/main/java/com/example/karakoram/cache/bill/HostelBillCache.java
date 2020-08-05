@@ -40,10 +40,16 @@ public class HostelBillCache {
     private HostelBillCache() {
     }
 
-    public HostelBillCache(Context context, Category category) {
+    public HostelBillCache(Context context, Category category, Boolean getAll) {
         this.CONTEXT = context;
-        HOSTEL_BILL_FILE_NAME = category.name() + "HostelBill.txt";
-        KEY_FILE_NAME = category.name() + "Key.txt";
+        if(getAll){
+            HOSTEL_BILL_FILE_NAME = "HostelBill.txt";
+            KEY_FILE_NAME = "Key.txt";
+        }
+        else {
+            HOSTEL_BILL_FILE_NAME = category.name() + "HostelBill.txt";
+            KEY_FILE_NAME = category.name() + "Key.txt";
+        }
     }
 
     public ArrayList<String> getKeyArray() {

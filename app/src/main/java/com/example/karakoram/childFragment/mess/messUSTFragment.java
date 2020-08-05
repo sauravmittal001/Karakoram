@@ -1,6 +1,7 @@
 package com.example.karakoram.childFragment.mess;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +25,10 @@ import com.example.karakoram.adapter.USTadapter;
 import com.example.karakoram.cache.mess.UstCache;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.MessFeedback;
+import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -33,15 +36,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class messUSTFragment extends Fragment {
 
 
     /* Variables */
-    ArrayList<Pair<String, MessFeedback>> feedbacksKv = new ArrayList<>();
-    Context context;
-    UstCache cache;
-
+    private ArrayList<Pair<String, MessFeedback>> feedbacksKv = new ArrayList<>();
+    private Context context;
+    private UstCache cache;
+    private boolean getMine;
 
     /* Views */
     private View view;
@@ -52,7 +57,7 @@ public class messUSTFragment extends Fragment {
     private USTadapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
-    public messUSTFragment(){
+    public messUSTFragment(boolean getMine){
 
     }
 
@@ -67,10 +72,10 @@ public class messUSTFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       view= inflater.inflate(R.layout.fragment_mess_u_s_t, container, false);
+        view= inflater.inflate(R.layout.fragment_mess_u_s_t, container, false);
         context = container.getContext();
-        cache = new UstCache(context);
-       return view;
+        cache = new UstCache(context,getMine);
+        return view;
     }
 
 
@@ -120,38 +125,62 @@ public class messUSTFragment extends Fragment {
     }
 
     private void refreshListView() {
-        FirebaseQuery.getAllMessFeedback().addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                feedbacksKv.clear();
-                for(DataSnapshot snapshotItem:snapshot.getChildren()){
-                    if (!Objects.requireNonNull(snapshotItem.getValue(MessFeedback.class)).getDescription().equals("")) {
-                        feedbacksKv.add(Pair.create(snapshotItem.getKey(),snapshotItem.getValue(MessFeedback.class)));
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        if(!userId.equals("loggedOut")) {
+            Query query;
+            if(getMine)
+                query = FirebaseQuery.getUserMessFeedback(userId);
+            else
+                query = FirebaseQuery.getAllMessFeedback();
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    feedbacksKv.clear();
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        if (!Objects.requireNonNull(snapshotItem.getValue(MessFeedback.class)).getDescription().equals("")) {
+                            feedbacksKv.add(Pair.create(snapshotItem.getKey(), snapshotItem.getValue(MessFeedback.class)));
+                        }
                     }
-                }
-                try {
-                    ArrayList<MessFeedback> feedbacks = new ArrayList<>();
-                    ArrayList<String> key = new ArrayList<>();
-                    for(int i=0; i<feedbacksKv.size();i++){
-                        key.add(feedbacksKv.get(i).first);
-                        feedbacks.add(feedbacksKv.get(i).second);
+                    try {
+                        ArrayList<MessFeedback> feedbacks = new ArrayList<>();
+                        ArrayList<String> key = new ArrayList<>();
+                        for (int i = 0; i < feedbacksKv.size(); i++) {
+                            key.add(feedbacksKv.get(i).first);
+                            feedbacks.add(feedbacksKv.get(i).second);
+                        }
+                        cache.setKeyArray(key);
+                        cache.setFeedbackArray(feedbacks);
+                    } catch (Exception ignored) {
+                        Log.i("UstCache", "cache files are not getting updated");
                     }
-                    cache.setKeyArray(key);
-                    cache.setFeedbackArray(feedbacks);
-                } catch (Exception ignored) {
-                    Log.i("UstCache", "cache files are not getting updated");
+                    start();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
-                start();
-                swipeRefreshLayout.setRefreshing(false);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
+        else {
+            feedbacksKv.clear();
+            try {
+                ArrayList<MessFeedback> feedbacks = new ArrayList<>();
+                ArrayList<String> key = new ArrayList<>();
+                for (int i = 0; i < feedbacksKv.size(); i++) {
+                    key.add(feedbacksKv.get(i).first);
+                    feedbacks.add(feedbacksKv.get(i).second);
+                }
+                cache.setKeyArray(key);
+                cache.setFeedbackArray(feedbacks);
+            } catch (Exception ignored) {
+                Log.i("UstCache", "cache files are not getting updated");
             }
-        });
-
+            start();
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private void start() {

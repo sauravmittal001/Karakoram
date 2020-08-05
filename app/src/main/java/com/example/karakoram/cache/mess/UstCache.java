@@ -30,8 +30,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class UstCache {
 
     Context CONTEXT;
-    String FEEDBACK_FILE_NAME = "UstFeedback.txt";
-    String KEY_FILE_NAME = "UstKey.txt";
+    String FEEDBACK_FILE_NAME;
+    String KEY_FILE_NAME;
+    boolean getMine;
 
     String TIMESTAMP = "timestamp";
     String USER_ID = "userId";
@@ -45,8 +46,18 @@ public class UstCache {
     private UstCache() {
     }
 
-    public UstCache(Context context) {
+    public UstCache(Context context, boolean getMine) {
         this.CONTEXT = context;
+        this.getMine = getMine;
+
+        if(getMine){
+            FEEDBACK_FILE_NAME = "MyUstFeedback.txt";
+            KEY_FILE_NAME = "MyUstKey.txt";
+        }
+        else{
+            FEEDBACK_FILE_NAME = "UstFeedback.txt";
+            KEY_FILE_NAME = "UstKey.txt";
+        }
     }
 
     public ArrayList<String> getKeyArray() {

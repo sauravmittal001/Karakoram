@@ -198,38 +198,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- wing -->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:layout_marginBottom="12dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="@font/senregular"-->
-<!--                    android:text="Wing: "-->
-<!--                    android:textSize="18sp" />-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center_vertical">-->
-
-<!--                    <com.example.karakoram.views.CustomSpinner-->
-<!--                        android:id="@+id/spinner_wing"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@drawable/spinner_background"-->
-<!--                        android:dropDownWidth="wrap_content"-->
-<!--                        android:entries="@array/wing" />-->
-<!--                </LinearLayout>-->
-
-
             <!-- change password -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -242,6 +210,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_change_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -253,11 +222,13 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_change_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <LinearLayout

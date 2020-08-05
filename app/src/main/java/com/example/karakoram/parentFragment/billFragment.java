@@ -60,11 +60,11 @@ public class billFragment extends Fragment {
     }
     private void setUpViewPager(ViewPager viewPager){
         pageadapter adapter=new pageadapter(getChildFragmentManager());
-        adapter.addFragment(new billChildFragment(Category.Maintenance),"Maint");
-        adapter.addFragment(new billChildFragment(Category.Mess),"Mess");
-        adapter.addFragment(new billChildFragment(Category.Cultural),"Cult");
-        adapter.addFragment(new billChildFragment(Category.Sports),"Sports");
-        adapter.addFragment(new billChildFragment(Category.Others),"Others");
+        adapter.addFragment(new billChildFragment(Category.Maintenance,false),"Maint");
+        adapter.addFragment(new billChildFragment(Category.Mess,false),"Mess");
+        adapter.addFragment(new billChildFragment(Category.Cultural,false),"Cult");
+        adapter.addFragment(new billChildFragment(Category.Sports,false),"Sports");
+        adapter.addFragment(new billChildFragment(Category.Others,false),"Others");
         viewPager.setAdapter(adapter);
     }
 

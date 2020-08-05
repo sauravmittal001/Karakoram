@@ -1,6 +1,7 @@
 package com.example.karakoram.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Anonymity;
+import com.example.karakoram.resource.User;
+import com.example.karakoram.resource.UserType;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.Date;
@@ -31,9 +34,10 @@ public class UstDescription extends AppCompatActivity {
     private String date;
     private String day;
     private int rating;
+    private String userId;
     private Anonymity anonymity;
 
-    private TextView mUserId;
+    private TextView mUserName;
     private TextView mDescription;
     private TextView mMealDay;
     private TextView mDateTime;
@@ -68,10 +72,11 @@ public class UstDescription extends AppCompatActivity {
         day = getIntent().getExtras().getString("day");
         rating = Integer.parseInt(getIntent().getExtras().getString("rating"));
         anonymity = Anonymity.valueOf(getIntent().getExtras().getString("anonymity"));
+        userId = getIntent().getExtras().getString("userId");
     }
 
     private void initViews() {
-        mUserId = findViewById(R.id.tv_mess_feedback_user_id);
+        mUserName = findViewById(R.id.tv_mess_feedback_user_id);
         mDescription = findViewById(R.id.tv_mess_feedback_description);
         mMealDay = findViewById(R.id.tv_mess_feedback_day_meal);
         mDateTime = findViewById(R.id.tv_mess_feedback_time_date);
@@ -83,9 +88,24 @@ public class UstDescription extends AppCompatActivity {
     }
 
     private void setViews() {
-        mUserId.setText("Feedback by " + userName);
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String currentUserId = sharedPreferences.getString("userId","loggedOut");
+        String userType = sharedPreferences.getString("type","Student");
+
         mDescription.setText(description);
         mMealDay.setText(day + " " + meal);
+
+        if(anonymity.equals(Anonymity.Anonymous))
+            mUserName.setText("Feedback by anonymous user");
+        else if(anonymity.equals(Anonymity.Public))
+            mUserName.setText("Feedback by " + userName);
+        else{
+            if(userType.equals(UserType.Admin))
+                mUserName.setText("Feedback by " + userName);
+            else
+                mUserName.setText("Feedback by anonymous user");
+        }
+
         mDateTime.setText(time + ", " + date);
         if (rating == 1) {
             mStarText.setText("Bad!");
@@ -121,6 +141,11 @@ public class UstDescription extends AppCompatActivity {
         Date dateTime = new Date();
         String dateNow = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1) + " " + String.format("%02d",dateTime.getDate());
         if(dateNow.equals(date))
+            mEdit.setVisibility(View.VISIBLE);
+        else
+            mEdit.setVisibility(View.GONE);
+
+        if(currentUserId.equals(userId))
             mEdit.setVisibility(View.VISIBLE);
         else
             mEdit.setVisibility(View.GONE);

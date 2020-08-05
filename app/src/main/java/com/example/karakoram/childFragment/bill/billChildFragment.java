@@ -2,6 +2,7 @@ package com.example.karakoram.childFragment.bill;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,14 +27,19 @@ import com.example.karakoram.adapter.HostelBillAdapter;
 import com.example.karakoram.cache.bill.HostelBillCache;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.User;
+import com.example.karakoram.resource.UserType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class billChildFragment extends Fragment {
@@ -45,6 +51,8 @@ public class billChildFragment extends Fragment {
     private Category category;
     private Context context;
     private HostelBillCache cache;
+    private boolean getAll;
+    private SharedPreferences sharedPreferences;
 
     /* Views */
     private View view;
@@ -56,8 +64,9 @@ public class billChildFragment extends Fragment {
     private HostelBillAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public billChildFragment(Category category) {
+    public billChildFragment(Category category, boolean getAll) {
         this.category = category;
+        this.getAll = getAll;
     }
 
 
@@ -71,7 +80,8 @@ public class billChildFragment extends Fragment {
                              Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_bill_child, container, false);
         context = container.getContext();
-        cache = new HostelBillCache(context, category);
+        cache = new HostelBillCache(context, category, getAll);
+        sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         return view;
     }
 
@@ -124,39 +134,72 @@ public class billChildFragment extends Fragment {
 
             }
         });
+        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
+        if(userType.equals(UserType.Student))
+            fab.setVisibility(View.GONE);
+        else
+            fab.setVisibility(View.VISIBLE);
     }
 
     private void refreshListView() {
-        FirebaseQuery.getCategoryBills(category).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                hostelBillsKv.clear();
-                for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                    hostelBillsKv.add(Pair.create(snapshotItem.getKey(),snapshotItem.getValue(HostelBill.class)));
-                }
-                try {
-                    ArrayList<HostelBill> hostelBill = new ArrayList<>();
-                    ArrayList<String> key = new ArrayList<>();
-                    for(int i=0; i<hostelBillsKv.size();i++){
-                        key.add(hostelBillsKv.get(i).first);
-                        hostelBill.add(hostelBillsKv.get(i).second);
-                    }
-                    cache.setKeyArray(key);
-                    cache.setHostelBillArray(hostelBill);
-                    Log.i("111111 " + category.name(), "hostelBills: after refresh" + hostelBill);
-                    Log.i("111111 " + category.name(), "keys: after refresh" + key);
-                } catch (Exception ignored) {
-                    Log.i("111111 " + category.name(), "cache files are not getting updated");
-                }
-                start();
-                swipeRefreshLayout.setRefreshing(false);
-            }
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        if(!userId.equals("loggedOut")) {
+            Query query;
+            if (getAll)
+                query = FirebaseQuery.getUserBill(userId);
+            else
+                query = FirebaseQuery.getCategoryBills(category);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebase error", "Something went wrong");
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    hostelBillsKv.clear();
+                    for (DataSnapshot snapshotItem : snapshot.getChildren()) {
+                        hostelBillsKv.add(Pair.create(snapshotItem.getKey(), snapshotItem.getValue(HostelBill.class)));
+                    }
+                    try {
+                        ArrayList<HostelBill> hostelBill = new ArrayList<>();
+                        ArrayList<String> key = new ArrayList<>();
+                        for (int i = 0; i < hostelBillsKv.size(); i++) {
+                            key.add(hostelBillsKv.get(i).first);
+                            hostelBill.add(hostelBillsKv.get(i).second);
+                        }
+                        cache.setKeyArray(key);
+                        cache.setHostelBillArray(hostelBill);
+                        Log.i("111111 " + category.name(), "hostelBills: after refresh" + hostelBill);
+                        Log.i("111111 " + category.name(), "keys: after refresh" + key);
+                    } catch (Exception ignored) {
+                        Log.i("111111 " + category.name(), "cache files are not getting updated");
+                    }
+                    start();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("firebase error", "Something went wrong");
+                }
+            });
+        }
+        else {
+            hostelBillsKv.clear();
+            try {
+                ArrayList<HostelBill> hostelBill = new ArrayList<>();
+                ArrayList<String> key = new ArrayList<>();
+                for (int i = 0; i < hostelBillsKv.size(); i++) {
+                    key.add(hostelBillsKv.get(i).first);
+                    hostelBill.add(hostelBillsKv.get(i).second);
+                }
+                cache.setKeyArray(key);
+                cache.setHostelBillArray(hostelBill);
+                Log.i("111111 " + category.name(), "hostelBills: after refresh" + hostelBill);
+                Log.i("111111 " + category.name(), "keys: after refresh" + key);
+            } catch (Exception ignored) {
+                Log.i("111111 " + category.name(), "cache files are not getting updated");
             }
-        });
+            start();
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
 

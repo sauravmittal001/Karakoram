@@ -81,7 +81,7 @@ public class messFragment extends Fragment {
         pageadapter adapter=new pageadapter(getChildFragmentManager());
         adapter.addFragment(new SlidingFragment(), "Menu");
         adapter.addFragment(new messFeedbackFragment(),"Feedback");
-        adapter.addFragment(new messUSTFragment(),"UST");
+        adapter.addFragment(new messUSTFragment(false),"UST");
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
 

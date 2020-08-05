@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -133,6 +134,13 @@ public class BillDescriptionActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String currentUserId = sharedPreferences.getString("userId","loggedOut");
+        if(currentUserId.equals(userId))
+            mEdit.setVisibility(View.VISIBLE);
+        else
+            mEdit.setVisibility(View.GONE);
 
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

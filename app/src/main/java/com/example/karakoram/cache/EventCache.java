@@ -1,4 +1,4 @@
-package com.example.karakoram.cache.myStuff;
+package com.example.karakoram.cache;
 
 import android.content.Context;
 import android.util.Log;
@@ -23,21 +23,35 @@ import java.util.Iterator;
 
 import static android.content.Context.MODE_PRIVATE;
 
+//Singleton class
 public class EventCache {
 
     Context CONTEXT;
-    String EVENT_FILE_NAME = "MyStuffEvent.txt";
-    String KEY_FILE_NAME = "MyStuffKey.txt";
+    String EVENT_FILE_NAME;
+    String KEY_FILE_NAME;
+    boolean getMine;
 
     String DATE_TIME = "dateTime";
     String DESCRIPTION = "description";
     String TITLE = "title";
+    String IMAGE_ATTACHED = "isImageAttached";
+    String TIME_STAMP = "timeStamp";
+    String USER_ID = "userId";
 
-    private EventCache() {
+    public EventCache() {
     }
 
-    public EventCache(Context context) {
+    public EventCache(Context context, boolean getMine) {
         this.CONTEXT = context;
+        this.getMine = getMine;
+        if(getMine){
+            EVENT_FILE_NAME = "MyEvent.txt";
+            KEY_FILE_NAME = "MyKey.txt";
+        }
+        else {
+            EVENT_FILE_NAME = "Event.txt";
+            KEY_FILE_NAME = "Key.txt";
+        }
     }
 
     public ArrayList<String> getKeyArray() {
@@ -124,6 +138,9 @@ public class EventCache {
                     event.setDateTime(new Date(Date.parse((String) value.get(DATE_TIME))));
                     event.setDescription((String) value.get(DESCRIPTION));
                     event.setTitle((String) value.get(TITLE));
+                    event.setImageAttached(Boolean.parseBoolean((String)value.get(IMAGE_ATTACHED)));
+                    event.setTimeStamp(new Date(Date.parse((String)value.get(DATE_TIME))));
+                    event.setUserId((String)value.get(USER_ID));
                     values.add(event);
                 }
             }
@@ -152,7 +169,9 @@ public class EventCache {
             valueJSON.put(DESCRIPTION, event.getDescription());
             valueJSON.put(DATE_TIME, (event.getDateTime()));
             valueJSON.put(TITLE, event.getTitle());
-
+            valueJSON.put(IMAGE_ATTACHED,String.valueOf(event.isImageAttached()));
+            valueJSON.put(TIME_STAMP,event.getTimeStamp());
+            valueJSON.put(USER_ID,event.getUserId());
             JSON.put(String.valueOf(i++), valueJSON);
         }
 

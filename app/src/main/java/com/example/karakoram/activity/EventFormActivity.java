@@ -77,7 +77,8 @@ public class EventFormActivity extends AppCompatActivity {
         intent = getIntent();
         isImageAttached = intent.getBooleanExtra("isImageAttached",false);
         editMode = intent.getBooleanExtra("editMode",false);
-        dateTime = new Date(Date.parse (getIntent().getExtras().getString("dateTime")));
+        if(editMode)
+            dateTime = new Date(Date.parse (getIntent().getStringExtra("dateTime")));
     }
 
     private void initViews() {
@@ -91,7 +92,6 @@ public class EventFormActivity extends AppCompatActivity {
 
     private void setViews() {
         Calendar calendar = Calendar.getInstance();
-
 
         if(editMode){
             year = dateTime.getYear()+1900;

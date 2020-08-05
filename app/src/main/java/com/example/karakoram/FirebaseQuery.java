@@ -30,6 +30,10 @@ public class FirebaseQuery {
             ref.child("users").child(userId).child("signedIn").setValue(true);
     }
 
+    public static void setUserRoom(String userId, String room){
+        ref.child("users").child(userId).child("room").setValue(room);
+    }
+
     public static Query getUserByEntryNumber(String entryNumber){
         return ref.child("users").child(entryNumber);
     }

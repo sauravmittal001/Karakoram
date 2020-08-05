@@ -10,7 +10,6 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
@@ -25,15 +24,13 @@ import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.EventFormActivity;
 import com.example.karakoram.adapter.EventAdapter;
-import com.example.karakoram.cache.HomeCache;
+import com.example.karakoram.cache.EventCache;
 import com.example.karakoram.resource.Event;
-import com.example.karakoram.resource.HostelBill;
-import com.example.karakoram.resource.Meal;
-import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,32 +38,34 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import lombok.SneakyThrows;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class HomeFragment extends Fragment {
+public class EventFragment extends Fragment {
 
     /* Variables */
-    ArrayList<Pair<String, Event>> eventsKv = new ArrayList<>();
-    Context context;
+    private ArrayList<Pair<String, Event>> eventsKv = new ArrayList<>();
+    private Context context;
+    private boolean getMine;
+    private SharedPreferences sharedPreferences;
 
     /* Views */
-    View view;
-    RecyclerView listView;
-    Drawable mdivider;
+    private View view;
+    private RecyclerView listView;
+    private Drawable mdivider;
 
     /* Adapters */
     EventAdapter adapter;
 
-    HomeCache cache;
+    EventCache cache;
     SwipeRefreshLayout swipeRefreshLayout;
 
 
-    public HomeFragment() {
+    public EventFragment(boolean getMine) {
+        this.getMine = getMine;
     }
 
 
@@ -74,9 +73,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_event, container, false);
         context = container.getContext();
-        cache = new HomeCache(context);
+        cache = new EventCache(context,getMine);
         return view;
     }
 
@@ -126,7 +125,7 @@ public class HomeFragment extends Fragment {
         });
 
         View addEventButton = view.findViewById(R.id.fab_event);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
         String userId  = sharedPreferences.getString("userId","loggedOut");
         UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
 
@@ -146,21 +145,29 @@ public class HomeFragment extends Fragment {
     }
 
     private void refreshListView() {
-            FirebaseQuery.getAllEvents().addListenerForSingleValueEvent(new ValueEventListener() {
+        String userId = sharedPreferences.getString("userId","loggedOut");
+        if(!userId.equals("loggedOut")) {
+            Query query;
+            if(getMine)
+                query = FirebaseQuery.getUserEvents(userId);
+            else
+                query= FirebaseQuery.getAllEvents();
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     eventsKv.clear();
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Event event = snapshotItem.getValue(Event.class);
-                        eventsKv.add(Pair.create(snapshotItem.getKey(),event));
-                        if(event.getTitle().equals("eyru"))
+                        eventsKv.add(Pair.create(snapshotItem.getKey(), event));
+                        if (event.getTitle().equals("eyru"))
                             Log.d("123hello", String.valueOf(event.isImageAttached()));
                     }
                     try {
                         ArrayList<Event> events = new ArrayList<>();
                         ArrayList<String> key = new ArrayList<>();
-                        for(int i=0; i<eventsKv.size();i++){
+                        for (int i = 0; i < eventsKv.size(); i++) {
                             key.add(eventsKv.get(i).first);
                             events.add(eventsKv.get(i).second);
                         }
@@ -179,6 +186,24 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+        else {
+            eventsKv.clear();
+            try {
+                ArrayList<Event> events = new ArrayList<>();
+                ArrayList<String> key = new ArrayList<>();
+                for (int i = 0; i < eventsKv.size(); i++) {
+                    key.add(eventsKv.get(i).first);
+                    events.add(eventsKv.get(i).second);
+                }
+                cache.setKeyArray(key);
+                cache.setValueArray(events);
+            } catch (Exception ignored) {
+                Log.i("HomeCacheLog", "cache files are not getting updated");
+            }
+            start();
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
 
 
 

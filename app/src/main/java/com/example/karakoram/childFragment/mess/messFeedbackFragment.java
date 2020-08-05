@@ -30,6 +30,7 @@ import com.example.karakoram.resource.Meal;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
+import com.example.karakoram.resource.UserType;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
 import com.google.android.gms.common.util.ArrayUtils;
@@ -93,7 +94,8 @@ public class messFeedbackFragment extends Fragment {
 
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
-        eligibleMeals = getMealsEligibleForRating();
+//        eligibleMeals = getMealsEligibleForRating();
+        eligibleMeals = ArrayUtils.toArrayList(new String[]{"Lunch"});
         currentMeal = getTheCurrentMeal();
         intent = getActivity().getIntent();
         editMode = intent.getBooleanExtra("editMode",false);
@@ -336,49 +338,53 @@ public class messFeedbackFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
                 String userId = sharedPreferences.getString("userId","loggedOut");
+                UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
                 if(userId.equals("loggedOut"))
                     Toast.makeText(getActivity().getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
                 else {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        View spinner = view.findViewById(R.id.ll_feedback_meal);
-                        if (mealSpinner.getSelectedItemPosition() == 0 && !editMode) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Select meal", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (rating == 0) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Select rating", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-
-                    MessFeedback messFeedback = new MessFeedback();
-                    String description = mDescription.getText().toString();
-                    messFeedback.setUserId(userId);
-                    messFeedback.setDescription(description);
-                    messFeedback.setMeal(Meal.valueOf(selectedMeal));
-                    messFeedback.setRating(rating);
-                    messFeedback.setTimestamp(new Date());
-                    messFeedback.setUserName(sharedPreferences.getString("userName","NA"));
-                    messFeedback.setAnonymity(anonymity);
-
-                    if(editMode){
-                        String key = intent.getStringExtra("key");
-                        FirebaseQuery.updateMessFeedback(key,messFeedback);
-                        Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
-                        getActivity().finish();
-                    }
+                    if (userType.equals(UserType.Admin))
+                        Toast.makeText(getActivity().getApplicationContext(), "please login with your resident account to continue", Toast.LENGTH_SHORT).show();
                     else {
-                        Calendar calendar = Calendar.getInstance();
-                        int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
-                        String currentDate = date + "-" + month + "-" + year;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            View spinner = view.findViewById(R.id.ll_feedback_meal);
+                            if (mealSpinner.getSelectedItemPosition() == 0 && !editMode) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Select meal", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            if (rating == 0) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Select rating", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(selectedMeal, currentDate);
-                        editor.apply();
+                        MessFeedback messFeedback = new MessFeedback();
+                        String description = mDescription.getText().toString();
+                        messFeedback.setUserId(userId);
+                        messFeedback.setDescription(description);
+                        messFeedback.setMeal(Meal.valueOf(selectedMeal));
+                        messFeedback.setRating(rating);
+                        messFeedback.setTimestamp(new Date());
+                        messFeedback.setUserName(sharedPreferences.getString("userName", "NA"));
+                        messFeedback.setAnonymity(anonymity);
 
-                        FirebaseQuery.addMessFeedback(messFeedback);
-                        refreshForm();
-                        Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                        if (editMode) {
+                            String key = intent.getStringExtra("key");
+                            FirebaseQuery.updateMessFeedback(key, messFeedback);
+                            Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        } else {
+                            Calendar calendar = Calendar.getInstance();
+                            int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
+                            String currentDate = date + "-" + month + "-" + year;
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(selectedMeal, currentDate);
+                            editor.apply();
+
+                            FirebaseQuery.addMessFeedback(messFeedback);
+                            refreshForm();
+                            Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
