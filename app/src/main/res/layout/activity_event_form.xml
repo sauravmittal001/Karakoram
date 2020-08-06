@@ -48,7 +48,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/add_photo"
+                    android:src="@drawable/ic_add_image_white"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="onClickChooseImage"
                     tools:targetApi="lollipop" />
@@ -206,7 +206,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:onClick="setDate"
@@ -267,7 +267,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -298,7 +298,7 @@
             android:textColor="@color/text700"
             android:textSize="18sp" />
 
-        <com.example.karakoram.DynamicImageView
+        <com.example.karakoram.views.DynamicImageView
             android:id="@+id/div_event_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

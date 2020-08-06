@@ -1,5 +1,6 @@
 package com.example.karakoram.childFragment.signin;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.activity.MainActivity;
 import com.example.karakoram.activity.SignInActivity;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.views.CustomSpinner;
@@ -35,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class LoginFragment extends Fragment {
 
-    View view;
+    private View view;
     private CustomSpinner userInputSpinner;
     private String[] userInputArray;
     private EditText mPassword, mEntryNoEdit;
@@ -107,7 +109,6 @@ public class LoginFragment extends Fragment {
                 final String entryNumber;
                 if (!userInput.equals("Student")){
                     entryNumber = userInput;
-                    Log.d("123hello",entryNumber);
                 }
                 else {
                     entryNumber = mEntryNoEdit.getText().toString();
@@ -133,6 +134,8 @@ public class LoginFragment extends Fragment {
                                 editor.putString("type",user.getType().toString());
                                 editor.apply();
                                 Toast.makeText(getActivity().getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
                                 getActivity().finish();
                             }
                             else

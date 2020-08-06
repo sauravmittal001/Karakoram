@@ -72,11 +72,4 @@ public class MenuDescription extends AppCompatActivity {
     public void backPressed(View view) {
         super.onBackPressed();
     }
-
-//    public void onClickChangeMenu(View view) {
-//        String b = breakfast.getText().toString();
-//        String l = lunch.getText().toString();
-//        String d = dinner.getText().toString();
-//        //set menu in firebase
-//    }
 }

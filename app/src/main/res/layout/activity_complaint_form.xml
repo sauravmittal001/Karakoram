@@ -48,7 +48,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/add_photo"
+                    android:src="@drawable/ic_add_image_white"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="onClickChooseImage"
                     tools:targetApi="lollipop" />
@@ -299,7 +299,7 @@
                         android:dropDownWidth="match_parent"/>
                 </LinearLayout>
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="4dp"
@@ -398,7 +398,7 @@
             android:textSize="18sp"/>
 
         <!-- complaint image -->
-        <com.example.karakoram.DynamicImageView
+        <com.example.karakoram.views.DynamicImageView
             android:id="@+id/div_complaint_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

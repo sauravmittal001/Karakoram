@@ -22,16 +22,11 @@ import java.util.Date;
 
  public class EventAdapter extends RecyclerView.Adapter<EventAdapter.myViewHolder> {
 
-    Context mcontext;
-    ArrayList<Event> event1;
-    ArrayList<String> key;
+    private Context mcontext;
+    private ArrayList<Event> event1;
+    private ArrayList<String> key;
 
     public EventAdapter(Context mcontext, ArrayList<Event> event1,ArrayList<String> key) {
-        /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
-         * the second argument is used when the ArrayAdapter is populating a single TextView.
-         * Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
-         * going to use this second argument, so it can be any value. Here, we used 0.
-         */
        this.mcontext=mcontext;
        this.event1=event1;
        this.key=key;
@@ -60,6 +55,7 @@ import java.util.Date;
                 intent.putExtra("date", date);
                 intent.putExtra("key", key.get(i));
                 intent.putExtra("dateTime",event1.get(i).getDateTime().toString());
+                intent.putExtra("userId",event1.get(i).getUserId());
                 mcontext.startActivity(intent);
             }
         });
@@ -75,6 +71,7 @@ import java.util.Date;
              String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
 
              holder.mTitle.setText(event.getTitle());
+             holder.mDescription.setText(event.getDescription());
              holder.mTime.setText(time);
              holder.mDate.setText(date);
          }
@@ -89,17 +86,17 @@ import java.util.Date;
 
      public static class myViewHolder extends RecyclerView.ViewHolder{
 
-
-         TextView mTitle;
-         TextView mDescription;
-         TextView mTime;
-         TextView mDate;
-         LinearLayout event_list_view;
+         private TextView mTitle;
+         private TextView mTime;
+         private TextView mDate;
+         private TextView mDescription;
+         private LinearLayout event_list_view;
 
 
          public myViewHolder(@NonNull View itemView) {
              super(itemView);
              mTitle = itemView.findViewById(R.id.tv_event_title);
+             mDescription = itemView.findViewById(R.id.tv_event_description);
              mTime = itemView.findViewById(R.id.tv_event_time_list);
              mDate = itemView.findViewById(R.id.tv_event_date_list);
              event_list_view=(LinearLayout)itemView.findViewById(R.id.event_item_id);
@@ -113,7 +110,7 @@ import java.util.Date;
      }
 
      public String monthName (int monthNumber) {
-         String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+         String[] monthOfYear = mcontext.getResources().getStringArray(R.array.months);
          return monthOfYear[monthNumber-1];
      }
 

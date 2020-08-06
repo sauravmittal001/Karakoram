@@ -6,7 +6,7 @@
     android:background="@color/cardview_dark_background"
     tools:ignore="PrivateResource">
 
-    <com.example.karakoram.DynamicImageView
+    <com.example.karakoram.views.DynamicImageView
         android:id="@+id/div_wing_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -6,16 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,19 +19,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.karakoram.DynamicImageView;
+import com.example.karakoram.views.DynamicImageView;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Category;
-import com.example.karakoram.resource.Complaint;
-import com.example.karakoram.resource.MaintComplaint;
-import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.Status;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
-import com.example.karakoram.resource.Wing;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -241,10 +234,12 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
             // status spinner
             findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
             final Status[] statusList = Status.values();
-            statusArray = new String[statusList.length+1];
+            int pos = ArrayUtils.toArrayList(statusList).indexOf(Status.valueOf(initialStatus));
+            Log.d("123hello", String.valueOf(pos));
+            statusArray = new String[statusList.length+1-pos];
             statusArray[0] = "";
-            for(int i=0;i<statusList.length;i++)
-                statusArray[i+1] = String.valueOf(statusList[i]);
+            for(int i=0;i+pos<statusList.length;i++)
+                statusArray[i+1] = String.valueOf(statusList[i+pos]);
             CustomSpinnerAdapter statusAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, statusArray);
             statusAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
             statusSpinner = findViewById(R.id.spinner_complaint_status);

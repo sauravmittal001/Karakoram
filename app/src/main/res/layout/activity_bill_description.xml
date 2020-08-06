@@ -9,6 +9,7 @@
         android:id="@+id/lv_top"
         android:layout_width="match_parent"
         android:layout_height="24dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
         <ImageView
@@ -45,7 +46,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginEnd="24dp"
             android:contentDescription="Edit Button"
             android:onClick="onClickOpenEditForm"
             android:padding="12dp"

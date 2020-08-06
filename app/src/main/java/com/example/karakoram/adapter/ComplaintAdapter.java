@@ -35,17 +35,12 @@ import static com.example.karakoram.R.drawable.red_status;
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myViewHolder> {
 
-    Context mcontext;
-    ArrayList<Complaint> complaints;
-    ArrayList<String> keys;
-    String[] maintAreaList, maintAreaEnumList, messAreaList, messAreaEnumList;
+    private Context mcontext;
+    private ArrayList<Complaint> complaints;
+    private ArrayList<String> keys;
+    private String[] maintAreaList, maintAreaEnumList, messAreaList, messAreaEnumList;
 
     public ComplaintAdapter(Context mcontext, ArrayList<Complaint> complaints, ArrayList<String> keys) {
-        /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
-         * the second argument is used when the ArrayAdapter is populating a single TextView.
-         * Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
-         * going to use this second argument, so it can be any value. Here, we used 0.
-         */
         this.mcontext=mcontext;
         this.complaints = complaints;
         this.keys=keys;
@@ -96,7 +91,6 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
                     int pos = ArrayUtils.toArrayList(messAreaEnumList).indexOf(complaintArea);
                     String area = messAreaList[pos];
                     intent.putExtra("complaintArea",complaintArea );
-//                    Log.d("123hello",area);
                     intent.putExtra("area", area);
                 }
                 mcontext.startActivity(intent);
@@ -122,7 +116,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
     }
 
     public String monthName (int monthNumber) {
-        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthOfYear = mcontext.getResources().getStringArray(R.array.months);
         return monthOfYear[monthNumber-1];
     }
 
@@ -178,12 +172,12 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
     public static class myViewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView mArea;
-        TextView mStatus;
-        TextView mName;
-        TextView mTime;
-        ImageButton mStatusButton;
-        LinearLayout complaint_list_view;
+        private TextView mArea;
+        private TextView mStatus;
+        private TextView mName;
+        private TextView mTime;
+        private ImageButton mStatusButton;
+        private LinearLayout complaint_list_view;
 
 
         public myViewHolder(@NonNull View itemView) {

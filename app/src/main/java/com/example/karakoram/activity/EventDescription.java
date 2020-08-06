@@ -1,12 +1,11 @@
 package com.example.karakoram.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,14 +18,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.karakoram.DynamicImageView;
+import com.example.karakoram.views.DynamicImageView;
 import com.example.karakoram.R;
+import com.example.karakoram.resource.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class EventDescription extends AppCompatActivity {
@@ -40,6 +39,7 @@ public class EventDescription extends AppCompatActivity {
     private String key;
     private boolean isImageAttached;
     private String dateTime;
+    private String userId;
 
     /*Views*/
     private TextView mTitle;
@@ -74,6 +74,7 @@ public class EventDescription extends AppCompatActivity {
         String key = getIntent().getExtras().getString("key");
         dbImageLocation = "eventImages/" + key + ".png";
         dateTime = getIntent().getExtras().getString("dateTime");
+        userId = getIntent().getExtras().getString("userId");
     }
 
     private void initViews() {
@@ -103,7 +104,6 @@ public class EventDescription extends AppCompatActivity {
                 public void onSuccess(Uri uri) {
 
                     loadGlideImage(uri.toString());
-//                adjustImageSize();
                     removePlaceholderImage();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -137,6 +137,12 @@ public class EventDescription extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String currentUserId = sharedPreferences.getString("userId","loggedOut");
+        if(currentUserId.equals(userId))
+            mEdit.setVisibility(View.VISIBLE);
+        else
+            mEdit.setVisibility(View.GONE);
     }
 
     private void loadGlideImage(String url) {

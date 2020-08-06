@@ -16,7 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.childFragment.mess.SlidingFragment;
+import com.example.karakoram.childFragment.mess.MenuFragment;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
@@ -32,19 +32,19 @@ public class FoodFragment extends Fragment {
     private EditText breakfast, lunch, dinner;
     private TextView mDay;
     private Button mMenuChange;
-    private SlidingFragment slidingFragment;
+    private MenuFragment menuFragment;
     private int dayIndex;
     private SharedPreferences sharedPreferences;
 
     public FoodFragment() {
     }
 
-    public FoodFragment(Menu menu, SlidingFragment slidingFragment, int dayIndex) {
+    public FoodFragment(Menu menu, MenuFragment menuFragment, int dayIndex) {
         this.day = menu.getDay();
         this.breakfastMenu = menu.getBreakFast();
         this.lunchMenu = menu.getLunch();
         this.dinnerMenu = menu.getDinner();
-        this.slidingFragment = slidingFragment;
+        this.menuFragment = menuFragment;
         this.dayIndex = dayIndex;
     }
 
@@ -91,7 +91,7 @@ public class FoodFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                slidingFragment.initVariables();
+                menuFragment.initVariables();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

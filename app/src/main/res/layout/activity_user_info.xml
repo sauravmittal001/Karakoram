@@ -8,6 +8,7 @@
     <LinearLayout
         android:id="@+id/lv_top"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_height="24dp"
         android:orientation="horizontal">
 
@@ -33,7 +34,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_background_user_info"
+                android:background="@drawable/ic_background_create_account"
                 android:orientation="vertical"
                 android:paddingStart="24dp"
                 android:paddingTop="24dp"
@@ -87,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:fontFamily="@font/senbold"
+                    android:fontFamily="@font/proximanovabold"
                     android:textColor="@color/text700"
                     android:text="User details"
                     android:textSize="18sp" />
@@ -114,9 +115,9 @@
                     android:id="@+id/tv_user_entryNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/senbold"
+                    android:fontFamily="@font/senregular"
                     android:text="201YDD#####"
-                    android:textColor="@color/green"
+                    android:textColor="@color/text700"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -142,9 +143,9 @@
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/senbold"
+                    android:fontFamily="@font/senregular"
                     android:text="first-last-name"
-                    android:textColor="@color/green"
+                    android:textColor="@color/text700"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -198,38 +199,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- wing -->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:layout_marginBottom="12dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="@font/senregular"-->
-<!--                    android:text="Wing: "-->
-<!--                    android:textSize="18sp" />-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center_vertical">-->
-
-<!--                    <com.example.karakoram.views.CustomSpinner-->
-<!--                        android:id="@+id/spinner_wing"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@drawable/spinner_background"-->
-<!--                        android:dropDownWidth="wrap_content"-->
-<!--                        android:entries="@array/wing" />-->
-<!--                </LinearLayout>-->
-
-
             <!-- change password -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -242,22 +211,25 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_change_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:fontFamily="@font/senbold"
-                    android:textColor="@color/text700"
-                    android:text="Change password"
+                    android:fontFamily="@font/proximanovabold"
+                    android:textColor="@color/colorPrimary"
+                    android:text="Change password?"
                     android:textSize="18sp" />
             </LinearLayout>
 
 
             <LinearLayout
+                android:id="@+id/ll_change_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -354,7 +326,7 @@
                     android:layout_marginTop="28dp"
                     android:layout_marginEnd="35dp"
                     android:layout_marginBottom="12dp"
-                    android:background="@drawable/user_info_save_button"
+                    android:background="@drawable/form_submit_button"
                     android:fontFamily="@font/senregular"
                     android:onClick="save"
                     android:text="Save changes"

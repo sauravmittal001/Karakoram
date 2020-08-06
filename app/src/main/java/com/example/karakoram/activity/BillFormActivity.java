@@ -26,6 +26,7 @@ import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.ComplaintArea;
 import com.example.karakoram.resource.HostelBill;
 import com.example.karakoram.resource.User;
+import com.example.karakoram.resource.UserType;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -134,46 +135,52 @@ public class BillFormActivity extends AppCompatActivity {
     }
 
     public void onClickUploadBill(View view) {
-        HostelBill bill = new HostelBill();
-        if (!editMode && (imageUri == null || String.valueOf(imageUri).equals(""))) {
-            mError.setVisibility(View.VISIBLE);
-            return;
-        }
-        String amount = String.valueOf(mAmount.getText());
-        String description = mDescription.getText().toString();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            if (!amount.equals("")) {
-                bill.setAmount(Double.parseDouble(amount));
-                findViewById(R.id.et_amount).setBackground(getDrawable(R.drawable.background_rounded_section_task));
-            } else {
-                findViewById(R.id.et_amount).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
-                return;
-            }
-            if (!description.equals("")) {
-                bill.setDescription(description);
-                findViewById(R.id.et_description).setBackground(getDrawable(R.drawable.background_rounded_section_task));
-            } else {
-                findViewById(R.id.et_description).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
-                return;
-            }
-        }
-
-        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId","loggedOut");
-        bill.setUserId(userId);
-        bill.setTimeStamp(new Date());
-        bill.setCategory(Category.valueOf((itemSelected)));
-
-        if(editMode){
-            String key = intent.getStringExtra("key");
-            FirebaseQuery.updateBill(key,bill,imageUri);
-            Toast.makeText(getApplicationContext(),"bill has been updated", Toast.LENGTH_SHORT).show();
-        }
+        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
+        if(userId.equals("loggedOut"))
+            Toast.makeText(getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
         else {
-            FirebaseQuery.addBill(bill, imageUri);
-            Toast.makeText(getApplicationContext(),"new bill added", Toast.LENGTH_SHORT).show();
+            if (userType.equals(UserType.Student))
+                Toast.makeText(getApplicationContext(), "you are not authorized to perform this action", Toast.LENGTH_SHORT).show();
+            HostelBill bill = new HostelBill();
+            if (!editMode && (imageUri == null || String.valueOf(imageUri).equals(""))) {
+                mError.setVisibility(View.VISIBLE);
+                return;
+            }
+            String amount = String.valueOf(mAmount.getText());
+            String description = mDescription.getText().toString();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                if (!amount.equals("")) {
+                    bill.setAmount(Double.parseDouble(amount));
+                    findViewById(R.id.et_amount).setBackground(getDrawable(R.drawable.background_rounded_section_task));
+                } else {
+                    findViewById(R.id.et_amount).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                    return;
+                }
+                if (!description.equals("")) {
+                    bill.setDescription(description);
+                    findViewById(R.id.et_description).setBackground(getDrawable(R.drawable.background_rounded_section_task));
+                } else {
+                    findViewById(R.id.et_description).setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
+                    return;
+                }
+            }
+
+            bill.setUserId(userId);
+            bill.setTimeStamp(new Date());
+            bill.setCategory(Category.valueOf((itemSelected)));
+
+            if (editMode) {
+                String key = intent.getStringExtra("key");
+                FirebaseQuery.updateBill(key, bill, imageUri);
+                Toast.makeText(getApplicationContext(), "bill has been updated", Toast.LENGTH_SHORT).show();
+            } else {
+                FirebaseQuery.addBill(bill, imageUri);
+                Toast.makeText(getApplicationContext(), "new bill added", Toast.LENGTH_SHORT).show();
+            }
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     public void onClickChooseImage(View view) {

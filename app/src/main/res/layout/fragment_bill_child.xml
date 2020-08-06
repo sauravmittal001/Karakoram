@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".childFragment.bill.billChildFragment">
+    tools:context=".childFragment.bill.BillChildFragment">
 
    <com.google.android.material.floatingactionbutton.FloatingActionButton
        android:layout_width="wrap_content"
@@ -12,7 +12,7 @@
        android:id="@+id/FABchild_bill"
        android:layout_marginEnd="20dp"
        android:layout_marginBottom="70dp"
-       android:src="@drawable/add_photo" />
+       android:src="@drawable/ic_add_white" />
 
    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
        android:id="@+id/swipe_refresh"
