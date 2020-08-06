@@ -75,6 +75,7 @@ import java.util.Date;
              String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
 
              holder.mTitle.setText(event.getTitle());
+             holder.mDescription.setText(event.getDescription());
              holder.mTime.setText(time);
              holder.mDate.setText(date);
          }
@@ -100,6 +101,7 @@ import java.util.Date;
          public myViewHolder(@NonNull View itemView) {
              super(itemView);
              mTitle = itemView.findViewById(R.id.tv_event_title);
+             mDescription = itemView.findViewById(R.id.tv_event_description);
              mTime = itemView.findViewById(R.id.tv_event_time_list);
              mDate = itemView.findViewById(R.id.tv_event_date_list);
              event_list_view=(LinearLayout)itemView.findViewById(R.id.event_item_id);

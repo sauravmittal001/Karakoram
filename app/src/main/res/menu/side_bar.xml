@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <item
         android:id="@+id/navigation_complaints"
-        android:title="complaints" />
+        android:title="Complaints"
+        android:icon="@drawable/ic_complaint"/>
     <item
         android:id="@+id/navigation_about"
-        android:title="about" />
+        android:title="About us"
+        android:icon="@drawable/ic_about_us"/>
     <item
         android:id="@+id/navigation_logout"
-        android:title="logout" />
+        android:title="Logout"
+        android:icon="@drawable/ic_login"/>
 
 </menu>

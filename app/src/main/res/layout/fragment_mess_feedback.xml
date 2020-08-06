@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/theme5lite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".childFragment.mess.messFeedbackFragment">
 
@@ -27,13 +28,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:srb_starSize="50dp"
+                    app:srb_starSize="60dp"
                     app:srb_starCornerRadius="0"
                     app:srb_numberOfStars="3"
                     app:srb_rating="0"
                     app:srb_stepSize="1"
-                    app:srb_borderColor="@color/white"
-                    app:srb_starBackgroundColor="@color/grey"
+                    app:srb_borderColor="@color/darker_yellow"
+                    app:srb_starBackgroundColor="@color/white"
                     app:srb_fillColor="@color/darker_yellow" />
 
                 <TextView
@@ -45,7 +46,7 @@
                     android:lineSpacingExtra="2sp"
                     android:text="You Found Today's food satisfactory"
                     android:textColor="@color/text700"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:visibility="invisible" />
 
                 <!-- meal time input-->
@@ -53,7 +54,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
@@ -106,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="90dp"
                         android:fontFamily="@font/senregular"
+                        android:layout_marginStart="1dp"
                         android:lineSpacingMultiplier="1.14"
                         android:text="Anonymity"
                         android:textColor="@color/text700"
@@ -137,7 +139,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="6dp"
                     android:orientation="vertical">
 
                     <EditText
@@ -164,8 +166,8 @@
                     android:id="@+id/button_feedback_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="28dp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginTop="36dp"
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/form_submit_button"
                     android:clickable="true"
@@ -180,8 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:fontFamily="@font/senextrabold"
-                    android:lineSpacingExtra="2sp"
+                    android:fontFamily="@font/senbold"
                     android:text="File complaint?"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"

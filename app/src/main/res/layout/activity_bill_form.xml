@@ -35,8 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:onClick="backPressed"
                     android:contentDescription="Back Button"
+                    android:onClick="backPressed"
                     android:src="@drawable/ic_frame3" />
 
                 <View
@@ -48,7 +48,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/add_photo"
+                    android:src="@drawable/ic_add_image_white"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="onClickChooseImage"
                     tools:targetApi="lollipop" />

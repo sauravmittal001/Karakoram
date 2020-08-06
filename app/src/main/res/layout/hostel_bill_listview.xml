@@ -1,57 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
-    style="@style/listview"
-    android:orientation="horizontal"
+    android:layout_height="75dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
     android:id="@+id/bill_item_id">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="88dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_bill_amount"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/senbold"
-            android:paddingLeft="10dp"
-            android:text="Bill amount"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_bill_amount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/proximanovabold"
+                android:text="Bill amount"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="false"
+                android:autoSizeTextType="uniform"
+                android:textAlignment="textStart"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="2dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_bill_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/text700"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="Truncated description string"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
 
-
-        <TextView
-            android:id="@+id/tv_bill_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/senregular"
-            android:lines="2"
-            android:maxLines="2"
-            android:paddingLeft="10dp"
-            android:paddingTop="25dp"
-            android:paddingRight="10dp"
-            android:singleLine="false"
-            android:text="Truncated description string"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-
-    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/progress_bar_background_home" />
 
 </LinearLayout>

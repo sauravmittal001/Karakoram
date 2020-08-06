@@ -85,7 +85,7 @@ public class EventCache {
             fos = CONTEXT.openFileOutput(KEY_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + KEY_FILE_NAME, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CONTEXT, "Saved to " + file + "/" + KEY_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -161,7 +161,7 @@ public class EventCache {
             fos = CONTEXT.openFileOutput(EVENT_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + EVENT_FILE_NAME, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CONTEXT, "Saved to " + file + "/" + EVENT_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

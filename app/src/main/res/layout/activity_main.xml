@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="56dp"
-            android:background="#FFFFFF" />
+            android:background="#EEEEEE" />
 
 
         <com.google.android.material.navigation.NavigationView
@@ -31,7 +31,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_marginTop="57dp"
-            android:background="@color/colorAccent"
+            android:layout_marginBottom="57dp"
+            android:background="#EEEEEE"
             app:headerLayout="@layout/header"
             app:menu="@menu/side_bar">
 

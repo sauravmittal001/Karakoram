@@ -3,6 +3,7 @@ package com.example.karakoram.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.karakoram.R;
 
@@ -18,5 +19,11 @@ public class AboutActivity extends AppCompatActivity {
             Objects.requireNonNull(this.getSupportActionBar()).hide();
         } catch (NullPointerException ignored) {
         }
+        findViewById(R.id.iv_back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AboutActivity.super.onBackPressed();
+            }
+        });
     }
 }
