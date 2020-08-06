@@ -154,21 +154,33 @@ public class FoodFragment extends Fragment {
                 dayRating = snapshot.getValue(DayRating.class);
                 assert dayRating != null;
                 float ratingBreakfast = 0;
-                if(dayRating.getBreakfast().getCount()!=0)
-                    ratingBreakfast = (float)dayRating.getBreakfast().getTotal()/dayRating.getBreakfast().getCount();
+                if(dayRating.getBreakfast().getCount()!=0) {
+                    ratingBreakfast = (float) dayRating.getBreakfast().getTotal() / dayRating.getBreakfast().getCount();
+                    mRatingBreakfast.setText(String.format("%.2f",ratingBreakfast));
+                }
+                else{
+                    mRatingBreakfast.setText("no rating yet");
+                }
                 float ratingLunch = 0;
-                if(dayRating.getLunch().getCount()!=0)
-                    ratingLunch = (float)dayRating.getLunch().getTotal()/dayRating.getLunch().getCount();
+                if(dayRating.getLunch().getCount()!=0) {
+                    ratingLunch = (float) dayRating.getLunch().getTotal() / dayRating.getLunch().getCount();
+                    mRatingLunch.setText(String.format("%.2f",ratingLunch));
+                }
+                else{
+                    mRatingLunch.setText("no rating yet");
+                }
                 float ratingDinner = 0;
-                if(dayRating.getDinner().getCount()!=0)
-                    ratingDinner = (float)dayRating.getDinner().getTotal()/dayRating.getDinner().getCount();
+                if(dayRating.getDinner().getCount()!=0) {
+                    ratingDinner = (float) dayRating.getDinner().getTotal() / dayRating.getDinner().getCount();
+                    mRatingDinner.setText(String.format("%.2f",ratingDinner));
+                }
+                else{
+                    mRatingDinner.setText("no rating yet");
+                }
 
                 simpleRatingBarBreakfast.setRating(ratingBreakfast);
                 simpleRatingBarLunch.setRating(ratingLunch);
                 simpleRatingBarDinner.setRating(ratingDinner);
-                mRatingBreakfast.setText(String.format("%.2f",ratingBreakfast));
-                mRatingLunch.setText(String.format("%.2f",ratingLunch));
-                mRatingDinner.setText(String.format("%.2f",ratingDinner));
             }
 
             @Override
