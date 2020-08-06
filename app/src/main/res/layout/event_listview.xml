@@ -2,69 +2,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/event_item_id"
-    style="@style/listview"
+
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="horizontal">
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_height="75dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:layout_weight="0.5"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="9dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_event_title"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="0dp"
-            android:fontFamily="@font/senbold"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Event Title"
-            android:textAlignment="gravity"
-            android:textSize="25sp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_event_time_list"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/senregular"
-            android:gravity="center_vertical"
-            android:text="00:00"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            tools:ignore="RtlCompat" />
-
-        <TextView
-            android:id="@+id/tv_event_date_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/senregular"
+            android:layout_marginStart="6dp"
+            android:layout_weight="0.5"
             android:gravity="center_vertical"
-            android:text="00:00"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            tools:ignore="RtlCompat" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_event_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/proximanovabold"
+                android:textColor="@color/text700"
+                android:text="Event Title"
+                android:textAlignment="gravity"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/text700"
+                android:text="Description about the event"
+                android:textAlignment="gravity"
+                android:textSize="16sp" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_event_time_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/proximanovaregular"
+                android:gravity="end"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/tv_event_date_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/proximanovaregular"
+                android:gravity="end"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
     </LinearLayout>
 
+
+    <View
+        android:layout_height="1dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="9dp"
+        android:layout_width="fill_parent"
+        android:background="@color/progress_bar_background_home"/>
 </LinearLayout>

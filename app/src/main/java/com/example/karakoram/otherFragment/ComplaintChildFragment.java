@@ -44,7 +44,7 @@ import java.util.Comparator;
 
 import lombok.SneakyThrows;
 
-public class complaintChildFragment extends Fragment {
+public class ComplaintChildFragment extends Fragment {
 
     private RecyclerView listView;
     private Context context;
@@ -61,7 +61,7 @@ public class complaintChildFragment extends Fragment {
     private AllMessComplaintCache allMessComplaintCache;
     private AllOtherComplaintCache allOtherComplaintCache;
 
-    public complaintChildFragment(Category category, boolean getAllCategory) {
+    public ComplaintChildFragment(Category category, boolean getAllCategory) {
         this.category = category;
         this.getAllCategory = getAllCategory;
     }

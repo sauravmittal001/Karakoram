@@ -3,13 +3,8 @@ package com.example.karakoram.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +18,7 @@ import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import java.util.Date;
 import java.util.Objects;
 
-public class UstDescription extends AppCompatActivity {
+public class FeedbackDescription extends AppCompatActivity {
 
     /* Variables */
     private String key; //only passing to edit form
@@ -51,7 +46,11 @@ public class UstDescription extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ust_description);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
+        setContentView(R.layout.activity_feedback_description);
         initVariables();
         initViews();
         setViews();
@@ -90,7 +89,7 @@ public class UstDescription extends AppCompatActivity {
     private void setViews() {
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         String currentUserId = sharedPreferences.getString("userId","loggedOut");
-        String userType = sharedPreferences.getString("type","Student");
+        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
 
         mDescription.setText(description);
         mMealDay.setText(day + " " + meal);
@@ -127,7 +126,7 @@ public class UstDescription extends AppCompatActivity {
         mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UstDescription.this,MainActivity.class);
+                Intent intent = new Intent(FeedbackDescription.this,MainActivity.class);
                 intent.putExtra("editMode",true);
                 intent.putExtra("rating",rating);
                 intent.putExtra("description",description);

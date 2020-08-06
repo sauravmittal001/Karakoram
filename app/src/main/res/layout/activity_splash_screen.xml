@@ -1,58 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".activity.SplashScreenActivity">
 
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tv_subtext"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/m2"/>
+        android:orientation="vertical"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_subtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:maxLines="1"
-        android:layout_above="@id/tv_subtext2"
-        android:text="@string/subtitle_app"
-        android:fontFamily="@font/senregular"
-        android:textColor="@color/text700"
-        android:textSize="18sp" />
-    <TextView
-        android:id="@+id/tv_subtext2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:maxLines="1"
-        android:text="@string/subtitle_app2"
-        android:fontFamily="@font/senregular"
-        android:textColor="@color/text700"
-        android:textSize="18sp" />
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center"
+            android:src="@drawable/m2" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/tallerBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@id/tv_subtext"
-        android:layout_marginStart="52dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginTop="44dp"
-        android:progressBackgroundTint="@color/progress_bar_background_home"
-        android:progressTint="@color/background_black"
-        android:visibility="visible"
-        android:indeterminateDuration="@android:integer/config_longAnimTime"
-        android:indeterminate="true"
-        tools:targetApi="lollipop" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_subtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/proximanovabold"
+            android:maxLines="1"
+            android:text="@string/subtitle_app"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_subtext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/proximanovabold"
+            android:maxLines="1"
+            android:text="@string/subtitle_app2"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/progressBar"-->
+    <!--        style="@style/tallerBarStyle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="4dp"-->
+    <!--        android:layout_below="@id/tv_subtext"-->
+    <!--        android:layout_marginStart="52dp"-->
+    <!--        android:layout_marginEnd="52dp"-->
+    <!--        android:layout_marginTop="44dp"-->
+    <!--        android:progressBackgroundTint="@color/progress_bar_background_home"-->
+    <!--        android:progressTint="@color/background_black"-->
+    <!--        android:visibility="visible"-->
+    <!--        android:indeterminateDuration="@android:integer/config_longAnimTime"-->
+    <!--        android:indeterminate="true"-->
+    <!--        tools:targetApi="lollipop" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

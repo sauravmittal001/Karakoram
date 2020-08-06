@@ -47,7 +47,7 @@ public class MenuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_sliding, container, false);
+        view = inflater.inflate(R.layout.fragment_menu, container, false);
         viewPager = view.findViewById(R.id.vp_menu);
         tabLayout = view.findViewById(R.id.tb_counter_menu);
         Context context = container.getContext();

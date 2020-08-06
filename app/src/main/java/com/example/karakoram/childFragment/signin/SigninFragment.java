@@ -2,6 +2,7 @@ package com.example.karakoram.childFragment.signin;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +21,9 @@ import androidx.fragment.app.Fragment;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.activity.ComplaintFormActivity;
+import com.example.karakoram.activity.MainActivity;
 import com.example.karakoram.activity.SignInActivity;
+import com.example.karakoram.activity.SplashScreenActivity;
 import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -107,6 +110,8 @@ public class SigninFragment extends Fragment {
                                                 editor.apply();
                                                 Toast.makeText(getActivity().getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
                                                 FirebaseQuery.setUserPassWord(entryNumber,password,true);
+                                                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                                                startActivity(intent);
                                                 getActivity().finish();
                                             }
                                         })

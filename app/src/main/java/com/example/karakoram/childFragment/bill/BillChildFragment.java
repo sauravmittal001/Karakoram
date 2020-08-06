@@ -42,7 +42,7 @@ import java.util.Comparator;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class billChildFragment extends Fragment {
+public class BillChildFragment extends Fragment {
 
     /* Variables */
     private ArrayList<Pair<String,HostelBill>> hostelBillsKv = new ArrayList<>();
@@ -62,7 +62,7 @@ public class billChildFragment extends Fragment {
     private HostelBillAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public billChildFragment(Category category, boolean getAll) {
+    public BillChildFragment(Category category, boolean getAll) {
         this.category = category;
         this.getAll = getAll;
     }

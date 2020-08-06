@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".childFragment.mess.messFeedbackFragment">
+    tools:context=".childFragment.mess.MessFeedbackFragment">
 
 
         <ScrollView
@@ -27,13 +27,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:srb_starSize="50dp"
+                    app:srb_starSize="60dp"
                     app:srb_starCornerRadius="0"
                     app:srb_numberOfStars="3"
                     app:srb_rating="0"
                     app:srb_stepSize="1"
-                    app:srb_borderColor="@color/white"
-                    app:srb_starBackgroundColor="@color/grey"
+                    app:srb_borderColor="@color/darker_yellow"
+                    app:srb_starBackgroundColor="@color/white"
                     app:srb_fillColor="@color/darker_yellow" />
 
                 <TextView
@@ -180,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:fontFamily="@font/senextrabold"
+                    android:fontFamily="@font/proximanovabold"
                     android:lineSpacingExtra="2sp"
                     android:text="File complaint?"
                     android:textAllCaps="true"

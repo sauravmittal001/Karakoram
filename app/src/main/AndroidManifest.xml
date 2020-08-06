@@ -14,9 +14,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_kara_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_kara_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
@@ -29,7 +29,7 @@
         <activity android:name=".activity.ComplaintFormActivity" />
         <activity android:name=".activity.EventDescription" />
         <activity android:name=".activity.ComplaintActivity" />
-        <activity android:name=".activity.UstDescription" />
+        <activity android:name=".activity.FeedbackDescription" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignInActivity" />
         <activity android:name=".activity.UserInfoActivity" />

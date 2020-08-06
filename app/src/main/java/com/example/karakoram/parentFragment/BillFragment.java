@@ -1,45 +1,39 @@
 package com.example.karakoram.parentFragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.karakoram.R;
-import com.example.karakoram.adapter.pageadapter;
-import com.example.karakoram.childFragment.mess.MenuFragment;
-import com.example.karakoram.childFragment.mess.messFeedbackFragment;
-import com.example.karakoram.childFragment.mess.messUSTFragment;
+import com.example.karakoram.childFragment.bill.BillChildFragment;
+import com.example.karakoram.adapter.PageAdapter;
+import com.example.karakoram.resource.Category;
 import com.google.android.material.tabs.TabLayout;
 
-public class messFragment extends Fragment {
 
+public class BillFragment extends Fragment {
     private View myfragment;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    public messFragment() {
+    public BillFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        myfragment= inflater.inflate(R.layout.fragment_mess, container, false);
-        viewPager=myfragment.findViewById(R.id.viewpager);
-        tabLayout=myfragment.findViewById(R.id.tabs);
-        return myfragment;
+      myfragment= inflater.inflate(R.layout.fragment_bill, container, false);
+      viewPager=myfragment.findViewById(R.id.viewpager);
+      tabLayout=myfragment.findViewById(R.id.tabs);
+      return myfragment;
     }
 
     @Override
@@ -47,10 +41,6 @@ public class messFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setUpViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        if(getActivity().getIntent().getBooleanExtra("editMode",false)) {
-            tabLayout.selectTab(tabLayout.getTabAt(1));
-            tabLayout.setVisibility(View.GONE);
-        }
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -69,11 +59,15 @@ public class messFragment extends Fragment {
         });
     }
     private void setUpViewPager(ViewPager viewPager){
-        pageadapter adapter=new pageadapter(getChildFragmentManager());
-        adapter.addFragment(new MenuFragment(), "Menu");
-        adapter.addFragment(new messFeedbackFragment(),"Feedback");
-        adapter.addFragment(new messUSTFragment(false),"UST");
+        PageAdapter adapter=new PageAdapter(getChildFragmentManager());
+        adapter.addFragment(new BillChildFragment(Category.Maintenance,false),"Maint");
+        adapter.addFragment(new BillChildFragment(Category.Mess,false),"Mess");
+        adapter.addFragment(new BillChildFragment(Category.Cultural,false),"Cult");
+        adapter.addFragment(new BillChildFragment(Category.Sports,false),"Sports");
+        adapter.addFragment(new BillChildFragment(Category.Others,false),"Others");
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(2);
     }
+
 }
+
+

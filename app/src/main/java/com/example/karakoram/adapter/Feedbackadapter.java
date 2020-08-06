@@ -14,20 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karakoram.R;
-import com.example.karakoram.activity.UstDescription;
+import com.example.karakoram.activity.FeedbackDescription;
 import com.example.karakoram.resource.MessFeedback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
+public class Feedbackadapter extends RecyclerView.Adapter<Feedbackadapter.myViewHolder> {
 
     private Context mcontext;
     private ArrayList<MessFeedback> feedbacks;
     private ArrayList<String> key;
 
-    public USTadapter(Context mcontext, ArrayList<MessFeedback> feedbacks, ArrayList<String> key) {
+    public Feedbackadapter(Context mcontext, ArrayList<MessFeedback> feedbacks, ArrayList<String> key) {
         this.mcontext=mcontext;
         this.feedbacks=feedbacks;
         this.key=key;
@@ -38,8 +38,8 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
-        v=LayoutInflater.from(mcontext).inflate(R.layout.ust_list_view,parent,false);
-        final USTadapter.myViewHolder vHolder=new USTadapter.myViewHolder(v);
+        v=LayoutInflater.from(mcontext).inflate(R.layout.feedback_list_view,parent,false);
+        final Feedbackadapter.myViewHolder vHolder=new Feedbackadapter.myViewHolder(v);
         vHolder.ust_list_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +48,7 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
                 String time = showTime(dateTime.getHours(), dateTime.getMinutes());//String.format("%02d", dateTime.getHours()) + " : " + String.format("%02d", dateTime.getMinutes());
                 String date = (dateTime.getYear() + 1900) + " " + monthName(dateTime.getMonth() + 1)/*String.format("%02d",dateTime.getMonth() + 1)*/ + " " + String.format("%02d",dateTime.getDate());
                 String day= new SimpleDateFormat("EEEE").format(dateTime);
-                Intent intent = new Intent(mcontext, UstDescription.class);
+                Intent intent = new Intent(mcontext, FeedbackDescription.class);
                 intent.putExtra("key", key.get(i));
                 intent.putExtra("userId",feedbacks.get(i).getUserId());
                 intent.putExtra("userName",feedbacks.get(i).getUserName());

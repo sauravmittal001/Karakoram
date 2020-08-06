@@ -12,13 +12,13 @@ import com.example.karakoram.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link mydialog#newInstance} factory method to
+ * Use the {@link MyDialog#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class mydialog extends DialogFragment {
+public class MyDialog extends DialogFragment {
 
 
-    public mydialog() {
+    public MyDialog() {
         // Required empty public constructor
     }
 

@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.karakoram.R;
-import com.example.karakoram.adapter.pageadapter;
-import com.example.karakoram.childFragment.bill.billChildFragment;
-import com.example.karakoram.childFragment.mess.messUSTFragment;
-import com.example.karakoram.otherFragment.complaintChildFragment;
+import com.example.karakoram.adapter.PageAdapter;
+import com.example.karakoram.childFragment.bill.BillChildFragment;
+import com.example.karakoram.childFragment.mess.FeedBackListFragment;
+import com.example.karakoram.otherFragment.ComplaintChildFragment;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.User;
 import com.google.android.material.tabs.TabLayout;
@@ -67,17 +67,17 @@ public class MyStuffFragment extends Fragment {
         });
     }
     private void setUpViewPager(ViewPager viewPager){
-        pageadapter adapter=new pageadapter(getChildFragmentManager());
+        PageAdapter adapter=new PageAdapter(getChildFragmentManager());
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
 
         if(sharedPreferences.getString("type","Student").equals("Admin")) {
             adapter.addFragment(new EventFragment(true), "Events");
-            adapter.addFragment(new billChildFragment(Category.Others,true), "Bills");
+            adapter.addFragment(new BillChildFragment(Category.Others,true), "Bills");
         }
         else{
-            adapter.addFragment(new messUSTFragment(true), "Mess Feedbacks");
-            adapter.addFragment(new complaintChildFragment(Category.Others,true), "Complains");
+            adapter.addFragment(new FeedBackListFragment(true), "Mess Feedbacks");
+            adapter.addFragment(new ComplaintChildFragment(Category.Others,true), "Complains");
         }
         viewPager.setAdapter(adapter);
     }

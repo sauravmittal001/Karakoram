@@ -21,9 +21,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
-import com.example.karakoram.adapter.USTadapter;
-import com.example.karakoram.cache.mess.UstCache;
-import com.example.karakoram.resource.Event;
+import com.example.karakoram.adapter.Feedbackadapter;
+import com.example.karakoram.cache.mess.FeedbackListCache;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
 import com.google.firebase.database.DataSnapshot;
@@ -39,13 +38,13 @@ import java.util.Objects;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class messUSTFragment extends Fragment {
+public class FeedBackListFragment extends Fragment {
 
 
     /* Variables */
     private ArrayList<Pair<String, MessFeedback>> feedbacksKv = new ArrayList<>();
     private Context context;
-    private UstCache cache;
+    private FeedbackListCache cache;
     private boolean getMine;
 
     /* Views */
@@ -54,10 +53,10 @@ public class messUSTFragment extends Fragment {
     Drawable mdivider;
 
 
-    private USTadapter adapter;
+    private Feedbackadapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
-    public messUSTFragment(boolean getMine){
+    public FeedBackListFragment(boolean getMine){
 
     }
 
@@ -72,9 +71,9 @@ public class messUSTFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_mess_u_s_t, container, false);
+        view= inflater.inflate(R.layout.fragment_mess_list, container, false);
         context = container.getContext();
-        cache = new UstCache(context,getMine);
+        cache = new FeedbackListCache(context,getMine);
         return view;
     }
 
@@ -192,7 +191,7 @@ public class messUSTFragment extends Fragment {
             key.add(feedbacksKv.get(i).first);
             feedbacks.add(feedbacksKv.get(i).second);
         }
-        adapter = new USTadapter(getActivity(), feedbacks,key);
+        adapter = new Feedbackadapter(getActivity(), feedbacks,key);
         listView = view.findViewById(R.id.bill_listView);
         listView.setHasFixedSize(true);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));

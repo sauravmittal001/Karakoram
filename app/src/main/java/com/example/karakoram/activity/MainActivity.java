@@ -25,8 +25,8 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.example.karakoram.R;
 import com.example.karakoram.parentFragment.EventFragment;
 import com.example.karakoram.parentFragment.MyStuffFragment;
-import com.example.karakoram.parentFragment.billFragment;
-import com.example.karakoram.parentFragment.messFragment;
+import com.example.karakoram.parentFragment.BillFragment;
+import com.example.karakoram.parentFragment.MessFragment;
 import com.example.karakoram.resource.User;
 import com.google.android.material.navigation.NavigationView;
 
@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "loggedOut");
         if (userId.equals("loggedOut"))
-            menuItem.setTitle("login/signin");
+            menuItem.setTitle("Login/Signin");
         else
-            menuItem.setTitle("logout");
+            menuItem.setTitle("Logout");
         TextView nameView = header.findViewById(R.id.user_name);
         TextView entryNumberView = header.findViewById(R.id.user_entry_number);
         nameView.setText(sharedPreferences.getString("userName", ""));
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (editMode) {
             navView.setVisibility(View.GONE);
-            openFragment(new messFragment());
+            openFragment(new MessFragment());
         }
     }
 
@@ -140,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
 
         navView.setBehaviorTranslationEnabled(true);
         navView.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        navView.setAccentColor(ContextCompat.getColor(this, R.color.colorAccent));
+        navView.setAccentColor(ContextCompat.getColor(this, R.color.white));
         navView.setInactiveColor(ContextCompat.getColor(this, R.color.black));
         navView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         navView.setColored(false);
         navView.setCurrentItem(0);
-        navView.setTitleTextSize(40,40);
+        navView.setTitleTextSize(30,30);
 
 
         navView.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
@@ -156,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
                         return openFragment(new EventFragment(false));
 
                     case 1:
-                        return openFragment(new messFragment());
+                        return openFragment(new MessFragment());
 
                     case 2:
-                        return openFragment(new billFragment());
+                        return openFragment(new BillFragment());
 
                     case 3:
                         return openFragment(new MyStuffFragment());
@@ -202,17 +202,19 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.navigation_about) {
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 } else if (id == R.id.navigation_logout) {
-                    if (menuItem.getTitle().equals("logout")) {
+                    if (menuItem.getTitle().equals("Logout")) {
                         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        menuItem.setTitle("login/signin");
+                        menuItem.setTitle("Login/Signup");
                         TextView nameView = header.findViewById(R.id.user_name);
                         TextView entryNumberView = header.findViewById(R.id.user_entry_number);
                         nameView.setText("");
                         entryNumberView.setText("");
-                        Toast.makeText(getApplicationContext(), "logged out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                        finish();
                     } else
                         startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 }

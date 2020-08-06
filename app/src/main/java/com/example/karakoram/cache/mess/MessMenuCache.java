@@ -88,7 +88,7 @@ public class MessMenuCache {
             fos = CONTEXT.openFileOutput(DAY_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + DAY_FILE_NAME, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CONTEXT, "Saved to " + file + "/" + DAY_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -168,7 +168,7 @@ public class MessMenuCache {
             fos = CONTEXT.openFileOutput(MENU_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + MENU_FILE_NAME, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CONTEXT, "Saved to " + file + "/" + MENU_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,6 +22,12 @@
             android:padding="18dp"
             android:src="@drawable/ic_frame_about" />
 
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:src="@drawable/m2" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +36,7 @@
             android:textSize="24sp"
             android:textColor="@color/white"
             android:fontFamily="@font/proximanovabold"
-            android:text="Karakoram">
+            android:text="About us">
 
         </TextView>
 
@@ -75,7 +80,7 @@
                     android:text="@string/kara_description"
                     android:textColor="@color/white"
                     android:fontFamily="@font/proximanovabold"
-                    android:textSize="20sp"/>
+                    android:textSize="24sp"/>
 
             </LinearLayout>
 
@@ -142,10 +147,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="24dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/proximanovaregular"
-                        android:text="@string/privacy_policy_1"/>
+                        android:text="@string/privacy_policy_1"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -179,7 +183,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
 
                     <com.example.karakoram.views.DynamicImageView
@@ -211,7 +215,7 @@
                 android:layout_marginBottom="24dp"
                 android:text="Beta version   1 . 0 . 0"
                 android:fontFamily="@font/proximanovaregular"
-                android:textSize="10sp"/>
+                android:textSize="12sp"/>
 
         </LinearLayout>
 

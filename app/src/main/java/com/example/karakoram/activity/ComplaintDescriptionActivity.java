@@ -28,6 +28,7 @@ import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -233,10 +234,12 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
             // status spinner
             findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
             final Status[] statusList = Status.values();
-            statusArray = new String[statusList.length+1];
+            int pos = ArrayUtils.toArrayList(statusList).indexOf(Status.valueOf(initialStatus));
+            Log.d("123hello", String.valueOf(pos));
+            statusArray = new String[statusList.length+1-pos];
             statusArray[0] = "";
-            for(int i=0;i<statusList.length;i++)
-                statusArray[i+1] = String.valueOf(statusList[i]);
+            for(int i=0;i+pos<statusList.length;i++)
+                statusArray[i+1] = String.valueOf(statusList[i+pos]);
             CustomSpinnerAdapter statusAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, statusArray);
             statusAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
             statusSpinner = findViewById(R.id.spinner_complaint_status);

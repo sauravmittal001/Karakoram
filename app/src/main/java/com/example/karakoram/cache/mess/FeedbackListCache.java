@@ -27,7 +27,7 @@ import java.util.Iterator;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class UstCache {
+public class FeedbackListCache {
 
     Context CONTEXT;
     String FEEDBACK_FILE_NAME;
@@ -43,10 +43,10 @@ public class UstCache {
     String ANONYMITY = "anonymity";
 
 
-    private UstCache() {
+    private FeedbackListCache() {
     }
 
-    public UstCache(Context context, boolean getMine) {
+    public FeedbackListCache(Context context, boolean getMine) {
         this.CONTEXT = context;
         this.getMine = getMine;
 
@@ -105,7 +105,7 @@ public class UstCache {
             fos = CONTEXT.openFileOutput(KEY_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + KEY_FILE_NAME, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CONTEXT, "Saved to " + file + "/" + KEY_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -188,7 +188,7 @@ public class UstCache {
             fos = CONTEXT.openFileOutput(FEEDBACK_FILE_NAME, MODE_PRIVATE);
             fos.write(JSON.toString().getBytes());
             File file = CONTEXT.getFilesDir();
-            Toast.makeText(CONTEXT, "Saved to " + file + "/" + FEEDBACK_FILE_NAME, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CONTEXT, "Saved to " + file + "/" + FEEDBACK_FILE_NAME, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

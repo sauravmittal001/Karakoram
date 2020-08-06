@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:keepScreenOn="false"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="25dp"
     tools:context=".activity.SignInActivity">
 

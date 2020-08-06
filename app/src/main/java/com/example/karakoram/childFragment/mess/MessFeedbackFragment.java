@@ -49,7 +49,7 @@ import java.util.Locale;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class messFeedbackFragment extends Fragment {
+public class MessFeedbackFragment extends Fragment {
 
     private View view;
     private Context context;
@@ -70,7 +70,7 @@ public class messFeedbackFragment extends Fragment {
     private Intent intent;
 
 
-    public messFeedbackFragment() {
+    public MessFeedbackFragment() {
     }
 
     @Override
@@ -94,7 +94,6 @@ public class messFeedbackFragment extends Fragment {
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
         eligibleMeals = getMealsEligibleForRating();
-//        eligibleMeals = ArrayUtils.toArrayList(new String[]{"Lunch"});
         currentMeal = getTheCurrentMeal();
         intent = getActivity().getIntent();
         editMode = intent.getBooleanExtra("editMode",false);

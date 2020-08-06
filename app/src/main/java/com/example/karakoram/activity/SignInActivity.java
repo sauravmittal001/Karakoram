@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -24,6 +25,10 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_sign_in);
         viewPager = findViewById(R.id.vp_menu);
         tabLayout = findViewById(R.id.tb_counter_menu);
@@ -34,7 +39,6 @@ public class SignInActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager, true);
 
         this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 7) / 10;
-        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 2) / 3;
 
         this.setupViewPager(viewPager);
     }
