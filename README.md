@@ -1,4 +1,4 @@
-![alt text](https://github.com/sauravmittal001/Karakoram/blob/master/app_icon.png?raw=true)
+![alt text](https://github.com/sauravmittal001/Karakoram/blob/hotfix/app_icon.png)
 # Karakoram App
 
 > Digital Complaint and other systems in Karakoram House, IIT Delhi
