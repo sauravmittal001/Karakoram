@@ -1,11 +1,11 @@
 package com.example.karakoram.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,8 +18,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.karakoram.DynamicImageView;
+import com.example.karakoram.views.DynamicImageView;
 import com.example.karakoram.R;
+import com.example.karakoram.resource.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,15 +33,22 @@ public class EventDescription extends AppCompatActivity {
     /* Variables */
     private String title;
     private String time;
+    private String date;
     private String description;
     private String dbImageLocation;
+    private String key;
+    private boolean isImageAttached;
+    private String dateTime;
+    private String userId;
 
     /*Views*/
     private TextView mTitle;
     private TextView mTime;
+    private TextView mDate;
     private TextView mDescription;
     private ImageView mImage;
-    private Button mButtonDone;
+    private ImageView mButtonBack;
+    private ImageView mEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,54 +66,83 @@ public class EventDescription extends AppCompatActivity {
     private void initVariables() {
         title = Objects.requireNonNull(getIntent().getExtras()).getString("title");
         time = getIntent().getExtras().getString("time");
+        date = getIntent().getExtras().getString("date");
         description = getIntent().getExtras().getString("description");
-        mButtonDone = findViewById(R.id.button_event_description_done);
+        isImageAttached = getIntent().getBooleanExtra("isImageAttached",false);
+        key = getIntent().getExtras().getString("key");
 
         String key = getIntent().getExtras().getString("key");
         dbImageLocation = "eventImages/" + key + ".png";
+        dateTime = getIntent().getExtras().getString("dateTime");
+        userId = getIntent().getExtras().getString("userId");
     }
 
     private void initViews() {
-        mTitle = (TextView) findViewById(R.id.tv_event_title);
-        mTime = (TextView) findViewById(R.id.tv_event_time);
-        mDescription = (TextView) findViewById(R.id.tv_event_description);
+        mTitle = findViewById(R.id.tv_event_title);
+        mTime = findViewById(R.id.tv_event_time);
+        mDescription = findViewById(R.id.tv_event_description);
         mImage = (DynamicImageView) findViewById(R.id.div_event_image);
+        mButtonBack = findViewById(R.id.iv_back_button);
+        mEdit = findViewById(R.id.iv_edit_button);
+        mDate = findViewById(R.id.tv_event_date);
     }
 
     private void setViews() {
         // TextViews
-//        mTitle.setText("Some Title which I want to display since this is it");
-//        mTime.setText("4th july | 11:00 AM");
-//        mDescription.setText("Luckily, you never have to be. The U.S. Navy Pre-Flight School developed a scientific method to fall asleep day or night, in any conditions, in under two minutes. After six weeks of practice, 96 percent of pilots could fall asleep in two minutes or less. Even after drinking coffee, with machine gunfire being played in the background. That’s what happened with U.S. fighter pilots in World War II. The U.S. military realized many of its pilots were making terrible, avoidable decisions due to stress and the resulting sleeplessness. Shooting down friendlies. Being shot down themselves. Even when pilots clocked off, they couldn’t relax and they couldn’t sleep. So their stress and fatigue built up, till they made a fatal error.");
 
         mTitle.setText(title);
         mTime.setText(time);
         mDescription.setText(description);
+        mDate.setText(date);
 
-        //DB image
-        StorageReference ref = FirebaseStorage.getInstance().getReference();
-        ref.child(dbImageLocation).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        if(isImageAttached) {
+            findViewById(R.id.fl_image).setVisibility(View.VISIBLE);
+            //DB image
+            StorageReference ref = FirebaseStorage.getInstance().getReference();
+            ref.child(dbImageLocation).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
-                loadGlideImage(uri.toString());
-//                adjustImageSize();
-                removePlaceholderImage();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+                    loadGlideImage(uri.toString());
+                    removePlaceholderImage();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+        else
+            findViewById(R.id.fl_image).setVisibility(View.GONE);
 
         //Button
-        mButtonDone.setOnClickListener(new View.OnClickListener() {
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EventDescription.this, EventFormActivity.class);
+                intent.putExtra("editMode",true);
+                intent.putExtra("description",description);
+                intent.putExtra("title",title);
+                intent.putExtra("isImageAttached",isImageAttached);
+                intent.putExtra("dateTime",dateTime);
+                intent.putExtra("key",key);
+                startActivity(intent);
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String currentUserId = sharedPreferences.getString("userId","loggedOut");
+        if(currentUserId.equals(userId))
+            mEdit.setVisibility(View.VISIBLE);
+        else
+            mEdit.setVisibility(View.GONE);
     }
 
     private void loadGlideImage(String url) {

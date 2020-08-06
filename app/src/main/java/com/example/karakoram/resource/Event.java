@@ -9,6 +9,7 @@ public class Event {
     private Date dateTime;
     private String userId;
     private Date timeStamp;
+    private boolean isImageAttached;
 
     public Date getDateTime() {
         return dateTime;
@@ -48,5 +49,13 @@ public class Event {
 
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public boolean isImageAttached() {
+        return isImageAttached;
+    }
+
+    public void setImageAttached(boolean imageAttached) {
+        isImageAttached = imageAttached;
     }
 }

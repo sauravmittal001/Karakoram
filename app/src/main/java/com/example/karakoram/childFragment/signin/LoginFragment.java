@@ -1,5 +1,6 @@
 package com.example.karakoram.childFragment.signin;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
+import com.example.karakoram.activity.MainActivity;
 import com.example.karakoram.activity.SignInActivity;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.views.CustomSpinner;
@@ -35,10 +37,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class LoginFragment extends Fragment {
 
-    View view;
+    private View view;
     private CustomSpinner userInputSpinner;
     private String[] userInputArray;
     private EditText mPassword, mEntryNoEdit;
+    private TextView mCreateAccount;
 
     public LoginFragment() {
 
@@ -62,6 +65,13 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mEntryNoEdit = view.findViewById(R.id.et_login_entry_number);
         mPassword = view.findViewById(R.id.et_login_password);
+        mCreateAccount = view.findViewById(R.id.tv_create_account);
+        mCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((SignInActivity)getActivity()).updatePagerView();
+            }
+        });
         setSpinners();
         setButtons();
     }
@@ -96,10 +106,9 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 final String password = mPassword.getText().toString();
                 String userInput = userInputArray[userInputSpinner.getSelectedItemPosition()];
-                String entryNumber;
+                final String entryNumber;
                 if (!userInput.equals("Student")){
                     entryNumber = userInput;
-                    Log.d("123hello",entryNumber);
                 }
                 else {
                     entryNumber = mEntryNoEdit.getText().toString();
@@ -108,22 +117,25 @@ public class LoginFragment extends Fragment {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Iterator<DataSnapshot> iterator =  snapshot.getChildren().iterator();
-                        if(iterator.hasNext()) {
-                            DataSnapshot dataSnapshot = iterator.next();
-                            User user = dataSnapshot.getValue(User.class);
+                        if(snapshot.exists()) {
+                            User user = snapshot.getValue(User.class);
+                            if(!user.isSignedIn()){
+                                Toast.makeText(getActivity().getApplicationContext(),"please signin",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             if(password.equals(user.getPassword())) {
-                                String key = dataSnapshot.getKey();
+                                String key = entryNumber;
                                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("userId", key);
                                 editor.putString("userName", user.getName());
                                 editor.putString("entryNumber", user.getEntryNumber());
                                 editor.putString("room", user.getRoom());
-                                editor.putString("wing", user.getWing());
                                 editor.putString("type",user.getType().toString());
                                 editor.apply();
                                 Toast.makeText(getActivity().getApplicationContext(), "logged in as " + user.getName(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
                                 getActivity().finish();
                             }
                             else

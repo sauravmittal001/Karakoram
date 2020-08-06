@@ -1,19 +1,17 @@
 package com.example.karakoram.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +19,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.karakoram.DynamicImageView;
+import com.example.karakoram.views.DynamicImageView;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Category;
-import com.example.karakoram.resource.Complaint;
-import com.example.karakoram.resource.MaintComplaint;
-import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.Status;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
-import com.example.karakoram.resource.Wing;
 import com.example.karakoram.views.CustomSpinner;
 import com.example.karakoram.views.CustomSpinnerAdapter;
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -58,7 +53,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
     private String room;
     private String wing;
     private String dbImageLocation;
-    private String userType;
+    private UserType userType;
     private String key;
     private String complaintArea;
     private boolean isImageAttached;
@@ -87,21 +82,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         } catch (NullPointerException ignored) {
         }
         setContentView(R.layout.activity_complaint_description);
-//        try {
-//            initVariables();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH1", String.valueOf(e));
-//        }
-//        try {
-//            initViews();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH2", String.valueOf(e));
-//        }
-//        try {
-//            setViews();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH3", String.valueOf(e));
-//        }
         initVariables();
         initViews();
         setViews();
@@ -129,7 +109,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         key = getIntent().getExtras().getString("key");
         dbImageLocation = "complaintImages/" + key + ".png";
         Log.i("CRASHHH", dbImageLocation);
-        userType = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE).getString("type", "Admin");
+        userType = UserType.valueOf(getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE).getString("type", "Student"));
     }
 
     private void initViews() {
@@ -165,7 +145,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         mCategory.setText(category + " complaint");
         mDateTime.setText(time + ", " + date);
         mDescription.setText(description);
-//        mDescription.setText("Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code.");
         mEntryNumber.setText(entryNumber);
         mName.setText(name);
         if (category.equals(Category.Maintenance.name()) || category.equals(Category.Mess.name())) {
@@ -193,8 +172,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
             });
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
-        UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
         if(userType.equals(UserType.Admin)){
             mEdit.setVisibility(View.GONE);
         }
@@ -204,22 +181,39 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (statusSpinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(ComplaintDescriptionActivity.this, "Select status", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if (initialStatus.equals(status)) {
-                    finish();
-                }
-                else {
-                    //TODO make firebase call
-                    FirebaseQuery.changeComplaintStatus(key,Status.valueOf(status));
-                    Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                onBackPressed();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(userType.equals(UserType.Admin)) {
+            if (statusSpinner.getSelectedItemPosition() == 0) {
+                Toast.makeText(ComplaintDescriptionActivity.this, "Select status", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (initialStatus.equals(status)) {
+                finish();
+            } else {
+                new AlertDialog.Builder(ComplaintDescriptionActivity.this, R.style.MyDialogTheme)
+                        .setTitle("Please confirm")
+                        .setMessage("Are you sure you want to change the status of this complaint to " + status + " ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseQuery.changeComplaintStatus(key, Status.valueOf(status));
+                                Toast.makeText(ComplaintDescriptionActivity.this, "status updated", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        }
+        else
+            finish();
     }
 
     private void loadGlideImage(String url) {
@@ -235,15 +229,17 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
     }
 
     private void hideViewsUserType() {
-        if (userType.equals(UserType.Admin.name())) {
+        if (userType.equals(UserType.Admin)) {
             mStatus.setText("Status ");
             // status spinner
             findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
             final Status[] statusList = Status.values();
-            statusArray = new String[statusList.length+1];
+            int pos = ArrayUtils.toArrayList(statusList).indexOf(Status.valueOf(initialStatus));
+            Log.d("123hello", String.valueOf(pos));
+            statusArray = new String[statusList.length+1-pos];
             statusArray[0] = "";
-            for(int i=0;i<statusList.length;i++)
-                statusArray[i+1] = String.valueOf(statusList[i]);
+            for(int i=0;i+pos<statusList.length;i++)
+                statusArray[i+1] = String.valueOf(statusList[i+pos]);
             CustomSpinnerAdapter statusAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, statusArray);
             statusAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
             statusSpinner = findViewById(R.id.spinner_complaint_status);
@@ -268,7 +264,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
                 statusSpinner.setSelection(spinnerPosition);
             }
         } else {
-            findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_complaint_status).setVisibility(View.GONE);
             mStatus.setText("Status : " + initialStatus);
         }
     }
@@ -278,7 +274,7 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
         intent.putExtra("editMode",true);
         intent.putExtra("key",key);
         intent.putExtra("description",description);
-        intent.putExtra("prevIsImageAttached",isImageAttached);
+        intent.putExtra("isImageAttached",isImageAttached);
         intent.putExtra("category",category);
         if(category.equals("Mess")){
             intent.putExtra("messArea",complaintArea);

@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,7 @@
         android:id="@+id/lv_top"
         android:layout_width="match_parent"
         android:layout_height="24dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
         <ImageView
@@ -18,6 +20,37 @@
             android:contentDescription="Top banner icon"
             android:src="@drawable/m2" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="0dp"
+            android:contentDescription="Back Button"
+            android:onClick="back"
+            android:padding="12dp"
+            android:src="@drawable/ic_frame3" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:contentDescription="Edit Button"
+            android:padding="12dp"
+            android:src="@drawable/icon_edit" />
     </LinearLayout>
 
     <ScrollView
@@ -36,11 +69,11 @@
                 android:id="@+id/fl_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/grey"
+                android:background="@color/light_grey"
                 android:minHeight="0dp"
                 tools:ignore="Suspicious0dp">
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:id="@+id/div_event_placeholder_image"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
@@ -52,7 +85,7 @@
                     tools:ignore="PrivateResource"
                     tools:targetApi="p" />
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:id="@+id/div_event_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,19 +103,46 @@
                 android:fontFamily="@font/senbold"
                 android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/tv_event_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8sp"
-                android:layout_marginBottom="8sp"
-                android:autoSizeTextType="uniform"
-                android:fontFamily="@font/quicksandregular"
-                android:textAlignment="textEnd"
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                tools:ignore="RtlSymmetry,SmallSp"
-                tools:targetApi="o" />
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/tv_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8sp"
+                    android:layout_marginBottom="8sp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/quicksandregular"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    tools:ignore="RtlSymmetry,SmallSp"
+                    tools:targetApi="o" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=", "/>
+
+                <TextView
+                    android:id="@+id/tv_event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8sp"
+                    android:layout_marginBottom="8sp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/quicksandregular"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    tools:ignore="RtlSymmetry,SmallSp"
+                    tools:targetApi="o" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_event_description"
@@ -92,22 +152,6 @@
                 android:textSize="18sp"
                 tools:targetApi="o" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:orientation="horizontal"
-                android:gravity="right">
-
-                <Button
-                    android:id="@+id/button_event_description_done"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/event_description_button"
-                    android:drawableEnd="@drawable/ic_outline_done_24"
-                    android:fontFamily="@font/senregular"
-                    android:text="Done" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

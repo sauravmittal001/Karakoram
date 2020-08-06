@@ -33,11 +33,12 @@ import java.util.Objects;
 
 public class UserInfoActivity extends AppCompatActivity {
 
-    private CustomSpinner floorSpinner, roomNumberSpinner, wingSpinner;
+    private CustomSpinner floorSpinner, roomNumberSpinner;
     private String[] floor, roomNumber, wing;
     private EditText mCurrent, mNew, mRetype;
-    private TextView mName, mEntryNumber;
-    private String userPassword, userEntryNumber, userName, userRoomNumber, userFloor;
+    private TextView mName, mEntryNumber, mChangePassword;
+    private String userId, userPassword, userEntryNumber, userName, userRoomNumber, userFloor;
+    private boolean changePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private void initVariables() {
         floor = getResources().getStringArray(R.array.floor);
         roomNumber = getResources().getStringArray(R.array.room_number);
+        changePassword = false;
         Wing[] wings = Wing.values();
         wing = new String[wings.length+1];
         wing[0] = "";
@@ -63,10 +65,10 @@ public class UserInfoActivity extends AppCompatActivity {
             wing[i+1] = String.valueOf(wings[i]);
 
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-        userEntryNumber = sharedPreferences.getString("entryNumber", "DEFAULT");
-        userName = sharedPreferences.getString("userName", "DEFAULT");
+        userId = sharedPreferences.getString("userId", "loggedOut");
+        userEntryNumber = sharedPreferences.getString("entryNumber", "NA");
+        userName = sharedPreferences.getString("userName", "NA");
         String room = sharedPreferences.getString("room", "A01");
-//        Log.i("USER_ROOM", String.valueOf(location[0]));
         userRoomNumber = room.substring(1);
         userFloor = room.substring(0,1);
 
@@ -74,10 +76,8 @@ public class UserInfoActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                if (iterator.hasNext()) {
-                    DataSnapshot dataSnapshot = iterator.next();
-                    User user = dataSnapshot.getValue(User.class);
+                if (snapshot.exists()) {
+                    User user = snapshot.getValue(User.class);
                     userPassword = user.getPassword();
                 }
             }
@@ -91,11 +91,11 @@ public class UserInfoActivity extends AppCompatActivity {
     private void initViews() {
         floorSpinner = findViewById(R.id.spinner_floor);
         roomNumberSpinner = findViewById(R.id.spinner_room_number);
-//        wingSpinner = findViewById(R.id.spinner_wing);
 
-        mCurrent = (EditText) findViewById(R.id.et_current);
-        mNew = (EditText) findViewById(R.id.et_new);
-        mRetype = (EditText) findViewById(R.id.et_retype);
+        mChangePassword = findViewById(R.id.tv_change_password);
+        mCurrent = findViewById(R.id.et_current);
+        mNew = findViewById(R.id.et_new);
+        mRetype = findViewById(R.id.et_retype);
 
         mName = (TextView) findViewById(R.id.tv_user_name);
         mEntryNumber = (TextView) findViewById(R.id.tv_user_entryNumber);
@@ -121,9 +121,16 @@ public class UserInfoActivity extends AppCompatActivity {
             roomNumberSpinner.setSelection(spinnerPosition);
         }
 
-//        CustomSpinnerAdapter wingAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, wing);
-//        wingAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-//        wingSpinner.setAdapter(wingAdapter);
+        mChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePassword = !changePassword;
+                if(!changePassword)
+                    findViewById(R.id.ll_change_password).setVisibility(View.GONE);
+                else
+                    findViewById(R.id.ll_change_password).setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 
@@ -132,48 +139,28 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        String location = floor[floorSpinner.getSelectedItemPosition()] + "-" + roomNumber[roomNumberSpinner.getSelectedItemPosition()];
-//        String selectedWing = wing[wingSpinner.getSelectedItemPosition()];
+        String location = floor[floorSpinner.getSelectedItemPosition()] + roomNumber[roomNumberSpinner.getSelectedItemPosition()];
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("room", location);
-//        editor.putString("wing", selectedWing);
         editor.apply();
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            if (!mCurrent.getText().toString().equals(userPassword)) {
-                mCurrent.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-//                showSnackbar("Current password is incorrect");
-                Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_SHORT).show();
-                return;
+        if(changePassword) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                if (!mCurrent.getText().toString().equals(userPassword)) {
+                    mCurrent.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
+                    Toast.makeText(this, "current password is incorrect", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!mNew.getText().toString().equals(mRetype.getText().toString())) {
+                    mRetype.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
+                    Toast.makeText(this, "both new passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
-            if (!mNew.getText().toString().equals(mRetype.getText().toString())) {
-                mRetype.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-//                showSnackbar("New and Retype do not match");
-                Toast.makeText(this, "New and Retype do not match", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            FirebaseQuery.setUserPassWord(userId, mNew.getText().toString(), false);
         }
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("users/" + userEntryNumber + "/password").setValue(mCurrent.getText().toString());
-        ref.child("users/" + userEntryNumber + "/room").setValue(location);
+        FirebaseQuery.setUserRoom(userId,location);
         super.onBackPressed();
     }
-
-    private void showSnackbar(String message) {
-        Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.GREEN)
-                .setActionTextColor(Color.WHITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                            mCurrent.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                            mRetype.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                        }
-                    }
-                })
-                .show();
-    }
-
 }

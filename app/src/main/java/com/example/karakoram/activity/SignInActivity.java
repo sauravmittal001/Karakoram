@@ -1,3 +1,4 @@
+
 package com.example.karakoram.activity;
 
 import android.content.res.Resources;
@@ -12,6 +13,10 @@ import com.example.karakoram.childFragment.signin.SigninFragment;
 import com.example.karakoram.views.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Objects;
+
 public class SignInActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
@@ -20,6 +25,10 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Objects.requireNonNull(this.getSupportActionBar()).hide();
+        } catch (NullPointerException ignored) {
+        }
         setContentView(R.layout.activity_sign_in);
         viewPager = findViewById(R.id.vp_menu);
         tabLayout = findViewById(R.id.tb_counter_menu);
@@ -28,7 +37,9 @@ public class SignInActivity extends AppCompatActivity {
 
     private void setViews() {
         tabLayout.setupWithViewPager(viewPager, true);
-        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 4) / 5;
+
+        this.viewPager.getLayoutParams().height = (Resources.getSystem().getDisplayMetrics().heightPixels * 7) / 10;
+
         this.setupViewPager(viewPager);
     }
 
@@ -37,6 +48,11 @@ public class SignInActivity extends AppCompatActivity {
         adapter.addFragment(new LoginFragment(), "Login");
         adapter.addFragment(new SigninFragment(), "Signup");
         viewPager.setAdapter(adapter);
+    }
+
+    public void updatePagerView() {
+        int nextPosition = 1;
+        viewPager.setCurrentItem(nextPosition, false);
     }
 
 }

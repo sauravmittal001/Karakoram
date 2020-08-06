@@ -16,14 +16,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,15 +41,21 @@ import java.util.Objects;
 public class EventFormActivity extends AppCompatActivity {
 
     private Uri imageUri;
-    private TextView mError, dateView, timeView, mTitle, mDescription;
+    private TextView dateView, timeView, mTitle, mDescription;
     private int year, month, day, hour, min;
-    private boolean isTimeFilled, isDateFilled;
+    private boolean isTimeFilled, isDateFilled, isImageAttached, editMode;
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker arg0, int year, int month, int day) {
-            showDate(year, month + 1, day);
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            showDate(arg1, arg2 + 1, arg3);
+            year = arg1;
+            month = arg2 + 1;
+            day = arg3;
         }
     };
+    private Intent intent;
+    private ImageView mImage, mDelete;
+    private Date dateTime;
 
 
     @Override
@@ -59,28 +74,91 @@ public class EventFormActivity extends AppCompatActivity {
     private void initVariables() {
         isDateFilled = false;
         isTimeFilled = false;
+        intent = getIntent();
+        isImageAttached = intent.getBooleanExtra("isImageAttached",false);
+        editMode = intent.getBooleanExtra("editMode",false);
+        if(editMode)
+            dateTime = new Date(Date.parse (getIntent().getStringExtra("dateTime")));
     }
 
     private void initViews() {
-        mError = (TextView) findViewById(R.id.tv_error);
-        dateView = (TextView) findViewById(R.id.et_date);
-        timeView = (TextView) findViewById(R.id.et_time);
-        mTitle = (EditText) findViewById(R.id.et_title);
-        mDescription = (EditText) findViewById(R.id.et_description);
+        dateView = findViewById(R.id.et_date);
+        timeView = findViewById(R.id.et_time);
+        mTitle = findViewById(R.id.et_title);
+        mDescription = findViewById(R.id.et_description);
+        mImage = findViewById(R.id.div_event_image);
+        mDelete = findViewById(R.id.iv_delete);
     }
 
     private void setViews() {
         Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, 1, 1);
 
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        min = calendar.get(Calendar.MINUTE);
-        showTime(23, 59);
+        if(editMode){
+            year = dateTime.getYear()+1900;
+            month = dateTime.getMonth()+1;
+            day = dateTime.getDate();
+            hour = dateTime.getHours();
+            min = dateTime.getMinutes();
+        }
+        else {
+            year = calendar.get(Calendar.YEAR);
+            month = 1;
+            day = 1;
+            hour = 23;
+            min = 59;
+        }
+
+        showDate(year, month, day);
+        showTime(hour, min);
+
+        if(editMode){
+            Log.d("123hello","hi");
+            mTitle.setText(intent.getStringExtra("title"));
+            mDescription.setText(intent.getStringExtra("description"));
+            if(isImageAttached) {
+                String key = intent.getStringExtra("key");
+                StorageReference ref = FirebaseQuery.getEventImageRef(key);
+                ref.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                imageUri = uri;
+                                loadGlideImage(uri.toString());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // image not loading
+                    }
+                });
+                ((TextView)findViewById(R.id.tv_image)).setText("Selected Image:");
+                mDelete.setVisibility(View.VISIBLE);
+                mImage.setVisibility(View.VISIBLE);
+            }
+        }
+
+        mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((TextView)findViewById(R.id.tv_image)).setText("No Image Selected");
+                mDelete.setVisibility(View.GONE);
+                mImage.setVisibility(View.GONE);
+                isImageAttached = false;
+            }
+        });
     }
 
+    private void loadGlideImage(String url) {
+        Log.i("CRASHHH", url); // not getting here
+        RequestOptions requestOption = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter();
+        Glide.with(EventFormActivity.this)
+                .load(url)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(requestOption)
+                .into(mImage);
+    }
 
     public void onClickCreateEvent(View view) {
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS,MODE_PRIVATE);
@@ -99,40 +177,54 @@ public class EventFormActivity extends AppCompatActivity {
                     if (title.equals("")) {
                         mTitle.setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
                         return;
-                    } else {
+                    }
+                    else {
                         mTitle.setBackground(getDrawable(R.drawable.background_rounded_section_task));
                     }
+
                     if (description.equals("")) {
                         mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task_red));
                         return;
-                    } else {
+                    }
+                    else {
                         mDescription.setBackground(getDrawable(R.drawable.background_rounded_section_task));
                     }
-                    if (!isDateFilled) {
-                        dateView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                        return;
-                    } else {
-                        dateView.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                    }
-                    if (!isTimeFilled) {
-                        timeView.setBackground(getDrawable(R.drawable.background_rect_section_task_red));
-                        return;
-                    } else {
-                        timeView.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                    }
+
                 }
-                if (imageUri == null || String.valueOf(imageUri).equals("")) {
-                    mError.setVisibility(View.VISIBLE);
-                    return;
-                }
+
                 event.setDateTime(new Date(year - 1900, month - 1, day, hour, min));
                 event.setTitle(title);
                 event.setDescription(description);
                 event.setUserId(userId);
                 event.setTimeStamp(new Date());
-                FirebaseQuery.addEvent(event, imageUri);
-                Toast.makeText(getApplicationContext(), "event added/updated", Toast.LENGTH_SHORT).show();
-                super.onBackPressed();
+                event.setImageAttached(isImageAttached);
+
+                if (!isImageAttached || imageUri == null || String.valueOf(imageUri).equals("")) {
+                    if(editMode){
+                        boolean prevIsImageAttached = intent.getBooleanExtra("isImageAttached",false);
+                        String key = intent.getStringExtra("key");
+                        FirebaseQuery.updateEvent(key,event);
+                        if(prevIsImageAttached)
+                            FirebaseQuery.removeEventImage(key);
+                    }
+                    else
+                        FirebaseQuery.addEvent(event);
+                }
+                else {
+                    if(editMode){
+                        String key = intent.getStringExtra("key");
+                        FirebaseQuery.updateEvent(key,event,imageUri);
+                    }
+                    else
+                        FirebaseQuery.addEvent(event, imageUri);
+                }
+
+                if(editMode)
+                    Toast.makeText(getApplicationContext(),"event updated", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(),"new event added", Toast.LENGTH_SHORT).show();
+
+                finish();
             }
         }
     }
@@ -149,13 +241,19 @@ public class EventFormActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         findViewById(R.id.tv_image).setVisibility(View.VISIBLE);
-        mError.setVisibility(View.INVISIBLE);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            ((TextView)findViewById(R.id.tv_image)).setText("Selected Image:");
             imageUri = data.getData();
-            ImageView eventImage = findViewById(R.id.div_event_image);
-            eventImage.setImageURI(imageUri);
-        } else {
-            Log.d("123hello", "upload failure");
+            mImage.setImageURI(imageUri);
+            mDelete.setVisibility(View.VISIBLE);
+            mImage.setVisibility(View.VISIBLE);
+            isImageAttached = true;
+        }
+        else {
+            ((TextView)findViewById(R.id.tv_image)).setText("No Image Selected");
+            mDelete.setVisibility(View.GONE);
+            mImage.setVisibility(View.GONE);
+            isImageAttached = false;
         }
     }
 
@@ -185,8 +283,7 @@ public class EventFormActivity extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String time = hourOfDay + ":" + minute;
                         timeView.setText(time);
                         showTime(hourOfDay, minute);

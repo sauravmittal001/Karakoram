@@ -1,9 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AboutActivity">
+    tools:context=".activity.AboutActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- top toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="18dp"
+            android:src="@drawable/ic_frame_about" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:src="@drawable/m2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/proximanovabold"
+            android:text="About us">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--picture and words about kara -->
+            <LinearLayout
+                android:id="@+id/fl_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:minHeight="0dp"
+                android:orientation="vertical"
+                tools:ignore="Suspicious0dp">
+
+                <com.example.karakoram.views.DynamicImageView
+                    android:id="@+id/div_event_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/karakoram"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/kara_description"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/proximanovabold"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <!-- Contact us -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:text="Contact us"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/proximanovabold"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:text="@string/contact_us"/>
+
+            </LinearLayout>
+
+            <!-- privacy policy -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:text="Privacy policy"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/proximanovabold"
+                    android:textSize="24sp"/>
+
+                <!-- policy 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="horizontal">
+
+                    <com.example.karakoram.views.DynamicImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:src="@drawable/ic_tick"
+                        android:scaleType="centerInside" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="24dp"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:text="@string/privacy_policy_1"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <!-- policy 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="horizontal">
+
+                    <com.example.karakoram.views.DynamicImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:src="@drawable/ic_tick"
+                        android:scaleType="centerInside" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="24dp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:text="@string/privacy_policy_2"/>
+
+                </LinearLayout>
+
+                <!-- policy 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="horizontal">
+
+                    <com.example.karakoram.views.DynamicImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:src="@drawable/ic_tick"
+                        android:scaleType="centerInside" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="24dp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:text="@string/privacy_policy_3"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- version use -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:text="Beta version   1 . 0 . 0"
+                android:fontFamily="@font/proximanovaregular"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

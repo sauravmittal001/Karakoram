@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:fillViewport="true">
 
@@ -47,7 +48,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/add_photo"
+                    android:src="@drawable/ic_add_image_white"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="onClickChooseImage"
                     tools:targetApi="lollipop" />
@@ -78,17 +79,6 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:lineSpacingExtra="2sp"
-            android:text="Bill image not selected"
-            android:textColor="@color/red"
-            android:textSize="12sp"
-            android:visibility="invisible"/>
 
         <!-- title input -->
         <LinearLayout
@@ -216,7 +206,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:onClick="setDate"
@@ -277,7 +267,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <com.example.karakoram.DynamicImageView
+                <com.example.karakoram.views.DynamicImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -291,6 +281,36 @@
 
         </LinearLayout>
 
+        <!-- Event image -->
+
+        <TextView
+            android:id="@+id/tv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/senbold"
+            android:gravity="top"
+            android:lineSpacingMultiplier="1.14"
+            android:text="No Image Selected"
+            android:textColor="@color/text700"
+            android:textSize="18sp" />
+
+        <com.example.karakoram.views.DynamicImageView
+            android:id="@+id/div_event_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            android:visibility="gone"/>
 
         <!-- Submit button -->
         <Button
@@ -310,30 +330,6 @@
             android:text="Submit"
             android:textColor="@color/text700"
             tools:targetApi="o" />
-
-        <!-- Event image -->
-
-        <TextView
-            android:id="@+id/tv_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/senbold"
-            android:gravity="top"
-            android:lineSpacingMultiplier="1.14"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="Selected image:"
-            android:textColor="@color/text700"
-            android:textSize="18sp"
-            android:visibility="gone"/>
-
-        <com.example.karakoram.DynamicImageView
-            android:id="@+id/div_event_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:scaleType="centerInside" />
 
     </LinearLayout>
 </ScrollView>

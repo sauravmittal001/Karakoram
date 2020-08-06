@@ -6,7 +6,7 @@ public class HostelBill {
 
     private Category category;
     private String description;
-    private int amount;
+    private double amount;
     private String  userId;
     private Date timeStamp;
 
@@ -26,11 +26,11 @@ public class HostelBill {
         this.description = description;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

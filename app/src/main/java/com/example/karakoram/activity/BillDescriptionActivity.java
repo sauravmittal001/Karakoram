@@ -1,34 +1,17 @@
 package com.example.karakoram.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.karakoram.DynamicImageView;
 import com.example.karakoram.R;
-import com.example.karakoram.resource.Category;
-import com.example.karakoram.resource.Status;
 import com.example.karakoram.resource.User;
-import com.example.karakoram.resource.UserType;
-import com.example.karakoram.views.CustomSpinner;
-import com.example.karakoram.views.CustomSpinnerAdapter;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
 
@@ -52,6 +35,7 @@ public class BillDescriptionActivity extends AppCompatActivity {
 
     private Button mButtonImage;
     private ImageView mBack;
+    private ImageView mEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +45,6 @@ public class BillDescriptionActivity extends AppCompatActivity {
         } catch (NullPointerException ignored) {
         }
         setContentView(R.layout.activity_bill_description);
-//        try {
-//            initVariables();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH1", String.valueOf(e));
-//        }
-//        try {
-//            initViews();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH2", String.valueOf(e));
-//        }
-//        try {
-//            setViews();
-//        } catch (Exception e) {
-//            Log.i("CRASHHH3", String.valueOf(e));
-//        }
         initVariables();
         initViews();
         setViews();
@@ -100,6 +69,7 @@ public class BillDescriptionActivity extends AppCompatActivity {
 
         mButtonImage = findViewById(R.id.button_bill_image);
         mBack = (ImageView) findViewById(R.id.iv_back_button);
+        mEdit = findViewById(R.id.iv_edit_button);
     }
 
     private void setViews() {
@@ -107,8 +77,7 @@ public class BillDescriptionActivity extends AppCompatActivity {
         mDateTime.setText(time + ", " + date);
         mAmount.setText("Rs. " + amount);
         mUserId.setText("Uploaded by " + userId);
-//        mDescription.setText(description);
-        mDescription.setText("Let's create a function that will accept two parameters and will return the month of the given date. The first parameter will be the date and the second parameter will accept a boolean value which will be true or false. This boolean value will determine if the return month name wants to be shortened or not. If the value is set to true it will return full month name otherwise it will return an abbreviation of the first 3 characters of the month name. Here is the full javascript function code.");
+        mDescription.setText(description);
 
         mButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +88,25 @@ public class BillDescriptionActivity extends AppCompatActivity {
             }
         });
 
+        mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BillDescriptionActivity.this,BillFormActivity.class);
+                intent.putExtra("amount",amount);
+                intent.putExtra("description",description);
+                intent.putExtra("category",category);
+                intent.putExtra("editMode",true);
+                intent.putExtra("key",key);
+                startActivity(intent);
+            }
+        });
+
+        SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        String currentUserId = sharedPreferences.getString("userId","loggedOut");
+        if(currentUserId.equals(userId))
+            mEdit.setVisibility(View.VISIBLE);
+        else
+            mEdit.setVisibility(View.GONE);
 
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

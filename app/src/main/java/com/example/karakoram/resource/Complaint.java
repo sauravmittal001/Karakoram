@@ -81,11 +81,11 @@ public class Complaint {
         this.userName = userName;
     }
 
-    public boolean getIsImageAttached() {
+    public boolean isImageAttached() {
         return isImageAttached;
     }
 
-    public void setIsImageAttached(boolean imageAttached) {
+    public void setImageAttached(boolean imageAttached) {
         isImageAttached = imageAttached;
     }
 }
