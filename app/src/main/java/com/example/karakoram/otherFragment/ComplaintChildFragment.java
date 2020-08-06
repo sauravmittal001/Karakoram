@@ -94,6 +94,7 @@ public class ComplaintChildFragment extends Fragment {
                 key.addAll(allOtherComplaintCache.getKeyArray());
                 key.addAll(allMaintenanceComplaintCache.getKeyArray());
                 key.addAll(allMessComplaintCache.getKeyArray());
+//                Log.d("123hello", String.valueOf(allMaintenanceComplaintCache.getComplaintArray().size()));
             }
             else if(category.equals(Category.Maintenance)){
                 complaints.addAll(maintenanceComplaintCache.getComplaintArray());
@@ -169,18 +170,19 @@ public class ComplaintChildFragment extends Fragment {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Pair<String,Complaint>> complaintsKvMess = new ArrayList<>();
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Complaint complaint = snapshotItem.getValue(MessComplaint.class);
                         if(!getAllCategory || complaint.getUserId().equals(userId)) {
-                            complaintsKv.add(Pair.create(snapshotItem.getKey(),complaint));
+                            complaintsKvMess.add(Pair.create(snapshotItem.getKey(),complaint));
                         }
                     }
                     try {
                         ArrayList<MessComplaint> complaints = new ArrayList<>();
                         ArrayList<String> key = new ArrayList<>();
-                        for(int i=0; i<complaintsKv.size();i++){
-                            key.add(complaintsKv.get(i).first);
-                            complaints.add((MessComplaint) complaintsKv.get(i).second);
+                        for(int i=0; i<complaintsKvMess.size();i++){
+                            key.add(complaintsKvMess.get(i).first);
+                            complaints.add((MessComplaint) complaintsKvMess.get(i).second);
                         }
                         if(getAllCategory) {
                             allMessComplaintCache.setKeyArray(key);
@@ -193,6 +195,7 @@ public class ComplaintChildFragment extends Fragment {
                     } catch (Exception ignored) {
                         Log.i("HomeCacheLog", "cache files are not getting updated");
                     }
+                    complaintsKv.addAll(complaintsKvMess);
                     start();
                     swipeRefreshLayout.setRefreshing(false);
                 }
@@ -208,30 +211,33 @@ public class ComplaintChildFragment extends Fragment {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Pair<String,Complaint>> complaintsKvMaint = new ArrayList<>();
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Complaint complaint = snapshotItem.getValue(MaintComplaint.class);
                         if(!getAllCategory || complaint.getUserId().equals(userId)) {
-                            complaintsKv.add(Pair.create(snapshotItem.getKey(),complaint));
+                            complaintsKvMaint.add(Pair.create(snapshotItem.getKey(),complaint));
                         }
                     }
                     try {
                         ArrayList<MaintComplaint> complaints = new ArrayList<>();
                         ArrayList<String> key = new ArrayList<>();
-                        for(int i=0; i<complaintsKv.size();i++){
-                            key.add(complaintsKv.get(i).first);
-                            complaints.add((MaintComplaint) complaintsKv.get(i).second);
+                        for(int i=0; i<complaintsKvMaint.size();i++){
+                            key.add(complaintsKvMaint.get(i).first);
+                            complaints.add((MaintComplaint) complaintsKvMaint.get(i).second);
                         }
                         if(getAllCategory) {
                             allMaintenanceComplaintCache.setKeyArray(key);
                             allMaintenanceComplaintCache.setValueArray(complaints);
+                            Log.d("123hello", String.valueOf(complaints.size()));
                         }
                         else{
                             maintenanceComplaintCache.setKeyArray(key);
                             maintenanceComplaintCache.setValueArray(complaints);
                         }
                     } catch (Exception ignored) {
-                        Log.i("HomeCacheLog", "cache files are not getting updated");
+                        Log.i("ComplaintCacheLog", "cache files are not getting updated");
                     }
+                    complaintsKv.addAll(complaintsKvMaint);
                     start();
                     swipeRefreshLayout.setRefreshing(false);
                 }
@@ -247,18 +253,19 @@ public class ComplaintChildFragment extends Fragment {
                 @SneakyThrows
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Pair<String,Complaint>> complaintsKvOthers = new ArrayList<>();
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Complaint complaint = snapshotItem.getValue(Complaint.class);
                         if(!getAllCategory || complaint.getUserId().equals(userId)) {
-                            complaintsKv.add(Pair.create(snapshotItem.getKey(),complaint));
+                            complaintsKvOthers.add(Pair.create(snapshotItem.getKey(),complaint));
                         }
                     }
                     try {
                         ArrayList<Complaint> complaints = new ArrayList<>();
                         ArrayList<String> key = new ArrayList<>();
-                        for(int i=0; i<complaintsKv.size();i++){
-                            key.add(complaintsKv.get(i).first);
-                            complaints.add(complaintsKv.get(i).second);
+                        for(int i=0; i<complaintsKvOthers.size();i++){
+                            key.add(complaintsKvOthers.get(i).first);
+                            complaints.add(complaintsKvOthers.get(i).second);
                         }
                         if(getAllCategory) {
                             allOtherComplaintCache.setKeyArray(key);
@@ -271,7 +278,9 @@ public class ComplaintChildFragment extends Fragment {
                     } catch (Exception ignored) {
                         Log.i("HomeCacheLog", "cache files are not getting updated");
                     }
+                    complaintsKv.addAll(complaintsKvOthers);
                     start();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
                 @Override
@@ -279,8 +288,6 @@ public class ComplaintChildFragment extends Fragment {
                     Log.d("firebase error", "Something went wrong");
                 }
             });
-            start();
-            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }

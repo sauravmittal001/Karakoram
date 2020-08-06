@@ -21,22 +21,23 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.BillImageActivity"/>
-        <activity android:name=".activity.AboutActivity"/>
-        <activity android:name=".activity.BillDescriptionActivity" />
-        <activity android:name=".activity.ComplaintDescriptionActivity" />
-        <activity android:name=".activity.WingMapActivity" />
-        <activity android:name=".activity.ComplaintFormActivity" />
-        <activity android:name=".activity.EventDescription" />
-        <activity android:name=".activity.ComplaintActivity" />
-        <activity android:name=".activity.FeedbackDescription" />
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.SignInActivity" />
-        <activity android:name=".activity.UserInfoActivity" />
-        <activity android:name=".activity.EventFormActivity" />
-        <activity android:name=".activity.BillFormActivity" />
+        <activity android:name=".activity.BillImageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.AboutActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BillDescriptionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ComplaintDescriptionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.WingMapActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ComplaintFormActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.EventDescription" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ComplaintActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FeedbackDescription" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SignInActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.UserInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.EventFormActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BillFormActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
