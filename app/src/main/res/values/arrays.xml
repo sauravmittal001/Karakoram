@@ -5,7 +5,7 @@
 
     <string-array name="user_type">
         <item></item>
-        <item>Resident</item>
+        <item>Student</item>
         <item>Developer</item>
         <item>Mess Secy</item>
         <item>Mess Supervisor</item>
