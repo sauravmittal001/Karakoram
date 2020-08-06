@@ -107,7 +107,14 @@ public class MessFeedbackFragment extends Fragment {
         String dayNow = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
         ArrayList<String> dayList = cache.getDayArray();
         ArrayList<Menu> menuList = cache.getMenuArray();
-        Menu menuObject = menuList.get(dayList.indexOf(dayNow));
+        Menu menuObject = new Menu();
+        try {
+            menuObject = menuList.get(dayList.indexOf(dayNow));
+        } catch (Exception e) {
+            menuObject.setBreakFast("Breakfast");
+            menuObject.setLunch("Lunch");
+            menuObject.setDinner("Dinner");
+        }
         ArrayList<String> todayMenu = new ArrayList<>();
         todayMenu.add(menuObject.getBreakFast());
         todayMenu.add(menuObject.getLunch());
