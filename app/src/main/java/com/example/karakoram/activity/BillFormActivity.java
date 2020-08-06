@@ -199,7 +199,7 @@ public class BillFormActivity extends AppCompatActivity {
             imageUri = data.getData();
             mImage.setImageURI(imageUri);
         } else {
-            Log.d("123hello", "upload failure");
+            Log.d("Image", "upload failure");
         }
     }
 

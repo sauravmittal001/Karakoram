@@ -57,7 +57,7 @@ public class FeedBackListFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     public FeedBackListFragment(boolean getMine){
-
+        this.getMine = getMine;
     }
 
 
@@ -133,7 +133,7 @@ public class FeedBackListFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     feedbacksKv.clear();
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
-                        if (!Objects.requireNonNull(snapshotItem.getValue(MessFeedback.class)).getDescription().equals("")) {
+                        if (getMine || !Objects.requireNonNull(snapshotItem.getValue(MessFeedback.class)).getDescription().equals("")) {
                             feedbacksKv.add(Pair.create(snapshotItem.getKey(), snapshotItem.getValue(MessFeedback.class)));
                         }
                     }

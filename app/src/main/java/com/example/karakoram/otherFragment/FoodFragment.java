@@ -2,6 +2,7 @@ package com.example.karakoram.otherFragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,9 +19,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.karakoram.FirebaseQuery;
 import com.example.karakoram.R;
 import com.example.karakoram.childFragment.mess.MenuFragment;
+import com.example.karakoram.resource.DayRating;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.User;
 import com.example.karakoram.resource.UserType;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -30,10 +37,12 @@ public class FoodFragment extends Fragment {
     private String breakfastMenu, lunchMenu, dinnerMenu;
     private String day;
     private EditText breakfast, lunch, dinner;
-    private TextView mDay;
+    private TextView mDay, mRatingBreakfast, mRatingLunch, mRatingDinner;
     private Button mMenuChange;
+    private SimpleRatingBar simpleRatingBarBreakfast, simpleRatingBarLunch, simpleRatingBarDinner;
     private MenuFragment menuFragment;
     private int dayIndex;
+    private DayRating dayRating;
     private SharedPreferences sharedPreferences;
 
     public FoodFragment() {
@@ -78,6 +87,12 @@ public class FoodFragment extends Fragment {
         lunch = view.findViewById(R.id.et_lunch_menu);
         dinner = view.findViewById(R.id.et_dinner_menu);
         mDay = view.findViewById(R.id.tv_day);
+        simpleRatingBarBreakfast = view.findViewById(R.id.srb_mess_menu_breakfast);
+        simpleRatingBarLunch = view.findViewById(R.id.srb_mess_menu_lunch);
+        simpleRatingBarDinner = view.findViewById(R.id.srb_mess_menu_dinner);
+        mRatingBreakfast = view.findViewById(R.id.tv_rating_breakfast);
+        mRatingLunch= view.findViewById(R.id.tv_rating_lunch);
+        mRatingDinner = view.findViewById(R.id.tv_rating_dinner);
     }
 
     private void setViews() {
@@ -92,6 +107,7 @@ public class FoodFragment extends Fragment {
             @Override
             public void onRefresh() {
                 menuFragment.initVariables();
+                setRating();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -127,6 +143,38 @@ public class FoodFragment extends Fragment {
                 }
             }
         });
+        setRating();
+
     }
 
+    private void setRating() {
+        FirebaseQuery.getRating(day).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dayRating = snapshot.getValue(DayRating.class);
+                assert dayRating != null;
+                float ratingBreakfast = 0;
+                if(dayRating.getBreakfast().getCount()!=0)
+                    ratingBreakfast = (float)dayRating.getBreakfast().getTotal()/dayRating.getBreakfast().getCount();
+                float ratingLunch = 0;
+                if(dayRating.getLunch().getCount()!=0)
+                    ratingLunch = (float)dayRating.getLunch().getTotal()/dayRating.getLunch().getCount();
+                float ratingDinner = 0;
+                if(dayRating.getDinner().getCount()!=0)
+                    ratingDinner = (float)dayRating.getDinner().getTotal()/dayRating.getDinner().getCount();
+
+                simpleRatingBarBreakfast.setRating(ratingBreakfast);
+                simpleRatingBarLunch.setRating(ratingLunch);
+                simpleRatingBarDinner.setRating(ratingDinner);
+                mRatingBreakfast.setText(String.format("%.2f",ratingBreakfast));
+                mRatingLunch.setText(String.format("%.2f",ratingLunch));
+                mRatingDinner.setText(String.format("%.2f",ratingDinner));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Firebase","Some error occurred");
+            }
+        });
+    }
 }

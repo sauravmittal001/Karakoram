@@ -27,14 +27,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:srb_starSize="60dp"
-                    app:srb_starCornerRadius="0"
+                    app:srb_borderColor="@color/darker_yellow"
+                    app:srb_fillColor="@color/darker_yellow"
                     app:srb_numberOfStars="3"
                     app:srb_rating="0"
-                    app:srb_stepSize="1"
-                    app:srb_borderColor="@color/darker_yellow"
                     app:srb_starBackgroundColor="@color/white"
-                    app:srb_fillColor="@color/darker_yellow" />
+                    app:srb_starCornerRadius="0"
+                    app:srb_starSize="60dp"
+                    app:srb_stepSize="1" />
 
                 <TextView
                     android:id="@+id/tv_star_text"

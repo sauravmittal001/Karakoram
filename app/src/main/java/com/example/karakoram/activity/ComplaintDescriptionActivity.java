@@ -235,7 +235,6 @@ public class ComplaintDescriptionActivity extends AppCompatActivity {
             findViewById(R.id.ll_complaint_status).setVisibility(View.VISIBLE);
             final Status[] statusList = Status.values();
             int pos = ArrayUtils.toArrayList(statusList).indexOf(Status.valueOf(initialStatus));
-            Log.d("123hello", String.valueOf(pos));
             statusArray = new String[statusList.length+1-pos];
             statusArray[0] = "";
             for(int i=0;i+pos<statusList.length;i++)
