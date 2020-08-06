@@ -94,7 +94,6 @@ public class ComplaintChildFragment extends Fragment {
                 key.addAll(allOtherComplaintCache.getKeyArray());
                 key.addAll(allMaintenanceComplaintCache.getKeyArray());
                 key.addAll(allMessComplaintCache.getKeyArray());
-//                Log.d("123hello", String.valueOf(allMaintenanceComplaintCache.getComplaintArray().size()));
             }
             else if(category.equals(Category.Maintenance)){
                 complaints.addAll(maintenanceComplaintCache.getComplaintArray());
@@ -228,7 +227,6 @@ public class ComplaintChildFragment extends Fragment {
                         if(getAllCategory) {
                             allMaintenanceComplaintCache.setKeyArray(key);
                             allMaintenanceComplaintCache.setValueArray(complaints);
-                            Log.d("123hello", String.valueOf(complaints.size()));
                         }
                         else{
                             maintenanceComplaintCache.setKeyArray(key);

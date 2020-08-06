@@ -76,7 +76,6 @@ public class MenuFragment extends Fragment {
         FirebaseQuery.getAllMenu().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("123hello","hi");
                 allDayMenu.clear();
                 days.clear();
                 for (DataSnapshot snapshotItem : snapshot.getChildren()) {

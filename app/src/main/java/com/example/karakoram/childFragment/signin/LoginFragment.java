@@ -86,7 +86,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String userType = userInputArray[userInputSpinner.getSelectedItemPosition()];
-                if (!userType.equals("Student")) {
+                if (!userType.equals("Resident")) {
                     view.findViewById(R.id.ll_entry_number).setVisibility(View.GONE);
                 } else {
                     view.findViewById(R.id.ll_entry_number).setVisibility(View.VISIBLE);

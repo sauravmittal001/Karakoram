@@ -27,6 +27,7 @@ import com.example.karakoram.activity.ComplaintFormActivity;
 import com.example.karakoram.cache.mess.MessMenuCache;
 import com.example.karakoram.resource.Anonymity;
 import com.example.karakoram.resource.Meal;
+import com.example.karakoram.resource.MealRating;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
@@ -260,7 +261,6 @@ public class MessFeedbackFragment extends Fragment {
         anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.d("123hello",anonymityArrayEnum[position]);
                 anonymity = Anonymity.valueOf(anonymityArrayEnum[position]);
 
             }
@@ -375,8 +375,23 @@ public class MessFeedbackFragment extends Fragment {
                         if (editMode) {
                             String key = intent.getStringExtra("key");
                             FirebaseQuery.updateMessFeedback(key, messFeedback);
-                            Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
-                            getActivity().finish();
+                            final String day = getActivity().getResources().getStringArray(R.array.days)[new Date().getDay()];
+                            FirebaseQuery.getRatingTotal(day,selectedMeal.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    MealRating mealRating = snapshot.getValue(MealRating.class);
+                                    int total = mealRating.getTotal();
+                                    mealRating.setTotal(total+ rating - intent.getIntExtra("rating", 0));
+                                    FirebaseQuery.updateRating(day,selectedMeal.toLowerCase(),mealRating);
+                                    Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
+                                    getActivity().finish();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.d("Firebase","Some error occurred");
+                                }
+                            });
                         } else {
                             Calendar calendar = Calendar.getInstance();
                             int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
@@ -387,8 +402,25 @@ public class MessFeedbackFragment extends Fragment {
                             editor.apply();
 
                             FirebaseQuery.addMessFeedback(messFeedback);
-                            refreshForm();
-                            Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                            final String day = getActivity().getResources().getStringArray(R.array.days)[new Date().getDay()];
+                            FirebaseQuery.getRatingTotal(day,selectedMeal.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    MealRating mealRating = snapshot.getValue(MealRating.class);
+                                    int total = mealRating.getTotal();
+                                    int count = mealRating.getCount();
+                                    mealRating.setCount(count+1);
+                                    mealRating.setTotal(total+rating);
+                                    FirebaseQuery.updateRating(day,selectedMeal.toLowerCase(),mealRating);
+                                    refreshForm();
+                                    Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.d("Firebase","Some error occurred");
+                                }
+                            });
                         }
                     }
                 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:fillViewport="true"
     tools:context=".otherFragment.FoodFragment">
@@ -15,8 +16,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,14 +41,6 @@
                         android:paddingEnd="42dp"
                         android:paddingBottom="24dp">
 
-                        <!--                    <ImageView-->
-                        <!--                        android:id="@+id/iv_back_button"-->
-                        <!--                        android:layout_width="wrap_content"-->
-                        <!--                        android:layout_height="wrap_content"-->
-                        <!--                        android:layout_gravity="start"-->
-                        <!--                        android:contentDescription="Back Button"-->
-                        <!--                        android:onClick="backPressed"-->
-                        <!--                        android:src="@drawable/ic_frame3" />-->
 
                         <TextView
                             android:id="@+id/tv_day"
@@ -59,17 +52,6 @@
                             android:text="Day's Menu"
                             android:textColor="@color/text700"
                             android:textSize="24sp" />
-
-                        <!--                <TextView-->
-                        <!--                    android:id="@+id/tv_menu_description"-->
-                        <!--                    android:layout_width="wrap_content"-->
-                        <!--                    android:layout_height="wrap_content"-->
-                        <!--                    android:layout_marginTop="8dp"-->
-                        <!--                    android:gravity="top"-->
-                        <!--                    android:lineSpacingMultiplier="1.5"-->
-                        <!--                    android:text="Today's Menu"-->
-                        <!--                    android:textColor="@color/text700"-->
-                        <!--                    android:textSize="16sp" />-->
 
                     </LinearLayout>
 
@@ -84,17 +66,52 @@
                         android:layout_marginEnd="24dp"
                         android:orientation="vertical">
 
-
-                        <TextView
-                            android:id="@+id/tv_breakfast"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/hl_breakfast"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/senbold"
-                            android:gravity="top"
-                            android:lineSpacingMultiplier="1.14"
-                            android:text="Breakfast"
-                            android:textColor="@color/text700"
-                            android:textSize="14sp" />
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/tv_breakfast"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/senbold"
+                                android:gravity="top"
+                                android:lineSpacingMultiplier="1.14"
+                                android:text="Breakfast"
+                                android:textColor="@color/text700"
+                                android:textSize="14sp" />
+
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                android:id="@+id/srb_mess_menu_breakfast"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                app:srb_borderColor="#00000000"
+                                app:srb_fillColor="@color/colorPrimary"
+                                app:srb_numberOfStars="3"
+                                app:srb_starBackgroundColor="@color/white"
+                                app:srb_starCornerRadius="0"
+                                app:srb_starSize="20dp"
+                                app:srb_stepSize="1" />
+
+                            <TextView
+                                android:id="@+id/tv_rating_breakfast"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/senbold"
+                                android:gravity="top"
+                                android:lineSpacingMultiplier="1.14"
+                                android:textColor="@color/text700"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
 
 
                         <EditText
@@ -123,6 +140,11 @@
                         android:layout_marginEnd="24dp"
                         android:orientation="vertical">
 
+                        <LinearLayout
+                            android:id="@+id/hl_lunch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tv_lunch"
@@ -136,22 +158,36 @@
                             android:textSize="14sp" />
 
 
-                        <!--                <EditText-->
-                        <!--                    android:id="@+id/et_lunch_menu"-->
-                        <!--                    android:layout_width="match_parent"-->
-                        <!--                    android:layout_height="wrap_content"-->
-                        <!--                    android:layout_marginStart="1dp"-->
-                        <!--                    android:layout_marginTop="8dp"-->
-                        <!--                    android:background="@drawable/background_rounded_section_task"-->
-                        <!--                    android:fontFamily="@font/senbold"-->
-                        <!--                    android:hint="Enter event title"-->
-                        <!--                    android:importantForAutofill="no"-->
-                        <!--                    android:lineSpacingMultiplier="1.5"-->
-                        <!--                    android:padding="12dp"-->
-                        <!--                    android:textColor="@color/text700"-->
-                        <!--                    android:textSize="16sp" />-->
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                android:id="@+id/srb_mess_menu_lunch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                app:srb_borderColor="#00000000"
+                                app:srb_fillColor="@color/colorPrimary"
+                                app:srb_numberOfStars="3"
+                                app:srb_starBackgroundColor="@color/white"
+                                app:srb_starCornerRadius="0"
+                                app:srb_starSize="20dp"
+                                app:srb_stepSize="1" />
 
-                        <EditText
+                            <TextView
+                                android:id="@+id/tv_rating_lunch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/senbold"
+                                android:gravity="top"
+                                android:lineSpacingMultiplier="1.14"
+                                android:textColor="@color/text700"
+                                android:textSize="14sp" />
+
+                    </LinearLayout>
+
+
+                    <EditText
                             android:id="@+id/et_lunch_menu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -177,17 +213,51 @@
                         android:layout_marginBottom="24dp"
                         android:orientation="vertical">
 
-
-                        <TextView
-                            android:id="@+id/tv_dinner"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/hl_dinner"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/senbold"
-                            android:gravity="top"
-                            android:lineSpacingMultiplier="1.14"
-                            android:text="Dinner"
-                            android:textColor="@color/text700"
-                            android:textSize="14sp" />
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/tv_dinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/senbold"
+                                android:gravity="top"
+                                android:lineSpacingMultiplier="1.14"
+                                android:text="Dinner"
+                                android:textColor="@color/text700"
+                                android:textSize="14sp" />
+
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                android:id="@+id/srb_mess_menu_dinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                app:srb_borderColor="#00000000"
+                                app:srb_fillColor="@color/colorPrimary"
+                                app:srb_numberOfStars="3"
+                                app:srb_starBackgroundColor="@color/white"
+                                app:srb_starCornerRadius="0"
+                                app:srb_starSize="20dp"
+                                app:srb_stepSize="1" />
+
+                            <TextView
+                                android:id="@+id/tv_rating_dinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/senbold"
+                                android:gravity="top"
+                                android:lineSpacingMultiplier="1.14"
+                                android:textColor="@color/text700"
+                                android:textSize="14sp" />
+
+                         </LinearLayout>
 
                         <EditText
                             android:id="@+id/et_dinner_menu"
@@ -202,7 +272,7 @@
                             android:textColor="@color/text700"
                             android:textSize="16sp" />
 
-                    </LinearLayout>
+                        </LinearLayout>
 
                     <!-- button -->
                     <Button
@@ -226,7 +296,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
 
         </ScrollView>
