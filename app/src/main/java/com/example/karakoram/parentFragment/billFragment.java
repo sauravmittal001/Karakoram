@@ -18,9 +18,9 @@ import com.google.android.material.tabs.TabLayout;
 
 
 public class billFragment extends Fragment {
-    View myfragment;
-    ViewPager viewPager;
-    TabLayout tabLayout;
+    private View myfragment;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     public billFragment() {
         // Required empty public constructor

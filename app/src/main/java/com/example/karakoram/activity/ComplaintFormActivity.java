@@ -372,40 +372,40 @@ public class ComplaintFormActivity extends AppCompatActivity {
 
                 final Complaint finalComplaint = complaint;
                 new AlertDialog.Builder(this, R.style.MyDialogTheme)
-                        .setTitle("Please confirm")
-                        .setMessage(editMode ? "Are you sure you want to make the changes ?" : isImageAttached ? "Are you sure you want to submit ?" : "Are you sure you want to submit without an image ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                //TODO image may or may not be sent
-                                //TODO which category complaint to sent
-                                if (!isImageAttached || imageUri == null || String.valueOf(imageUri).equals("")) {
-                                    if (editMode) {
-                                        boolean prevIsImageAttached = intent.getBooleanExtra("isImageAttached", false);
-                                        String key = intent.getStringExtra("key");
-                                        FirebaseQuery.updateComplaint(key, finalComplaint);
-                                        if (prevIsImageAttached)
-                                            FirebaseQuery.removeComplaintImage(key);
-                                    } else
-                                        FirebaseQuery.addCompliant(finalComplaint);
-                                } else {
-                                    if (editMode) {
-                                        String key = intent.getStringExtra("key");
-                                        FirebaseQuery.updateComplaint(key, finalComplaint, imageUri);
-                                    } else
-                                        FirebaseQuery.addCompliant(finalComplaint, imageUri);
-                                }
-
-                                if (editMode)
-                                    Toast.makeText(getApplicationContext(), "complaint updated", Toast.LENGTH_SHORT).show();
-                                else
-                                    Toast.makeText(getApplicationContext(), "new complaint submitted", Toast.LENGTH_SHORT).show();
-
-                                ComplaintFormActivity.super.onBackPressed();
+                    .setTitle("Please confirm")
+                    .setMessage(editMode ? "Are you sure you want to make the changes ?" : isImageAttached ? "Are you sure you want to submit ?" : "Are you sure you want to submit without an image ?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //TODO image may or may not be sent
+                            //TODO which category complaint to sent
+                            if (!isImageAttached || imageUri == null || String.valueOf(imageUri).equals("")) {
+                                if (editMode) {
+                                    boolean prevIsImageAttached = intent.getBooleanExtra("isImageAttached", false);
+                                    String key = intent.getStringExtra("key");
+                                    FirebaseQuery.updateComplaint(key, finalComplaint);
+                                    if (prevIsImageAttached)
+                                        FirebaseQuery.removeComplaintImage(key);
+                                } else
+                                    FirebaseQuery.addCompliant(finalComplaint);
+                            } else {
+                                if (editMode) {
+                                    String key = intent.getStringExtra("key");
+                                    FirebaseQuery.updateComplaint(key, finalComplaint, imageUri);
+                                } else
+                                    FirebaseQuery.addCompliant(finalComplaint, imageUri);
                             }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+
+                            if (editMode)
+                                Toast.makeText(getApplicationContext(), "complaint updated", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getApplicationContext(), "new complaint submitted", Toast.LENGTH_SHORT).show();
+
+                            ComplaintFormActivity.super.onBackPressed();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
             }
         }
     }

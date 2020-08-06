@@ -22,16 +22,11 @@ import java.util.Date;
 
  public class EventAdapter extends RecyclerView.Adapter<EventAdapter.myViewHolder> {
 
-    Context mcontext;
-    ArrayList<Event> event1;
-    ArrayList<String> key;
+    private Context mcontext;
+    private ArrayList<Event> event1;
+    private ArrayList<String> key;
 
     public EventAdapter(Context mcontext, ArrayList<Event> event1,ArrayList<String> key) {
-        /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
-         * the second argument is used when the ArrayAdapter is populating a single TextView.
-         * Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
-         * going to use this second argument, so it can be any value. Here, we used 0.
-         */
        this.mcontext=mcontext;
        this.event1=event1;
        this.key=key;
@@ -90,12 +85,10 @@ import java.util.Date;
 
      public static class myViewHolder extends RecyclerView.ViewHolder{
 
-
-         TextView mTitle;
-         TextView mDescription;
-         TextView mTime;
-         TextView mDate;
-         LinearLayout event_list_view;
+         private TextView mTitle;
+         private TextView mTime;
+         private TextView mDate;
+         private LinearLayout event_list_view;
 
 
          public myViewHolder(@NonNull View itemView) {
@@ -114,7 +107,7 @@ import java.util.Date;
      }
 
      public String monthName (int monthNumber) {
-         String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+         String[] monthOfYear = mcontext.getResources().getStringArray(R.array.months);
          return monthOfYear[monthNumber-1];
      }
 

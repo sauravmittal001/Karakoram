@@ -58,10 +58,10 @@ public class EventFragment extends Fragment {
     private Drawable mdivider;
 
     /* Adapters */
-    EventAdapter adapter;
+    private EventAdapter adapter;
 
-    EventCache cache;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private EventCache cache;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     public EventFragment(boolean getMine) {
@@ -95,15 +95,11 @@ public class EventFragment extends Fragment {
             eventsKv.clear();
             for(int i = 0; i<events.size();i++)
                 eventsKv.add(Pair.create(key.get(i),events.get(i)));
-            Log.i("HomeCacheLog", "events: " + events);
-            Log.i("HomeCacheLog", "keys: " + key);
 
             if (events.isEmpty() || key.isEmpty()) {
-                Log.i("HomeCacheLog", "lists were empty");
                 refreshListView();
             }
             start();
-            Log.i("HomeCacheLog", "try block");
         } catch (Exception e) {
             Log.i("HomeCacheLog", "some problem in getting cached content " + e);
             refreshListView();
@@ -161,8 +157,6 @@ public class EventFragment extends Fragment {
                     for (DataSnapshot snapshotItem : snapshot.getChildren()) {
                         Event event = snapshotItem.getValue(Event.class);
                         eventsKv.add(Pair.create(snapshotItem.getKey(), event));
-                        if (event.getTitle().equals("eyru"))
-                            Log.d("123hello", String.valueOf(event.isImageAttached()));
                     }
                     try {
                         ArrayList<Event> events = new ArrayList<>();
@@ -224,10 +218,8 @@ public class EventFragment extends Fragment {
         }
         adapter = new EventAdapter(getActivity(), events,key);
         listView = view.findViewById(R.id.list_event);
-        //listView.setHasFixedSize(true);
         listView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         mdivider= ContextCompat.getDrawable(view.getContext(),R.drawable.divider);
-//        mdivider.setBounds(20,20,20,20);
         DividerItemDecoration itemdecor=new DividerItemDecoration(view.getContext(),LinearLayoutManager.VERTICAL);
         itemdecor.setDrawable(mdivider);
         listView.addItemDecoration(itemdecor);

@@ -35,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class LoginFragment extends Fragment {
 
-    View view;
+    private View view;
     private CustomSpinner userInputSpinner;
     private String[] userInputArray;
     private EditText mPassword, mEntryNoEdit;
@@ -107,7 +107,6 @@ public class LoginFragment extends Fragment {
                 final String entryNumber;
                 if (!userInput.equals("Student")){
                     entryNumber = userInput;
-                    Log.d("123hello",entryNumber);
                 }
                 else {
                     entryNumber = mEntryNoEdit.getText().toString();

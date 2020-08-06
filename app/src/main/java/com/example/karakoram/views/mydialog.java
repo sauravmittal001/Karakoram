@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+
+import com.example.karakoram.R;
 
 /**
  * A simple {@link Fragment} subclass.

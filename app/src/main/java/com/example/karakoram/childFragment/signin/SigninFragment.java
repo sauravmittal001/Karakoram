@@ -33,7 +33,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SigninFragment extends Fragment {
 
-    View view;
+    private View view;
     private EditText mPassword, mEntryNoEdit;
     private User user;
     private Context context;

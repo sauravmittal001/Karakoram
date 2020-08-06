@@ -66,10 +66,9 @@ public class UserInfoActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         userId = sharedPreferences.getString("userId", "loggedOut");
-        userEntryNumber = sharedPreferences.getString("entryNumber", "DEFAULT");
-        userName = sharedPreferences.getString("userName", "DEFAULT");
+        userEntryNumber = sharedPreferences.getString("entryNumber", "NA");
+        userName = sharedPreferences.getString("userName", "NA");
         String room = sharedPreferences.getString("room", "A01");
-//        Log.i("USER_ROOM", String.valueOf(location[0]));
         userRoomNumber = room.substring(1);
         userFloor = room.substring(0,1);
 
@@ -164,21 +163,4 @@ public class UserInfoActivity extends AppCompatActivity {
         FirebaseQuery.setUserRoom(userId,location);
         super.onBackPressed();
     }
-
-    private void showSnackbar(String message) {
-        Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.GREEN)
-                .setActionTextColor(Color.WHITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                            mCurrent.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                            mRetype.setBackground(getDrawable(R.drawable.background_rect_section_task));
-                        }
-                    }
-                })
-                .show();
-    }
-
 }

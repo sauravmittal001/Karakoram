@@ -47,20 +47,19 @@ import lombok.SneakyThrows;
 public class complaintChildFragment extends Fragment {
 
     private RecyclerView listView;
-
-    Context context;
-    View view;
-    ComplaintAdapter adapter;
-    ArrayList<Pair<String, Complaint>> complaintsKv = new ArrayList<>();
-    Category category;
-    boolean getAllCategory;
-    SwipeRefreshLayout swipeRefreshLayout;
-    MaintenanceComplaintCache maintenanceComplaintCache;
-    MessComplaintCache messComplaintCache;
-    OtherComplaintCache otherComplaintCache;
-    AllMaintenanceComplaintCache allMaintenanceComplaintCache;
-    AllMessComplaintCache allMessComplaintCache;
-    AllOtherComplaintCache allOtherComplaintCache;
+    private Context context;
+    private View view;
+    private ComplaintAdapter adapter;
+    private ArrayList<Pair<String, Complaint>> complaintsKv = new ArrayList<>();
+    private Category category;
+    private boolean getAllCategory;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private MaintenanceComplaintCache maintenanceComplaintCache;
+    private MessComplaintCache messComplaintCache;
+    private OtherComplaintCache otherComplaintCache;
+    private AllMaintenanceComplaintCache allMaintenanceComplaintCache;
+    private AllMessComplaintCache allMessComplaintCache;
+    private AllOtherComplaintCache allOtherComplaintCache;
 
     public complaintChildFragment(Category category, boolean getAllCategory) {
         this.category = category;
@@ -111,15 +110,11 @@ public class complaintChildFragment extends Fragment {
             complaintsKv.clear();
             for(int i = 0; i<complaints.size();i++)
                 complaintsKv.add(Pair.create(key.get(i),complaints.get(i)));
-            Log.i("ComplaintCacheLog", "complaints: " + complaints);
-            Log.i("ComplaintCacheLog", "keys: " + key);
 
             if (complaints.isEmpty() || key.isEmpty()) {
-                Log.i("ComplaintCacheLog", "lists were empty");
                 refreshListView();
             }
             start();
-            Log.i("ComplaintCacheLog", "try block");
         } catch (Exception e) {
             Log.i("ComplaintCacheLog", "some problem in getting cached content " + e);
             refreshListView();

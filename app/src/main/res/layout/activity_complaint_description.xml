@@ -183,7 +183,7 @@
             <!-- save and exit button -->
 
             <!-- complaint image -->
-            <com.example.karakoram.DynamicImageView
+            <com.example.karakoram.views.DynamicImageView
                 android:id="@+id/div_complaint_description_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

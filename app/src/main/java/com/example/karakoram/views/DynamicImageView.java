@@ -1,4 +1,4 @@
-package com.example.karakoram;
+package com.example.karakoram.views;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

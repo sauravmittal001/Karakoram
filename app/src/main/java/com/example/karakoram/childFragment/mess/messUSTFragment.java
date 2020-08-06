@@ -93,15 +93,11 @@ public class messUSTFragment extends Fragment {
                 feedbacksKv.add(Pair.create(key.get(i),feedbacks.get(i)));
             feedbacks = cache.getFeedbackArray();
             key = cache.getKeyArray();
-            Log.i("UstCache", "hostelBills: " + feedbacks);
-            Log.i("UstCache", "keys: " + key);
 
             if (feedbacks.isEmpty() || key.isEmpty()) {
-                Log.i("UstCache", "lists were empty");
                 refreshListView();
             }
             start();
-            Log.i("UstCache", "try block");
         } catch (Exception e) {
             Log.i("UstCache", "some problem in getting cached content");
             refreshListView();

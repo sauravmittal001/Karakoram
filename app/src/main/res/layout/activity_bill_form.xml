@@ -248,7 +248,7 @@
             android:textColor="@color/text700"
             android:textSize="18sp"
             android:visibility="gone"/>
-        <com.example.karakoram.DynamicImageView
+        <com.example.karakoram.views.DynamicImageView
             android:id="@+id/div_bill_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

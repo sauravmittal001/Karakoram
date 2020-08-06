@@ -14,7 +14,6 @@ import com.example.karakoram.R;
 import com.example.karakoram.adapter.pageadapter;
 import com.example.karakoram.childFragment.bill.billChildFragment;
 import com.example.karakoram.childFragment.mess.messUSTFragment;
-import com.example.karakoram.childFragment.myStuff.mystuffUST;
 import com.example.karakoram.otherFragment.complaintChildFragment;
 import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.User;
@@ -28,9 +27,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class MyStuffFragment extends Fragment {
 
-    View myfragment;
-    ViewPager viewPager;
-    TabLayout tabLayout;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     public MyStuffFragment() {
         // Required empty public constructor
@@ -40,9 +38,9 @@ public class MyStuffFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        myfragment= inflater.inflate(R.layout.fragment_bill, container, false);
-        viewPager=myfragment.findViewById(R.id.viewpager);
-        tabLayout=myfragment.findViewById(R.id.tabs);
+        View myfragment = inflater.inflate(R.layout.fragment_bill, container, false);
+        viewPager= myfragment.findViewById(R.id.viewpager);
+        tabLayout= myfragment.findViewById(R.id.tabs);
         return myfragment;
     }
 

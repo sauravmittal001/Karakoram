@@ -14,7 +14,7 @@ public class pageadapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-  private List<Fragment> fragmentList=new ArrayList<>();
+    private List<Fragment> fragmentList=new ArrayList<>();
     private List<String> titleList=new ArrayList<>();
     @NonNull
     @Override
@@ -37,6 +37,4 @@ public class pageadapter extends FragmentPagerAdapter {
         fragmentList.add(fragment);
         titleList.add(title);
     }
-
-
 }

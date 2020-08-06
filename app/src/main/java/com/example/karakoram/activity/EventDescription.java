@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,16 +18,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.karakoram.DynamicImageView;
+import com.example.karakoram.views.DynamicImageView;
 import com.example.karakoram.R;
 import com.example.karakoram.resource.User;
-import com.example.karakoram.resource.UserType;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class EventDescription extends AppCompatActivity {
@@ -108,7 +104,6 @@ public class EventDescription extends AppCompatActivity {
                 public void onSuccess(Uri uri) {
 
                     loadGlideImage(uri.toString());
-//                adjustImageSize();
                     removePlaceholderImage();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -148,7 +143,6 @@ public class EventDescription extends AppCompatActivity {
             mEdit.setVisibility(View.VISIBLE);
         else
             mEdit.setVisibility(View.GONE);
-
     }
 
     private void loadGlideImage(String url) {

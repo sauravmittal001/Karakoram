@@ -58,7 +58,7 @@ public class UstDescription extends AppCompatActivity {
     }
 
     public String monthName (int monthNumber) {
-        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthOfYear = getResources().getStringArray(R.array.months);
         return monthOfYear[monthNumber-1];
     }
 

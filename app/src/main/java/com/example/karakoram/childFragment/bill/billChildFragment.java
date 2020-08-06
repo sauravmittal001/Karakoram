@@ -44,8 +44,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class billChildFragment extends Fragment {
 
-//   ArrayList<Integer> bill= new ArrayList<>();
-
     /* Variables */
     private ArrayList<Pair<String,HostelBill>> hostelBillsKv = new ArrayList<>();
     private Category category;
@@ -58,7 +56,7 @@ public class billChildFragment extends Fragment {
     private View view;
     private RecyclerView listView;
     private FloatingActionButton fab;
-    Drawable mdivider;
+    private Drawable mdivider;
 
     /* Adapters */
     private HostelBillAdapter adapter;

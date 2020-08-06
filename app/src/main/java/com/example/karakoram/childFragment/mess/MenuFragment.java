@@ -28,17 +28,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class SlidingFragment extends Fragment {
-    //    private String[] day = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+public class MenuFragment extends Fragment {
 
-    View view;
+    private View view;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ArrayList<String> days = new ArrayList<>();
     private ArrayList<Menu> allDayMenu = new ArrayList<>();
     private MessMenuCache cache;
 
-    public SlidingFragment() {
+    public MenuFragment() {
     }
 
     @Override
@@ -62,14 +61,11 @@ public class SlidingFragment extends Fragment {
         try {
             allDayMenu = cache.getMenuArray();
             days = cache.getDayArray();
-            Log.i("CacheLog", "events: " + allDayMenu);
-            Log.i("CacheLog", "keys: " + days);
+
             if (allDayMenu.isEmpty() || days.isEmpty()) {
-                Log.i("CacheLog", "lists were empty");
                 initVariables();
             }
             setupViews();
-            Log.i("CacheLog", "try block");
         } catch (Exception e) {
             Log.i("CacheLog", "some problem in getting cached content");
             initVariables();

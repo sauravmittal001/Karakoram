@@ -254,7 +254,6 @@ public class EventFormActivity extends AppCompatActivity {
             mDelete.setVisibility(View.GONE);
             mImage.setVisibility(View.GONE);
             isImageAttached = false;
-            Log.d("123hello", "upload failure");
         }
     }
 

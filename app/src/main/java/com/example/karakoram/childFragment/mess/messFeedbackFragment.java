@@ -59,9 +59,8 @@ public class messFeedbackFragment extends Fragment {
     private SimpleRatingBar simpleRatingBar;
     private EditText mDescription;
     private TextView mMenu;
-    //textview to set menu
-    //button to submit, file complain
 
+    //variables
     private String currentMeal, selectedMeal;
     private ArrayList<String> allMealsOfToday;
     private ArrayList<String> eligibleMeals;
@@ -94,8 +93,8 @@ public class messFeedbackFragment extends Fragment {
 
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
-//        eligibleMeals = getMealsEligibleForRating();
-        eligibleMeals = ArrayUtils.toArrayList(new String[]{"Lunch"});
+        eligibleMeals = getMealsEligibleForRating();
+//        eligibleMeals = ArrayUtils.toArrayList(new String[]{"Lunch"});
         currentMeal = getTheCurrentMeal();
         intent = getActivity().getIntent();
         editMode = intent.getBooleanExtra("editMode",false);

@@ -11,32 +11,23 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.karakoram.R;
 import com.example.karakoram.adapter.pageadapter;
-import com.example.karakoram.childFragment.mess.SlidingFragment;
+import com.example.karakoram.childFragment.mess.MenuFragment;
 import com.example.karakoram.childFragment.mess.messFeedbackFragment;
 import com.example.karakoram.childFragment.mess.messUSTFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class messFragment extends Fragment {
 
-    View myfragment;
-
-    ViewPager viewPager;
-    TabLayout tabLayout;
-
-
-
+    private View myfragment;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     public messFragment() {
         // Required empty public constructor
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        //find the view that shows the number category
-
-// Find the view pager that will allow the user to swipe between fragments
         super.onCreate(savedInstanceState);
 
     }
@@ -79,11 +70,10 @@ public class messFragment extends Fragment {
     }
     private void setUpViewPager(ViewPager viewPager){
         pageadapter adapter=new pageadapter(getChildFragmentManager());
-        adapter.addFragment(new SlidingFragment(), "Menu");
+        adapter.addFragment(new MenuFragment(), "Menu");
         adapter.addFragment(new messFeedbackFragment(),"Feedback");
         adapter.addFragment(new messUSTFragment(false),"UST");
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
-
     }
 }

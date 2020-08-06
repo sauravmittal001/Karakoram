@@ -32,9 +32,7 @@
         <activity android:name=".activity.UstDescription" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignInActivity" />
-        <activity android:name=".activity.BillActivity" />
         <activity android:name=".activity.UserInfoActivity" />
-        <activity android:name=".activity.HostelBillDescription" />
         <activity android:name=".activity.EventFormActivity" />
         <activity android:name=".activity.BillFormActivity" />
         <activity

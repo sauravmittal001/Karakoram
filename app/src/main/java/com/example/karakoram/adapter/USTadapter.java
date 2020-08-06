@@ -23,18 +23,11 @@ import java.util.Date;
 
 public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
 
-    Context mcontext;
-    ArrayList<MessFeedback> feedbacks;
-    ArrayList<String> key;
+    private Context mcontext;
+    private ArrayList<MessFeedback> feedbacks;
+    private ArrayList<String> key;
 
     public USTadapter(Context mcontext, ArrayList<MessFeedback> feedbacks, ArrayList<String> key) {
-
-        /* Here, we initialize the ArrayAdapter's internal storage for the context and the list.
-         * the second argument is used when the ArrayAdapter is populating a single TextView.
-         * Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
-         * going to use this second argument, so it can be any value. Here, we used 0.
-         */
-
         this.mcontext=mcontext;
         this.feedbacks=feedbacks;
         this.key=key;
@@ -90,7 +83,7 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
     }
 
     public String monthName (int monthNumber) {
-        String[] monthOfYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthOfYear = mcontext.getResources().getStringArray(R.array.months);
         return monthOfYear[monthNumber-1];
     }
 
@@ -121,11 +114,11 @@ public class USTadapter extends RecyclerView.Adapter<USTadapter.myViewHolder> {
     public static class myViewHolder extends RecyclerView.ViewHolder{
 
 
-        LinearLayout ust_list_view;
-        TextView mMeal;
-        TextView mDay;
-        RatingBar mRating;
-        TextView mDescription;
+        private LinearLayout ust_list_view;
+        private TextView mMeal;
+        private TextView mDay;
+        private RatingBar mRating;
+        private TextView mDescription;
 
 
 
