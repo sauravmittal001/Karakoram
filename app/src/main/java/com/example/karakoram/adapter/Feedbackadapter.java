@@ -79,7 +79,7 @@ public class Feedbackadapter extends RecyclerView.Adapter<Feedbackadapter.myView
         } else {
             format = "AM";
         }
-        return hour + " : " + min + " " + format;
+        return hour + " : " + String.format("%02d",min) + " " + format;
     }
 
     public String monthName (int monthNumber) {
@@ -91,17 +91,23 @@ public class Feedbackadapter extends RecyclerView.Adapter<Feedbackadapter.myView
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         MessFeedback messFeedback = getItem(position);
         if (messFeedback != null) {
-            String description = messFeedback.getDescription();
             int rating=messFeedback.getRating();
             holder.mRating.setNumStars(3);
             holder.mRating.setStepSize(1);
             holder.mRating.setRating(rating);
-            holder.mDescription.setText(messFeedback.getDescription());
             holder.mMeal.setText(messFeedback.getMeal().name());
             Date timestamp = messFeedback.getTimestamp();
             String[] days = mcontext.getResources().getStringArray(R.array.days);
             String day = days[timestamp.getDay()];
             holder.mDay.setText(day);
+
+            String description;
+            if(messFeedback.getDescription().length()>15)
+                description = messFeedback.getDescription().substring(0,15) + "...";
+            else
+                description = messFeedback.getDescription();
+
+            holder.mDescription.setText(description);
         }
     }
 

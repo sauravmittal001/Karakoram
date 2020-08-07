@@ -73,7 +73,7 @@ public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.my
         } else {
             format = "AM";
         }
-        return hour + " : " + min + " " + format;
+        return hour + " : " + String.format("%02d",min) + " " + format;
     }
 
     public String monthName (int monthNumber) {
@@ -86,7 +86,14 @@ public class HostelBillAdapter extends RecyclerView.Adapter<HostelBillAdapter.my
         HostelBill hostelBill = getItem(position);
         if (hostelBill != null) {
             holder.mAmount.setText(String.format("Rs %s", hostelBill.getAmount()));
-            holder.mDescription.setText(hostelBill.getDescription());
+
+            String description;
+            if(hostelBill.getDescription().length()>15)
+                description = hostelBill.getDescription().substring(0,15) + "...";
+            else
+                description = hostelBill.getDescription();
+
+            holder.mDescription.setText(description);
         }
     }
 

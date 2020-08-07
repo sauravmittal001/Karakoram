@@ -283,9 +283,9 @@ public class EventFormActivity extends AppCompatActivity {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String time = hourOfDay + ":" + minute;
-                        timeView.setText(time);
                         showTime(hourOfDay, minute);
+                        hour = hourOfDay;
+                        min = minute;
                         isTimeFilled = true;
                     }
                 }, hour, min, false);
@@ -305,7 +305,7 @@ public class EventFormActivity extends AppCompatActivity {
         } else {
             format = "AM";
         }
-        timeView.setText(new StringBuilder().append(hour).append(" : ").append(min)
+        timeView.setText(new StringBuilder().append(hour).append(" : ").append(String.format("%02d",min))
                 .append(" ").append(format));
     }
 

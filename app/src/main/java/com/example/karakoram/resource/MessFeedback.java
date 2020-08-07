@@ -1,5 +1,7 @@
 package com.example.karakoram.resource;
 
+import android.util.Log;
+
 import java.util.Date;
 
 public class MessFeedback {

@@ -112,7 +112,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.myVi
         } else {
             format = "AM";
         }
-        return hour + " : " + min + " " + format;
+        return hour + " : " + String.format("%02d",min) + " " + format;
     }
 
     public String monthName (int monthNumber) {
