@@ -7,6 +7,7 @@ import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.Meal;
 import com.example.karakoram.resource.MealRating;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessComplaint;
@@ -121,6 +122,19 @@ public class FirebaseQuery {
 
     public static Query getUserMessFeedback(String userId){
         return ref.child("messFeedback").orderByChild("userId").equalTo(userId);
+    }
+
+    public static Query getLastFeedbackDate(String userId){
+        return ref.child("users").child(userId).child("lastFeedbackDate");
+    }
+
+    public static void changeLastFeedbackUpdate(String userId, Meal meal, String date){
+        if(meal.equals(Meal.Breakfast))
+            ref.child("users").child(userId).child("lastFeedbackDate/breakfast").setValue(date);
+        else if(meal.equals(Meal.Lunch))
+            ref.child("users").child(userId).child("lastFeedbackDate/lunch").setValue(date);
+        else
+            ref.child("users").child(userId).child("lastFeedbackDate/dinner").setValue(date);
     }
 
     public static Query getAllMenu(){
