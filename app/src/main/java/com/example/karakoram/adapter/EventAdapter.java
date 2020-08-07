@@ -69,9 +69,13 @@ import java.util.Date;
              Date dateTime = event.getDateTime();
              String time = showTime(dateTime.getHours(),dateTime.getMinutes());
              String date = (dateTime.getYear() + 1900) + "-" + String.format("%02d",dateTime.getMonth() + 1) + "-" + String.format("%02d",dateTime.getDate());
-
+             String description;
+             if(event.getDescription().length()>15)
+                 description = event.getDescription().substring(0,15) + "...";
+             else
+                 description = event.getDescription();
              holder.mTitle.setText(event.getTitle());
-             holder.mDescription.setText(event.getDescription());
+             holder.mDescription.setText(description);
              holder.mTime.setText(time);
              holder.mDate.setText(date);
          }
@@ -127,6 +131,6 @@ import java.util.Date;
          } else {
              format = "AM";
          }
-         return hour + " : " + min + " " + format;
+         return hour + " : " + String.format("%02d",min) + " " + format;
      }
  }

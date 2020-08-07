@@ -276,19 +276,21 @@ public class MessFeedbackFragment extends Fragment {
         anonymitySpinner = view.findViewById(R.id.spinner_feedback_anonymity);
 
         if(editMode){
-            String anonymity = intent.getExtras().getString("anonymity");
-            int position = ArrayUtils.toArrayList(anonymityArrayEnum).indexOf(anonymity);
+            String anonymityString = intent.getExtras().getString("anonymity");
+            int position = ArrayUtils.toArrayList(anonymityArrayEnum).indexOf(anonymityString);
             anonymitySpinner.setSelection(position);
+            anonymity = Anonymity.valueOf(anonymityArrayEnum[position]);
         }
-        else
+        else {
             anonymitySpinner.setSelection(0);
+            anonymity = Anonymity.Public;
+        }
 
         anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 anonymity = Anonymity.valueOf(anonymityArrayEnum[position]);
-
-            }
+               }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {

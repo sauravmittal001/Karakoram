@@ -147,7 +147,7 @@ public class FeedBackListFragment extends Fragment {
                         cache.setKeyArray(key);
                         cache.setFeedbackArray(feedbacks);
                     } catch (Exception ignored) {
-                        Log.i("UstCache", "cache files are not getting updated");
+                        Log.i("UstCache", "cache files are not getting updated" + ignored);
                     }
                     start();
                     swipeRefreshLayout.setRefreshing(false);
