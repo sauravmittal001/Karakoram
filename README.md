@@ -1,7 +1,4 @@
-<a href="http://fvcproductions.com"><img src="https://avatars1.githubusercontent.com/u/4284691?v=3&s=200" title="FVCproductions" alt="FVCproductions"></a>
-
-<!-- [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) -->
-
+![alt text](https://github.com/sauravmittal001/Karakoram/blob/hotfix/app_icon.png)
 # Karakoram App
 
 > Digital Complaint and other systems in Karakoram House, IIT Delhi

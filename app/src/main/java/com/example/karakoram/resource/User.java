@@ -12,6 +12,7 @@ public class User {
     private UserType type;
     private String entryNumber;
     private boolean isSignedIn;
+    private LastFeedbackDate lastFeedbackDate;
     public static final String SHARED_PREFS = "sharedPrefs";
 
     public User(){
@@ -72,5 +73,13 @@ public class User {
 
     public void setSignedIn(boolean signedIn) {
         isSignedIn = signedIn;
+    }
+
+    public LastFeedbackDate getLastFeedbackDate() {
+        return lastFeedbackDate;
+    }
+
+    public void setLastFeedbackDate(LastFeedbackDate lastFeedbackDate) {
+        this.lastFeedbackDate = lastFeedbackDate;
     }
 }

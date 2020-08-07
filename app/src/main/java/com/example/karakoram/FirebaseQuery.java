@@ -7,6 +7,8 @@ import com.example.karakoram.resource.Category;
 import com.example.karakoram.resource.Complaint;
 import com.example.karakoram.resource.Event;
 import com.example.karakoram.resource.HostelBill;
+import com.example.karakoram.resource.Meal;
+import com.example.karakoram.resource.MealRating;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessComplaint;
 import com.example.karakoram.resource.MessFeedback;
@@ -122,6 +124,19 @@ public class FirebaseQuery {
         return ref.child("messFeedback").orderByChild("userId").equalTo(userId);
     }
 
+    public static Query getLastFeedbackDate(String userId){
+        return ref.child("users").child(userId).child("lastFeedbackDate");
+    }
+
+    public static void changeLastFeedbackUpdate(String userId, Meal meal, String date){
+        if(meal.equals(Meal.Breakfast))
+            ref.child("users").child(userId).child("lastFeedbackDate/breakfast").setValue(date);
+        else if(meal.equals(Meal.Lunch))
+            ref.child("users").child(userId).child("lastFeedbackDate/lunch").setValue(date);
+        else
+            ref.child("users").child(userId).child("lastFeedbackDate/dinner").setValue(date);
+    }
+
     public static Query getAllMenu(){
         return ref.child("messMenu").orderByKey();
     }
@@ -168,5 +183,17 @@ public class FirebaseQuery {
 
     public static void changeComplaintStatus(String key, Status status) {
         ref.child("complaints").child(key).child("status").setValue(status);
+    }
+
+    public static Query getRating(String day){
+        return ref.child("stats/menuRating").child(day);
+    }
+
+    public static void updateRating(String day, String meal, MealRating mealRating){
+        ref.child("stats/menuRating").child(day).child(meal).setValue(mealRating);
+    }
+
+    public static Query getRatingTotal(String day, String meal){
+        return ref.child("stats/menuRating").child(day).child(meal);
     }
 }

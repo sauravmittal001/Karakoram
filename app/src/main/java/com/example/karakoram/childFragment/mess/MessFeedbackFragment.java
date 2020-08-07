@@ -26,7 +26,9 @@ import com.example.karakoram.R;
 import com.example.karakoram.activity.ComplaintFormActivity;
 import com.example.karakoram.cache.mess.MessMenuCache;
 import com.example.karakoram.resource.Anonymity;
+import com.example.karakoram.resource.LastFeedbackDate;
 import com.example.karakoram.resource.Meal;
+import com.example.karakoram.resource.MealRating;
 import com.example.karakoram.resource.Menu;
 import com.example.karakoram.resource.MessFeedback;
 import com.example.karakoram.resource.User;
@@ -46,6 +48,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.content.Context.MEDIA_PROJECTION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -61,12 +64,14 @@ public class MessFeedbackFragment extends Fragment {
     private TextView mMenu;
 
     //variables
-    private String currentMeal, selectedMeal;
+    private String currentMeal, selectedMeal, userId, userName;
     private ArrayList<String> allMealsOfToday;
     private ArrayList<String> eligibleMeals;
     private Anonymity anonymity;
+    private UserType userType;
     private int rating;
     private boolean editMode;
+    private LastFeedbackDate lastFeedbackDate;
     private Intent intent;
 
 
@@ -93,12 +98,29 @@ public class MessFeedbackFragment extends Fragment {
 
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
-        eligibleMeals = getMealsEligibleForRating();
         currentMeal = getTheCurrentMeal();
         intent = getActivity().getIntent();
         editMode = intent.getBooleanExtra("editMode",false);
-        setMenuOfCurrentMeal(currentMeal);
-        initAndSetAllTheViews();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId","loggedOut");
+        userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
+        userName = sharedPreferences.getString("userName","NA");
+
+        FirebaseQuery.getLastFeedbackDate(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lastFeedbackDate = snapshot.getValue(LastFeedbackDate.class);
+                eligibleMeals = getMealsEligibleForRating();
+                setMenuOfCurrentMeal(currentMeal);
+                initAndSetAllTheViews();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Firebase","Some error occurred");
+            }
+        });
     }
 
     private ArrayList<String> getTodayMenu() {
@@ -107,7 +129,14 @@ public class MessFeedbackFragment extends Fragment {
         String dayNow = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
         ArrayList<String> dayList = cache.getDayArray();
         ArrayList<Menu> menuList = cache.getMenuArray();
-        Menu menuObject = menuList.get(dayList.indexOf(dayNow));
+        Menu menuObject = new Menu();
+        try {
+            menuObject = menuList.get(dayList.indexOf(dayNow));
+        } catch (Exception e) {
+            menuObject.setBreakFast("Breakfast");
+            menuObject.setLunch("Lunch");
+            menuObject.setDinner("Dinner");
+        }
         ArrayList<String> todayMenu = new ArrayList<>();
         todayMenu.add(menuObject.getBreakFast());
         todayMenu.add(menuObject.getLunch());
@@ -117,10 +146,10 @@ public class MessFeedbackFragment extends Fragment {
 
     private ArrayList<String> getMealsEligibleForRating() {
         ArrayList<String> eligibleMeals = new ArrayList<>();
-        String[] array = {"Breakfast", "Lunch", "Dinner"};
-        for (String meal: array) {
+        Meal[] array = Meal.values();
+        for (Meal meal: array) {
             if (isTimeValidFor(meal) && !(isFeedbackAlreadyGivenFor(meal))) {
-                eligibleMeals.add(meal);
+                eligibleMeals.add(meal.toString());
             }
         }
         return eligibleMeals;
@@ -130,7 +159,6 @@ public class MessFeedbackFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        boolean isTrue = false;
         // not between 00:00 and 06:59
         if (!(hour <= 6)) {
             // not between 07:00 and 07:15
@@ -160,7 +188,7 @@ public class MessFeedbackFragment extends Fragment {
             }
     }
 
-    private boolean isTimeValidFor(String meal) {
+    private boolean isTimeValidFor(Meal meal) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -168,22 +196,27 @@ public class MessFeedbackFragment extends Fragment {
         if (!(hour <= 6)) {
             // not between 07:00 and 07:15
             if (!(hour == 7 && minute < 15)) {
-                if (meal.equals("Breakfast")) {
+                if (meal.equals(Meal.Breakfast)){
                     return true;
                 }
-                if (meal.equals("Lunch") && hour >= 12) {
+                if (meal.equals(Meal.Lunch) && hour >= 12) {
                     return true;
                 }
-                if (meal.equals("Dinner") && hour >= 19)
+                if (meal.equals(Meal.Dinner) && hour >= 19)
                     return true;
             }
         }
         return false;
     }
 
-    private boolean isFeedbackAlreadyGivenFor(String selectedMeal) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-        String[] timestamp = sharedPreferences.getString(selectedMeal, "00-00-0000").split("-");
+    private boolean isFeedbackAlreadyGivenFor(Meal selectedMeal) {
+        String[] timestamp;
+        if(selectedMeal.equals(Meal.Breakfast))
+            timestamp = lastFeedbackDate.getBreakfast().split("-");
+        else if(selectedMeal.equals(Meal.Lunch))
+            timestamp = lastFeedbackDate.getLunch().split("-");
+        else
+            timestamp = lastFeedbackDate.getDinner().split("-");
         int[] previousDate = new int[timestamp.length];
         for (int i = 0; i < timestamp.length; i++)
             previousDate[i]=Integer.parseInt(timestamp[i]);
@@ -253,7 +286,6 @@ public class MessFeedbackFragment extends Fragment {
         anonymitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.d("123hello",anonymityArrayEnum[position]);
                 anonymity = Anonymity.valueOf(anonymityArrayEnum[position]);
 
             }
@@ -334,9 +366,6 @@ public class MessFeedbackFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
-                String userId = sharedPreferences.getString("userId","loggedOut");
-                UserType userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
                 if(userId.equals("loggedOut"))
                     Toast.makeText(getActivity().getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
                 else {
@@ -362,26 +391,55 @@ public class MessFeedbackFragment extends Fragment {
                         messFeedback.setMeal(Meal.valueOf(selectedMeal));
                         messFeedback.setRating(rating);
                         messFeedback.setTimestamp(new Date());
-                        messFeedback.setUserName(sharedPreferences.getString("userName", "NA"));
+                        messFeedback.setUserName(userName);
                         messFeedback.setAnonymity(anonymity);
 
                         if (editMode) {
                             String key = intent.getStringExtra("key");
                             FirebaseQuery.updateMessFeedback(key, messFeedback);
-                            Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
-                            getActivity().finish();
+                            final String day = getActivity().getResources().getStringArray(R.array.days)[new Date().getDay()];
+                            FirebaseQuery.getRatingTotal(day,selectedMeal.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    MealRating mealRating = snapshot.getValue(MealRating.class);
+                                    int total = mealRating.getTotal();
+                                    mealRating.setTotal(total+ rating - intent.getIntExtra("rating", 0));
+                                    FirebaseQuery.updateRating(day,selectedMeal.toLowerCase(),mealRating);
+                                    Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
+                                    getActivity().finish();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.d("Firebase","Some error occurred");
+                                }
+                            });
                         } else {
                             Calendar calendar = Calendar.getInstance();
                             int date = calendar.get(Calendar.DATE), month = calendar.get(Calendar.MONTH), year = calendar.get(Calendar.YEAR);
                             String currentDate = date + "-" + month + "-" + year;
 
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(selectedMeal, currentDate);
-                            editor.apply();
-
+                            FirebaseQuery.changeLastFeedbackUpdate(userId,Meal.valueOf(selectedMeal),currentDate);
                             FirebaseQuery.addMessFeedback(messFeedback);
-                            refreshForm();
-                            Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                            final String day = getActivity().getResources().getStringArray(R.array.days)[new Date().getDay()];
+                            FirebaseQuery.getRatingTotal(day,selectedMeal.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    MealRating mealRating = snapshot.getValue(MealRating.class);
+                                    int total = mealRating.getTotal();
+                                    int count = mealRating.getCount();
+                                    mealRating.setCount(count+1);
+                                    mealRating.setTotal(total+rating);
+                                    FirebaseQuery.updateRating(day,selectedMeal.toLowerCase(),mealRating);
+                                    refreshForm();
+                                    Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.d("Firebase","Some error occurred");
+                                }
+                            });
                         }
                     }
                 }

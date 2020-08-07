@@ -112,7 +112,6 @@ public class EventFormActivity extends AppCompatActivity {
         showTime(hour, min);
 
         if(editMode){
-            Log.d("123hello","hi");
             mTitle.setText(intent.getStringExtra("title"));
             mDescription.setText(intent.getStringExtra("description"));
             if(isImageAttached) {

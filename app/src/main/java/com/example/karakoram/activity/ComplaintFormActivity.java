@@ -228,8 +228,6 @@ public class ComplaintFormActivity extends AppCompatActivity {
 
                 String room = intent.getStringExtra("room");
 
-                Log.d("123hello",room);
-
                 String roomNumber = room.substring(1);
                 position = ArrayUtils.toArrayList(roomNumberArray).indexOf(roomNumber);
                 roomNumberSpinner.setSelection(position);
@@ -269,7 +267,7 @@ public class ComplaintFormActivity extends AppCompatActivity {
             mDelete.setVisibility(View.GONE);
             mImage.setVisibility(View.GONE);
             isImageAttached = false;
-            Log.d("123hello", "upload failure");
+            Log.d("Image", "upload failure");
         }
     }
 
