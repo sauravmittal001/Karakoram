@@ -63,6 +63,7 @@ public class MessFeedbackFragment extends Fragment {
     private SimpleRatingBar simpleRatingBar;
     private EditText mDescription;
     private TextView mMenu;
+    private Button submit;
 
     //variables
     private String currentMeal, selectedMeal, userId, userName;
@@ -115,6 +116,7 @@ public class MessFeedbackFragment extends Fragment {
                 eligibleMeals = getMealsEligibleForRating();
                 setMenuOfCurrentMeal(currentMeal);
                 initAndSetAllTheViews();
+                submit.setClickable(true);
             }
 
             @Override
@@ -229,6 +231,8 @@ public class MessFeedbackFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initAndSetAllTheViews() {
+        submit = view.findViewById(R.id.button_feedback_submit);
+
         simpleRatingBar = view.findViewById(R.id.srb_mess_feedback);
         if(editMode) {
             rating = intent.getIntExtra("rating", 0);
@@ -270,8 +274,8 @@ public class MessFeedbackFragment extends Fragment {
     }
 
     private void setSpinners() {
-        String[] anonymityArray = getResources().getStringArray(R.array.feedback_anonymity);
-        final String[] anonymityArrayEnum = getResources().getStringArray(R.array.feedback_anonymity_enum);
+        String[] anonymityArray = context.getResources().getStringArray(R.array.feedback_anonymity);
+        final String[] anonymityArrayEnum = context.getResources().getStringArray(R.array.feedback_anonymity_enum);
         final CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(context.getApplicationContext(), R.layout.spinner_item, anonymityArray);
         anonymityAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         anonymitySpinner = view.findViewById(R.id.spinner_feedback_anonymity);
@@ -365,7 +369,6 @@ public class MessFeedbackFragment extends Fragment {
     }
 
     private void setButtons() {
-        Button submit = view.findViewById(R.id.button_feedback_submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -386,6 +389,8 @@ public class MessFeedbackFragment extends Fragment {
                                 return;
                             }
                         }
+
+                        submit.setClickable(false);
 
                         MessFeedback messFeedback = new MessFeedback();
                         String description = mDescription.getText().toString();
