@@ -1,6 +1,7 @@
 package com.example.karakoram.childFragment.mess;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -99,10 +100,10 @@ public class MessFeedbackFragment extends Fragment {
     public void refreshForm(){
         allMealsOfToday = getTodayMenu();
         currentMeal = getTheCurrentMeal();
-        intent = getActivity().getIntent();
+        intent = ((Activity)context).getIntent();
         editMode = intent.getBooleanExtra("editMode",false);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(User.SHARED_PREFS, MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","loggedOut");
         userType = UserType.valueOf(sharedPreferences.getString("type","Student"));
         userName = sharedPreferences.getString("userName","NA");
@@ -271,7 +272,7 @@ public class MessFeedbackFragment extends Fragment {
     private void setSpinners() {
         String[] anonymityArray = getResources().getStringArray(R.array.feedback_anonymity);
         final String[] anonymityArrayEnum = getResources().getStringArray(R.array.feedback_anonymity_enum);
-        final CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, anonymityArray);
+        final CustomSpinnerAdapter anonymityAdapter = new CustomSpinnerAdapter(context.getApplicationContext(), R.layout.spinner_item, anonymityArray);
         anonymityAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         anonymitySpinner = view.findViewById(R.id.spinner_feedback_anonymity);
 
@@ -302,7 +303,7 @@ public class MessFeedbackFragment extends Fragment {
             final String meal = intent.getStringExtra("meal");
             String[] mealArray = new String[] {meal};
             selectedMeal = meal;
-            CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, mealArray);
+            CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(context.getApplicationContext(), R.layout.spinner_item, mealArray);
             mealAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
             mealSpinner = view.findViewById(R.id.spinner_feedback_meal);
             mealSpinner.setAdapter(mealAdapter);
@@ -322,7 +323,7 @@ public class MessFeedbackFragment extends Fragment {
             mealArray[0] = "";
             for (int i = 0; i < eligibleMeals.size(); i++)
                 mealArray[i + 1] = eligibleMeals.get(i);
-            CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_item, mealArray);
+            CustomSpinnerAdapter mealAdapter = new CustomSpinnerAdapter(context.getApplicationContext(), R.layout.spinner_item, mealArray);
             mealAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
             mealSpinner = view.findViewById(R.id.spinner_feedback_meal);
             mealSpinner.setAdapter(mealAdapter);
@@ -369,19 +370,19 @@ public class MessFeedbackFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(userId.equals("loggedOut"))
-                    Toast.makeText(getActivity().getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(),"please login to continue", Toast.LENGTH_SHORT).show();
                 else {
                     if (userType.equals(UserType.Admin))
-                        Toast.makeText(getActivity().getApplicationContext(), "please login with your resident account to continue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "please login with your resident account to continue", Toast.LENGTH_SHORT).show();
                     else {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                             View spinner = view.findViewById(R.id.ll_feedback_meal);
                             if (mealSpinner.getSelectedItemPosition() == 0 && !editMode) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Select meal", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(), "Select meal", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             if (rating == 0) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Select rating", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(), "Select rating", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         }
@@ -399,7 +400,7 @@ public class MessFeedbackFragment extends Fragment {
                         if (editMode) {
                             String key = intent.getStringExtra("key");
                             FirebaseQuery.updateMessFeedback(key, messFeedback);
-                            final String day = getActivity().getResources().getStringArray(R.array.days)[new Date().getDay()];
+                            final String day = context.getResources().getStringArray(R.array.days)[new Date().getDay()];
                             FirebaseQuery.getRatingTotal(day,selectedMeal.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -407,8 +408,8 @@ public class MessFeedbackFragment extends Fragment {
                                     int total = mealRating.getTotal();
                                     mealRating.setTotal(total+ rating - intent.getIntExtra("rating", 0));
                                     FirebaseQuery.updateRating(day,selectedMeal.toLowerCase(),mealRating);
-                                    Toast.makeText(getActivity().getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
-                                    getActivity().finish();
+                                    Toast.makeText(context.getApplicationContext(), "feedback updated", Toast.LENGTH_SHORT).show();
+                                    ((Activity)context).finish();
                                 }
 
                                 @Override
@@ -423,7 +424,7 @@ public class MessFeedbackFragment extends Fragment {
 
                             FirebaseQuery.changeLastFeedbackUpdate(userId,Meal.valueOf(selectedMeal),currentDate);
                             FirebaseQuery.addMessFeedback(messFeedback);
-                            final String day = getActivity().getResources().getStringArray(R.array.days)[new Date().getDay()];
+                            final String day = context.getResources().getStringArray(R.array.days)[new Date().getDay()];
                             FirebaseQuery.getRatingTotal(day,selectedMeal.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -434,7 +435,7 @@ public class MessFeedbackFragment extends Fragment {
                                     mealRating.setTotal(total+rating);
                                     FirebaseQuery.updateRating(day,selectedMeal.toLowerCase(),mealRating);
                                     refreshForm();
-                                    Toast.makeText(getActivity().getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context.getApplicationContext(), "feedback submitted", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -452,7 +453,7 @@ public class MessFeedbackFragment extends Fragment {
         complain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), ComplaintFormActivity.class);
+                Intent intent = new Intent(context.getApplicationContext(), ComplaintFormActivity.class);
                 intent.putExtra("messFlag",true);
                 startActivity(intent);
             }
